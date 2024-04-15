@@ -15,11 +15,13 @@
     {
       "id": 0,
       "name": "John Doe",
+      "username": "johnDoe",
       "email": "johnDoe@email.com"
     },
     {
       "id": 1,
       "name": "Jane Doe",
+      "username": "janeDoe",
       "email": "janeDoe@email.com"
     }
   ],

@@ -6,6 +6,7 @@ export type Team = {
 
 export type TeamMember = {
   teamMemberId: number;
+  username: string;
   name: string;
   email: string;
 };
