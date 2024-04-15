@@ -1,0 +1,45 @@
+input {
+  border-color: var(--border);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: var(--background);
+}
+
+.log-in-container {
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.user-entry {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 10px;
+  border-color: var(--border);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.user-entry h3,
+.user-register-heading {
+  font-size: 25px;
+}
+
+.user-entry h3 {
+  margin-bottom: 20px;
+}
+
+.user-register-heading {
+  margin: 20px 0px;
+}
