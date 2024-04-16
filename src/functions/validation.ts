@@ -1,5 +1,5 @@
 export const isName = (name: string) => {
-  return /\d/.test(name);
+  return !/\d/.test(name);
 };
 
 export const isEmail = (email: string) => {

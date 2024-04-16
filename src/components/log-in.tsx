@@ -2,29 +2,27 @@ import "@/styles/log-in.css";
 import { useState } from "react";
 import { useUser } from "./componentsProvider/UserProvider";
 import { isEmail, isName } from "@/functions/validation";
-import { Requests } from "@/api/api";
 import toast from "react-hot-toast";
 
-const defaultSignIn = {
-  username: "",
-  password: "",
-};
-
-const defaultSignUp = {
-  newUsername: "",
-  firstName: "",
-  lastName: "",
-  email: "",
-  newPassword: "",
-  confirmPassword: "",
-};
-
 export const LogIn = () => {
-  const { allUsers, createUser } = useUser();
+  const { createUser, userAuth } = useUser();
 
-  const [userLogIn, setUserLogIn] = useState(defaultSignIn);
+  const [isLogInSubmit, setIsLogInSubmit] = useState(false);
+  const [isCreateFormSubmit, setIsCreateFormSubmit] = useState(false);
 
-  const [newUser, setNewUser] = useState(defaultSignUp);
+  const [userLogIn, setUserLogIn] = useState({
+    username: "",
+    password: "",
+  });
+
+  const [newUser, setNewUser] = useState({
+    newUsername: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
 
   return (
     <>
@@ -32,25 +30,13 @@ export const LogIn = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            if (
-              allUsers.filter((user) =>
-                user.username === userLogIn.username ? user : null
-              ).length === 0
-            ) {
-              toast.error("User not found");
+            if (userLogIn.username === "" || userLogIn.password === "") {
+              toast.error("Please enter a username and/or password");
+              setIsLogInSubmit(true);
               return;
             }
-            Requests.getUserPassword(
-              allUsers.filter((user) =>
-                user.username === userLogIn.username ? user : null
-              )[0].id
-            ).then((passwordAuth) => {
-              if (passwordAuth.password !== userLogIn.password) {
-                toast.error("Wrong password");
-                return;
-              }
-            });
-            setUserLogIn(defaultSignIn);
+            userAuth(userLogIn.username, userLogIn.password);
+            setIsLogInSubmit(false);
           }}
           className="user-entry"
         >
@@ -71,6 +57,11 @@ export const LogIn = () => {
               }}
             />
           </div>
+          {isLogInSubmit && userLogIn.username === "" && (
+            <div className="userError">
+              <p>Please enter a username</p>
+            </div>
+          )}
           <div className="input-group">
             <label htmlFor="password">Password: </label>
             <input
@@ -84,6 +75,11 @@ export const LogIn = () => {
               }}
             />
           </div>
+          {isLogInSubmit && userLogIn.password === "" && (
+            <div className="userError">
+              <p>Please enter a password</p>
+            </div>
+          )}
           <input type="submit" value="Log In" />
         </form>
         <h3 className="user-register-heading">New to Task Manager?</h3>
@@ -91,15 +87,23 @@ export const LogIn = () => {
           className="user-entry"
           onSubmit={(e) => {
             e.preventDefault();
+            console.log(isName("ernie"));
 
             if (
-              !isName(newUser.firstName) &&
-              !isName(newUser.lastName) &&
-              isEmail(newUser.email) &&
-              newUser.newPassword === newUser.confirmPassword
-            )
+              newUser.newUsername === "" ||
+              newUser.firstName === "" ||
+              newUser.lastName === "" ||
+              newUser.email === "" ||
+              newUser.newPassword === "" ||
+              newUser.confirmPassword === "" ||
+              !isName(newUser.firstName) ||
+              !isName(newUser.lastName) ||
+              !isEmail(newUser.email)
+            ) {
+              toast.error("Please fill out all fields on the form");
+              setIsCreateFormSubmit(true);
               return;
-
+            }
             createUser(
               {
                 name: `${
@@ -114,7 +118,7 @@ export const LogIn = () => {
               },
               newUser.newPassword
             );
-            setNewUser(defaultSignUp);
+            setIsCreateFormSubmit(false);
           }}
         >
           <h3>Sign up</h3>
@@ -131,7 +135,11 @@ export const LogIn = () => {
               }}
             />
           </div>
-
+          {isCreateFormSubmit && newUser.newUsername === "" && (
+            <div className="userError">
+              <p>Please enter a username</p>
+            </div>
+          )}
           <div className="input-group">
             <label htmlFor="firstName">First Name: </label>
             <input
@@ -145,7 +153,12 @@ export const LogIn = () => {
               }}
             />
           </div>
-
+          {isCreateFormSubmit &&
+            (newUser.firstName === "" || isName(newUser.firstName)) && (
+              <div className="userError">
+                <p>Please enter a first name</p>
+              </div>
+            )}
           <div className="input-group">
             <label htmlFor="lastName">Last Name: </label>
             <input
@@ -159,7 +172,12 @@ export const LogIn = () => {
               }}
             />
           </div>
-
+          {isCreateFormSubmit &&
+            (newUser.lastName === "" || isName(newUser.lastName)) && (
+              <div className="userError">
+                <p>Please enter a last name</p>
+              </div>
+            )}
           <div className="input-group">
             <label htmlFor="email">Email: </label>
             <input
@@ -173,7 +191,12 @@ export const LogIn = () => {
               }}
             />
           </div>
-
+          {isCreateFormSubmit &&
+            (newUser.email === "" || !isEmail(newUser.email)) && (
+              <div className="userError">
+                <p>Please enter a email</p>
+              </div>
+            )}
           <div className="input-group">
             <label htmlFor="createPassword">Create Password: </label>
             <input
@@ -187,7 +210,11 @@ export const LogIn = () => {
               }}
             />
           </div>
-
+          {isCreateFormSubmit && newUser.newPassword === "" && (
+            <div className="userError">
+              <p>Please enter a password</p>
+            </div>
+          )}
           <div className="input-group">
             <label htmlFor="confirmPassword">Confirm Password: </label>
             <input
@@ -204,6 +231,12 @@ export const LogIn = () => {
               }}
             />
           </div>
+          {isCreateFormSubmit &&
+            newUser.confirmPassword !== newUser.newPassword && (
+              <div className="userError">
+                <p>password does not match</p>
+              </div>
+            )}
           <input type="submit" value="Crate Account" />
         </form>
       </div>
