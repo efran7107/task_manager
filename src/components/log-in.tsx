@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useUser } from "./componentsProvider/UserProvider";
 import { isEmail, isName } from "@/functions/validation";
 import { Requests } from "@/api/api";
+import toast from "react-hot-toast";
 
 const defaultSignIn = {
   username: "",
@@ -35,15 +36,19 @@ export const LogIn = () => {
               allUsers.filter((user) =>
                 user.username === userLogIn.username ? user : null
               ).length === 0
-            )
+            ) {
+              toast.error("User not found");
               return;
+            }
             Requests.getUserPassword(
               allUsers.filter((user) =>
                 user.username === userLogIn.username ? user : null
               )[0].id
             ).then((passwordAuth) => {
-              if (passwordAuth.password !== userLogIn.password) return;
-              console.log("success");
+              if (passwordAuth.password !== userLogIn.password) {
+                toast.error("Wrong password");
+                return;
+              }
             });
             setUserLogIn(defaultSignIn);
           }}
