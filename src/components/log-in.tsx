@@ -2,28 +2,53 @@ import "@/styles/log-in.css";
 import { useState } from "react";
 import { useUser } from "./componentsProvider/UserProvider";
 import { isEmail, isName } from "@/functions/validation";
+import { Requests } from "@/api/api";
+
+const defaultSignIn = {
+  username: "",
+  password: "",
+};
+
+const defaultSignUp = {
+  newUsername: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  newPassword: "",
+  confirmPassword: "",
+};
 
 export const LogIn = () => {
-  const { createUser } = useUser();
+  const { allUsers, createUser } = useUser();
 
-  const [user, setUser] = useState({
-    username: "",
-    password: "",
-  });
+  const [userLogIn, setUserLogIn] = useState(defaultSignIn);
 
-  const [newUser, setNewUser] = useState({
-    newUsername: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
+  const [newUser, setNewUser] = useState(defaultSignUp);
 
   return (
     <>
       <div className="log-in-container">
-        <form action="" className="user-entry">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (
+              allUsers.filter((user) =>
+                user.username === userLogIn.username ? user : null
+              ).length === 0
+            )
+              return;
+            Requests.getUserPassword(
+              allUsers.filter((user) =>
+                user.username === userLogIn.username ? user : null
+              )[0].id
+            ).then((passwordAuth) => {
+              if (passwordAuth.password !== userLogIn.password) return;
+              console.log("success");
+            });
+            setUserLogIn(defaultSignIn);
+          }}
+          className="user-entry"
+        >
           <h3>Log in</h3>
           <div className="input-group">
             <label htmlFor="username" className="form-label">
@@ -35,9 +60,9 @@ export const LogIn = () => {
               name="username"
               id="username"
               autoComplete="off"
-              value={user.username}
+              value={userLogIn.username}
               onChange={(e) => {
-                setUser({ ...user, username: e.currentTarget.value });
+                setUserLogIn({ ...userLogIn, username: e.currentTarget.value });
               }}
             />
           </div>
@@ -48,9 +73,9 @@ export const LogIn = () => {
               name="password"
               id="password"
               autoComplete="off"
-              value={user.password}
+              value={userLogIn.password}
               onChange={(e) => {
-                setUser({ ...user, password: e.currentTarget.value });
+                setUserLogIn({ ...userLogIn, password: e.currentTarget.value });
               }}
             />
           </div>
@@ -84,6 +109,7 @@ export const LogIn = () => {
               },
               newUser.newPassword
             );
+            setNewUser(defaultSignUp);
           }}
         >
           <h3>Sign up</h3>
