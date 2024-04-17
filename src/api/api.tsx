@@ -2,7 +2,17 @@ import { TeamMember, TeamMemberAuth } from "@/types/types";
 
 const baseUrl = "http://localhost:3000";
 
-const registerUser = (newUser: Omit<TeamMember, "teamMemberId">) => {
+const getAllUsers = (): Promise<TeamMember[]> => {
+  return fetch(`${baseUrl}/teamMembers`).then((res) => res.json());
+};
+
+const getUserPassword = (teamMemberId: number) => {
+  return fetch(`${baseUrl}/teamMemberAuth/${teamMemberId}`).then((res) =>
+    res.json()
+  );
+};
+
+const registerUser = (newUser: Omit<TeamMember, "id">) => {
   return fetch(`${baseUrl}/teamMembers`, {
     body: JSON.stringify(newUser),
     method: "POST",
@@ -25,4 +35,6 @@ const registerUserAuth = (userPassword: Omit<TeamMemberAuth, "id">) => {
 export const Requests = {
   registerUser,
   registerUserAuth,
+  getAllUsers,
+  getUserPassword,
 };
