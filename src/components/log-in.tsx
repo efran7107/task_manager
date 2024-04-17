@@ -1,28 +1,33 @@
 import "@/styles/log-in.css";
 import { useState } from "react";
 import { useUser } from "./componentsProvider/UserProvider";
-import { isEmail, isName } from "@/functions/validation";
+import { isEmail, isName, isValidFormSub } from "@/functions/validation";
 import toast from "react-hot-toast";
+import { formatName } from "@/functions/transformations";
+
+const defaultLogIn = {
+  username: "",
+  password: "",
+};
+
+const defaultRegistration = {
+  newUsername: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  newPassword: "",
+  confirmPassword: "",
+};
 
 export const LogIn = () => {
-  const { createUser, userAuth } = useUser();
+  const { createUser, userAuth, isExistingUser } = useUser();
 
   const [isLogInSubmit, setIsLogInSubmit] = useState(false);
   const [isCreateFormSubmit, setIsCreateFormSubmit] = useState(false);
 
-  const [userLogIn, setUserLogIn] = useState({
-    username: "",
-    password: "",
-  });
+  const [userLogIn, setUserLogIn] = useState(defaultLogIn);
 
-  const [newUser, setNewUser] = useState({
-    newUsername: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
+  const [newUser, setNewUser] = useState(defaultRegistration);
 
   return (
     <>
@@ -37,6 +42,7 @@ export const LogIn = () => {
             }
             userAuth(userLogIn.username, userLogIn.password);
             setIsLogInSubmit(false);
+            setUserLogIn(defaultLogIn);
           }}
           className="user-entry"
         >
@@ -87,38 +93,26 @@ export const LogIn = () => {
           className="user-entry"
           onSubmit={(e) => {
             e.preventDefault();
-            console.log(isName("ernie"));
-
-            if (
-              newUser.newUsername === "" ||
-              newUser.firstName === "" ||
-              newUser.lastName === "" ||
-              newUser.email === "" ||
-              newUser.newPassword === "" ||
-              newUser.confirmPassword === "" ||
-              !isName(newUser.firstName) ||
-              !isName(newUser.lastName) ||
-              !isEmail(newUser.email)
-            ) {
+            if (isValidFormSub(newUser)) {
               toast.error("Please fill out all fields on the form");
+              setIsCreateFormSubmit(true);
+              return;
+            } else if (isExistingUser(newUser.newUsername)) {
+              toast.error("user already exists");
               setIsCreateFormSubmit(true);
               return;
             }
             createUser(
               {
-                name: `${
-                  newUser.firstName.charAt(0).toUpperCase() +
-                  newUser.firstName.slice(1)
-                } ${
-                  newUser.lastName.charAt(0).toUpperCase() +
-                  newUser.lastName.slice(1)
-                }`,
+                name: formatName(newUser.firstName, newUser.lastName),
                 username: newUser.newUsername,
                 email: newUser.email,
               },
               newUser.newPassword
             );
+            toast.success("User created successfully");
             setIsCreateFormSubmit(false);
+            setNewUser(defaultRegistration);
           }}
         >
           <h3>Sign up</h3>
@@ -154,7 +148,7 @@ export const LogIn = () => {
             />
           </div>
           {isCreateFormSubmit &&
-            (newUser.firstName === "" || isName(newUser.firstName)) && (
+            (newUser.firstName === "" || !isName(newUser.firstName)) && (
               <div className="userError">
                 <p>Please enter a first name</p>
               </div>
@@ -173,7 +167,7 @@ export const LogIn = () => {
             />
           </div>
           {isCreateFormSubmit &&
-            (newUser.lastName === "" || isName(newUser.lastName)) && (
+            (newUser.lastName === "" || !isName(newUser.lastName)) && (
               <div className="userError">
                 <p>Please enter a last name</p>
               </div>

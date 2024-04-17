@@ -2,7 +2,7 @@ import { TeamMember, TeamMemberAuth } from "@/types/types";
 
 const baseUrl = "http://localhost:3000";
 
-const getAllUsers = () => {
+const getAllUsers = (): Promise<TeamMember[]> => {
   return fetch(`${baseUrl}/teamMembers`).then((res) => res.json());
 };
 

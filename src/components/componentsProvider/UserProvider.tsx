@@ -10,17 +10,18 @@ import {
 import toast from "react-hot-toast";
 
 type TUserProvider = {
-  user: TeamMember | null;
+  user: Omit<TeamMember, "id"> | null;
   isLoggedIn: boolean;
   allUsers: TeamMember[];
   createUser: (user: Omit<TeamMember, "id">, password: string) => void;
   userAuth: (username: string, password: string) => void;
+  isExistingUser: (username: string) => boolean;
 };
 
 const UserContext = createContext<TUserProvider>({} as TUserProvider);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<TeamMember | null>(null);
+  const [user, setUser] = useState<Omit<TeamMember, "id"> | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [allUsers, setAllUsers] = useState<TeamMember[]>([]);
 
@@ -56,7 +57,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  // const findExistingUser = (username: string): boolean => {};
+  const isExistingUser = (username: string): boolean => {
+    return (
+      allUsers.filter((user) => user.username === username && user).length > 0
+    );
+  };
 
   const createUser = (user: Omit<TeamMember, "id">, password: string) => {
     Requests.registerUser(user).then((teamMember) => {
@@ -66,6 +71,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       });
     });
     fetchUsers();
+    setUser(user);
+    setIsLoggedIn(true);
   };
 
   useEffect(() => {
@@ -74,7 +81,14 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, isLoggedIn, allUsers, createUser, userAuth }}
+      value={{
+        user,
+        isLoggedIn,
+        allUsers,
+        createUser,
+        userAuth,
+        isExistingUser,
+      }}
     >
       {children}
     </UserContext.Provider>
