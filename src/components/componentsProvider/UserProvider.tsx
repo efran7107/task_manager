@@ -1,4 +1,5 @@
 import { Requests } from "@/api/api";
+import { functions } from "@/functions/functions";
 import { TeamMember } from "@/types/types";
 import {
   ReactNode,
@@ -53,6 +54,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       setUser(
         allUsers.filter((user) => (user.username === username ? user : null))[0]
       );
+      functions.getHeaderContainer();
       setIsLoggedIn(true);
     });
   };

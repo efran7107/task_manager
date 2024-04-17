@@ -68,10 +68,6 @@
   }
 }
 
-h1 {
-  font-size: 35px;
-}
-
 @layer base {
   * {
     @apply border-border;

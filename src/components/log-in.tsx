@@ -1,9 +1,9 @@
 import "@/styles/log-in.css";
 import { useState } from "react";
 import { useUser } from "./componentsProvider/UserProvider";
-import { isEmail, isName, isValidFormSub } from "@/functions/validation";
 import toast from "react-hot-toast";
-import { formatName } from "@/functions/transformations";
+import { validations } from "@/functions/validation";
+import { transformations } from "@/functions/transformations";
 
 const defaultLogIn = {
   username: "",
@@ -21,6 +21,8 @@ const defaultRegistration = {
 
 export const LogIn = () => {
   const { createUser, userAuth, isExistingUser } = useUser();
+  const { isValidFormSub, isName, isEmail } = validations;
+  const { formatName } = transformations;
 
   const [isLogInSubmit, setIsLogInSubmit] = useState(false);
   const [isCreateFormSubmit, setIsCreateFormSubmit] = useState(false);

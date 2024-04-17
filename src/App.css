@@ -7,3 +7,25 @@
   flex-direction: column;
   gap: 50px;
 }
+
+.main-header {
+  font-size: 35px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: center;
+}
+
+.main-header.dashboard {
+  font-size: 20px;
+}
+
+.header-container.dashboard {
+  justify-content: flex-start;
+}
+
+.main-header.dashboard,
+.header-container.dashboard {
+  transition: ease-in-out 0.1s;
+}
