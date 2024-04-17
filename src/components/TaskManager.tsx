@@ -1,9 +1,7 @@
+import { useUser } from "./componentsProvider/UserProvider";
 import { LogIn } from "./log-in";
 
 export const TaskManager = () => {
-  return (
-    <>
-      <LogIn />
-    </>
-  );
+  const { isLoggedIn } = useUser();
+  return <>{!isLoggedIn && <LogIn />}</>;
 };
