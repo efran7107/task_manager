@@ -1,9 +1,13 @@
 input {
-  border-color: var(--border);
+  border-color: #ea580c;
   border-width: 1px;
   border-style: solid;
   border-radius: 5px;
-  background-color: var(--background);
+  background-color: var(--primary);
+}
+.form-btn {
+  background-color: #ea580c;
+  color: white;
 }
 
 .log-in-container {
@@ -18,7 +22,7 @@ input {
   justify-content: space-between;
   align-items: stretch;
   gap: 10px;
-  border-color: var(--border);
+  border-color: #ea580c;
   border-width: 1px;
   border-style: solid;
   border-radius: 10px;

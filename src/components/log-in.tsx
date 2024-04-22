@@ -88,7 +88,7 @@ export const LogIn = () => {
               <p>Please enter a password</p>
             </div>
           )}
-          <input type="submit" value="Log In" />
+          <input className="form-btn" type="submit" value="Log In" />
         </form>
         <h3 className="user-register-heading">New to Task Manager?</h3>
         <form
@@ -233,7 +233,7 @@ export const LogIn = () => {
                 <p>password does not match</p>
               </div>
             )}
-          <input type="submit" value="Crate Account" />
+          <input className="form-btn" type="submit" value="Crate Account" />
         </form>
       </div>
     </>

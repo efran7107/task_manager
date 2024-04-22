@@ -75,6 +75,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     fetchUsers();
     setUser(user);
     setIsLoggedIn(true);
+    functions.getHeaderContainer();
   };
 
   useEffect(() => {
