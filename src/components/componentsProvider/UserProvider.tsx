@@ -1,6 +1,17 @@
 import { Requests } from "@/api/api";
 import { functions } from "@/functions/functions";
-import { TeamMember } from "@/types/types";
+import {
+  Notes,
+  Tag,
+  Task,
+  TaskAssinmentLink,
+  TaskTagLink,
+  Team,
+  TeamMember,
+  TeamMemberAuth,
+  TeamMemberTeamsLink,
+  UserInfo,
+} from "@/types/types";
 import {
   ReactNode,
   createContext,
@@ -11,7 +22,7 @@ import {
 import toast from "react-hot-toast";
 
 type TUserProvider = {
-  user: Omit<TeamMember, "id"> | null;
+  user: TeamMember | undefined;
   isLoggedIn: boolean;
   allUsers: TeamMember[];
   createUser: (user: Omit<TeamMember, "id">, password: string) => void;
@@ -22,7 +33,7 @@ type TUserProvider = {
 const UserContext = createContext<TUserProvider>({} as TUserProvider);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<Omit<TeamMember, "id"> | null>(null);
+  const [user, setUser] = useState<TeamMember>();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [allUsers, setAllUsers] = useState<TeamMember[]>([]);
 
@@ -51,6 +62,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
       toast.success("Login successful");
+      console.log(
+        functions.getUserInfo(
+          allUsers.filter((user) =>
+            user.username === username ? user : null
+          )[0]
+        )
+      );
       setUser(
         allUsers.filter((user) => (user.username === username ? user : null))[0]
       );
@@ -71,9 +89,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         teamMemberId: teamMember.id,
         password: password,
       });
+      setUser(teamMember);
     });
     fetchUsers();
-    setUser(user);
     setIsLoggedIn(true);
     functions.getHeaderContainer();
   };
