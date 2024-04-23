@@ -1,13 +1,13 @@
-export const isName = (name: string) => {
+const isName = (name: string) => {
   return !/\d/.test(name);
 };
 
-export const isEmail = (email: string) => {
+const isEmail = (email: string) => {
   const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return !!email?.match(regex);
 };
 
-export const isValidFormSub = (newUser: {
+const isValidFormSub = (newUser: {
   newUsername: string;
   firstName: string;
   lastName: string;
@@ -28,4 +28,10 @@ export const isValidFormSub = (newUser: {
   )
     return true;
   else return false;
+};
+
+export const validations = {
+  isName,
+  isEmail,
+  isValidFormSub,
 };

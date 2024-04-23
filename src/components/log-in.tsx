@@ -1,9 +1,9 @@
 import "@/styles/log-in.css";
 import { useState } from "react";
 import { useUser } from "./componentsProvider/UserProvider";
-import { isEmail, isName, isValidFormSub } from "@/functions/validation";
 import toast from "react-hot-toast";
-import { formatName } from "@/functions/transformations";
+import { validations } from "@/functions/validation";
+import { transformations } from "@/functions/transformations";
 
 const defaultLogIn = {
   username: "",
@@ -21,6 +21,8 @@ const defaultRegistration = {
 
 export const LogIn = () => {
   const { createUser, userAuth, isExistingUser } = useUser();
+  const { isValidFormSub, isName, isEmail } = validations;
+  const { formatName } = transformations;
 
   const [isLogInSubmit, setIsLogInSubmit] = useState(false);
   const [isCreateFormSubmit, setIsCreateFormSubmit] = useState(false);
@@ -86,7 +88,7 @@ export const LogIn = () => {
               <p>Please enter a password</p>
             </div>
           )}
-          <input type="submit" value="Log In" />
+          <input className="form-btn" type="submit" value="Log In" />
         </form>
         <h3 className="user-register-heading">New to Task Manager?</h3>
         <form
@@ -231,7 +233,7 @@ export const LogIn = () => {
                 <p>password does not match</p>
               </div>
             )}
-          <input type="submit" value="Crate Account" />
+          <input className="form-btn" type="submit" value="Crate Account" />
         </form>
       </div>
     </>

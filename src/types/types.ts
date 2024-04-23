@@ -19,8 +19,8 @@ export type TeamMemberAuth = {
 
 export type TeamMemberTeamsLink = {
   id: number;
-  TeamMemberId: number;
-  TeamId: number;
+  teamMemberId: number;
+  teamId: number;
 };
 
 export type Status = "to-do" | "doing" | "done";
@@ -54,8 +54,15 @@ export type TaskTagLink = {
 
 export type Notes = {
   id: number;
-  noteId: number;
   content: string;
   TeamMemberId: number;
   TaskId: number;
+};
+
+export type UserInfo = {
+  user: TeamMember;
+  team: Team[] | null;
+  teamMembers: TeamMember[];
+  task: Task[] | null;
+  notes: Notes[] | null;
 };

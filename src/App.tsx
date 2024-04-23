@@ -10,7 +10,9 @@ function App() {
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Toaster />
-        <h1>Task Manager</h1>
+        <div id="header" className="header-container">
+          <h1 className="main-header">Task Manager</h1>
+        </div>
         <ModeToggle />
         <UserProvider>
           <TaskManager />
