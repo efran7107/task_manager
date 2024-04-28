@@ -61,8 +61,9 @@ export type Notes = {
 
 export type UserInfo = {
   user: TeamMember;
-  team: Team[] | null;
+  team: Team[];
   teamMembers: TeamMember[];
-  task: Task[] | null;
+  tasks: Task[];
+  tags: Tag[] | null;
   notes: Notes[] | null;
 };

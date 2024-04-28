@@ -1,4 +1,5 @@
 import {
+  TaskAssinmentLink,
   Team,
   TeamMember,
   TeamMemberAuth,
@@ -53,8 +54,24 @@ const getUserTeamLink = (
   ).then((res) => res.json());
 };
 
-const getUserTeamMembersTeamLinks = (teamId: number) => {
+const getUserTeamLinks = (teamId: number) => {
   return fetch(`${baseUrl}/teamMemberTeamsLink?teamId=${teamId}`).then((res) =>
+    res.json()
+  );
+};
+
+const getUserTaskLinks = (userId: number): Promise<TaskAssinmentLink[]> => {
+  return fetch(`${baseUrl}/taskAssignmentLink?teamMemberId=${userId}`).then(
+    (res) => res.json()
+  );
+};
+
+const getTaskById = (taskid: number) => {
+  return fetch(`${baseUrl}/tasks?id=${taskid}`).then((res) => res.json());
+};
+
+const getTagsById = (taskId: number) => {
+  return fetch(`${baseUrl}/taskTagLink?taskId=${taskId}`).then((res) =>
     res.json()
   );
 };
@@ -67,5 +84,8 @@ export const Requests = {
   getTeamById,
   getTeamMemberById,
   getUserTeamLink,
-  getUserTeamMembersTeamLinks,
+  getUserTeamLinks,
+  getUserTaskLinks,
+  getTaskById,
+  getTagsById,
 };
