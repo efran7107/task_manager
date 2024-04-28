@@ -1,10 +1,4 @@
-import {
-  TaskAssinmentLink,
-  Team,
-  TeamMember,
-  TeamMemberAuth,
-  TeamMemberTeamsLink,
-} from "@/types/types";
+import { Team, TeamMember, TeamMemberAuth } from "@/types/types";
 
 const baseUrl = "http://localhost:3000";
 
@@ -46,36 +40,6 @@ const getTeamMemberById = (userId: number): Promise<TeamMember> => {
   return fetch(`${baseUrl}/teamMembers/${userId}`).then((res) => res.json());
 };
 
-const getUserTeamLink = (
-  teamMemberId: number
-): Promise<TeamMemberTeamsLink[]> => {
-  return fetch(
-    `${baseUrl}/teamMemberTeamsLink?teamMemberId=${teamMemberId}`
-  ).then((res) => res.json());
-};
-
-const getUserTeamLinks = (teamId: number) => {
-  return fetch(`${baseUrl}/teamMemberTeamsLink?teamId=${teamId}`).then((res) =>
-    res.json()
-  );
-};
-
-const getUserTaskLinks = (userId: number): Promise<TaskAssinmentLink[]> => {
-  return fetch(`${baseUrl}/taskAssignmentLink?teamMemberId=${userId}`).then(
-    (res) => res.json()
-  );
-};
-
-const getTaskById = (taskid: number) => {
-  return fetch(`${baseUrl}/tasks?id=${taskid}`).then((res) => res.json());
-};
-
-const getTagsById = (taskId: number) => {
-  return fetch(`${baseUrl}/taskTagLink?taskId=${taskId}`).then((res) =>
-    res.json()
-  );
-};
-
 export const Requests = {
   registerUser,
   registerUserAuth,
@@ -83,9 +47,4 @@ export const Requests = {
   getUserPassword,
   getTeamById,
   getTeamMemberById,
-  getUserTeamLink,
-  getUserTeamLinks,
-  getUserTaskLinks,
-  getTaskById,
-  getTagsById,
 };
