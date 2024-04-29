@@ -1,17 +1,6 @@
 import { Requests } from "@/api/api";
 import { functions } from "@/functions/functions";
-import {
-  Notes,
-  Tag,
-  Task,
-  TaskAssinmentLink,
-  TaskTagLink,
-  Team,
-  TeamMember,
-  TeamMemberAuth,
-  TeamMemberTeamsLink,
-  UserInfo,
-} from "@/types/types";
+import { TeamMember } from "@/types/types";
 import {
   ReactNode,
   createContext,
