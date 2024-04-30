@@ -308,11 +308,11 @@ const db = {
       tagName: "#tag1",
     },
     {
-      id: 2,
+      id: 1,
       tagName: "#tag2",
     },
     {
-      id: 3,
+      id: 2,
       tagName: "#tag3",
     },
   ],
@@ -324,17 +324,17 @@ const db = {
     },
     {
       id: 1,
-      tagId: 0,
+      tagId: 1,
       taskId: 0,
     },
     {
       id: 2,
-      tagId: 0,
+      tagId: 2,
       taskId: 0,
     },
     {
       id: 3,
-      tagId: 1,
+      tagId: 0,
       taskId: 1,
     },
     {
@@ -344,38 +344,23 @@ const db = {
     },
     {
       id: 5,
-      tagId: 1,
+      tagId: 2,
       taskId: 1,
     },
     {
       id: 6,
-      tagId: 2,
+      tagId: 0,
       taskId: 2,
     },
     {
       id: 7,
-      tagId: 2,
+      tagId: 1,
       taskId: 2,
     },
     {
       id: 8,
       tagId: 2,
       taskId: 2,
-    },
-    {
-      id: 9,
-      tagId: 3,
-      taskId: 3,
-    },
-    {
-      id: 10,
-      tagId: 3,
-      taskId: 3,
-    },
-    {
-      id: 11,
-      tagId: 3,
-      taskId: 3,
     },
   ],
   notes: [

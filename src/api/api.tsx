@@ -1,9 +1,4 @@
-import {
-  Team,
-  TeamMember,
-  TeamMemberAuth,
-  TeamMemberTeamsLink,
-} from "@/types/types";
+import { TeamMember, TeamMemberAuth } from "@/types/types";
 
 const baseUrl = "http://localhost:3000";
 
@@ -37,33 +32,9 @@ const registerUserAuth = (userPassword: Omit<TeamMemberAuth, "id">) => {
   }).then((res) => res.json());
 };
 
-const getUsersTeamLinks = (userId: number): Promise<TeamMemberTeamsLink[]> => {
-  return fetch(`${baseUrl}/teamMemberTeamsLink?teamMemberId=${userId}`).then(
-    (res) => res.json()
-  );
-};
-
-const getTeamById = (teamId: number): Promise<Team[]> => {
-  return fetch(`${baseUrl}/teams?id=${teamId}`).then((res) => res.json());
-};
-
-const getTeamTeamLinks = (teamId: number): Promise<TeamMemberTeamsLink[]> => {
-  return fetch(`${baseUrl}/teamMemberTeamsLink?teamId=${teamId}`).then((res) =>
-    res.json()
-  );
-};
-
-const getUserById = (userId: number): Promise<TeamMember[]> => {
-  return fetch(`${baseUrl}/teamMembers?id=${userId}`).then((res) => res.json());
-};
-
 export const Requests = {
   registerUser,
   registerUserAuth,
   getAllUsers,
   getUserPassword,
-  getUsersTeamLinks,
-  getTeamById,
-  getTeamTeamLinks,
-  getUserById,
 };
