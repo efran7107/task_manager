@@ -20,7 +20,7 @@ const defaultRegistration = {
 };
 
 export const LogIn = () => {
-  const { createUser, userAuth, isExistingUser } = useUser();
+  const { createUser, userAuth, isExistingUser, isLoading } = useUser();
   const { isValidFormSub, isName, isEmail } = validations;
   const { formatName } = transformations;
 
@@ -63,6 +63,7 @@ export const LogIn = () => {
               onChange={(e) => {
                 setUserLogIn({ ...userLogIn, username: e.currentTarget.value });
               }}
+              disabled={isLoading}
             />
           </div>
           {isLogInSubmit && userLogIn.username === "" && (
@@ -81,6 +82,7 @@ export const LogIn = () => {
               onChange={(e) => {
                 setUserLogIn({ ...userLogIn, password: e.currentTarget.value });
               }}
+              disabled={isLoading ? true : false}
             />
           </div>
           {isLogInSubmit && userLogIn.password === "" && (
@@ -88,7 +90,12 @@ export const LogIn = () => {
               <p>Please enter a password</p>
             </div>
           )}
-          <input className="form-btn" type="submit" value="Log In" />
+          <input
+            className="form-btn"
+            type="submit"
+            value="Log In"
+            disabled={isLoading}
+          />
         </form>
         <h3 className="user-register-heading">New to Task Manager?</h3>
         <form
@@ -129,6 +136,7 @@ export const LogIn = () => {
               onChange={(e) => {
                 setNewUser({ ...newUser, newUsername: e.currentTarget.value });
               }}
+              disabled={isLoading}
             />
           </div>
           {isCreateFormSubmit && newUser.newUsername === "" && (
@@ -147,6 +155,7 @@ export const LogIn = () => {
               onChange={(e) => {
                 setNewUser({ ...newUser, firstName: e.currentTarget.value });
               }}
+              disabled={isLoading}
             />
           </div>
           {isCreateFormSubmit &&
@@ -166,6 +175,7 @@ export const LogIn = () => {
               onChange={(e) => {
                 setNewUser({ ...newUser, lastName: e.currentTarget.value });
               }}
+              disabled={isLoading}
             />
           </div>
           {isCreateFormSubmit &&
@@ -185,6 +195,7 @@ export const LogIn = () => {
               onChange={(e) => {
                 setNewUser({ ...newUser, email: e.currentTarget.value });
               }}
+              disabled={isLoading}
             />
           </div>
           {isCreateFormSubmit &&
@@ -204,6 +215,7 @@ export const LogIn = () => {
               onChange={(e) => {
                 setNewUser({ ...newUser, newPassword: e.currentTarget.value });
               }}
+              disabled={isLoading}
             />
           </div>
           {isCreateFormSubmit && newUser.newPassword === "" && (
@@ -225,6 +237,7 @@ export const LogIn = () => {
                   confirmPassword: e.currentTarget.value,
                 });
               }}
+              disabled={isLoading}
             />
           </div>
           {isCreateFormSubmit &&
@@ -233,7 +246,12 @@ export const LogIn = () => {
                 <p>password does not match</p>
               </div>
             )}
-          <input className="form-btn" type="submit" value="Crate Account" />
+          <input
+            className="form-btn"
+            type="submit"
+            value="Crate Account"
+            disabled={isLoading}
+          />
         </form>
       </div>
     </>

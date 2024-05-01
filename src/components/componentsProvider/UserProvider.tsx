@@ -1,6 +1,6 @@
 import { Requests } from "@/api/api";
 import { functions } from "@/functions/functions";
-import { TeamMember } from "@/types/types";
+import { AllData, TeamMember } from "@/types/types";
 import {
   ReactNode,
   createContext,
@@ -13,7 +13,8 @@ import toast from "react-hot-toast";
 type TUserProvider = {
   user: TeamMember | undefined;
   isLoggedIn: boolean;
-  allUsers: TeamMember[];
+  allData: AllData | undefined;
+  isLoading: boolean;
   createUser: (user: Omit<TeamMember, "id">, password: string) => void;
   userAuth: (username: string, password: string) => void;
   isExistingUser: (username: string) => boolean;
@@ -23,12 +24,15 @@ const UserContext = createContext<TUserProvider>({} as TUserProvider);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<TeamMember>();
+  const [allData, setAllData] = useState<AllData>();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [allUsers, setAllUsers] = useState<TeamMember[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const fetchUsers = () => {
-    return Requests.getAllUsers().then((users) => {
-      setAllUsers(users);
+  const fetchallData = () => {
+    setIsLoading(true);
+    functions.getAllData().then((data) => {
+      setAllData(data);
+      setIsLoading(false);
     });
   };
 
@@ -37,29 +41,27 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       toast.error("Please enter a username and/or password");
       return;
     } else if (
-      allUsers.filter((user) => user.username === username && user).length === 0
+      allData!.users.filter((user) => user.username === username && user)
+        .length === 0
     ) {
       toast.error("User not found");
       return;
     }
     Requests.getUserPassword(
-      allUsers.filter((user) => (user.username === username ? user : null))[0]
-        .id
+      allData!.users.filter((user) =>
+        user.username === username ? user : null
+      )[0].id
     ).then((passwordAuth) => {
       if (passwordAuth.password !== password) {
         toast.error("Wrong password");
         return;
       }
       toast.success("Login successful");
-      console.log(
-        functions.getUserInfo(
-          allUsers.filter((user) =>
-            user.username === username ? user : null
-          )[0]
-        )
-      );
+      console.log(allData);
       setUser(
-        allUsers.filter((user) => (user.username === username ? user : null))[0]
+        allData!.users.filter((user) =>
+          user.username === username ? user : null
+        )[0]
       );
       functions.getHeaderContainer();
       setIsLoggedIn(true);
@@ -68,7 +70,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const isExistingUser = (username: string): boolean => {
     return (
-      allUsers.filter((user) => user.username === username && user).length > 0
+      allData!.users.filter((user) => user.username === username && user)
+        .length > 0
     );
   };
 
@@ -80,13 +83,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       });
       setUser(teamMember);
     });
-    fetchUsers();
     setIsLoggedIn(true);
     functions.getHeaderContainer();
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchallData();
   }, []);
 
   return (
@@ -94,7 +96,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       value={{
         user,
         isLoggedIn,
-        allUsers,
+        allData,
+        isLoading,
         createUser,
         userAuth,
         isExistingUser,

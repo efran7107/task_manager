@@ -52,18 +52,20 @@ export type TaskTagLink = {
   tagId: number;
 };
 
-export type Notes = {
+export type Note = {
   id: number;
   content: string;
   TeamMemberId: number;
   TaskId: number;
 };
 
-export type UserInfo = {
-  user: TeamMember;
-  team: Team[];
-  teamMembers: Array<TeamMember[]>;
+export type AllData = {
+  teams: Team[];
+  users: TeamMember[];
+  userTeamLinks: TeamMemberTeamsLink[];
   tasks: Task[];
-  tags: Tag[] | null;
-  notes: Notes[] | null;
+  taskAssignments: TaskAssinmentLink[];
+  tags: Tag[];
+  taskTags: TaskTagLink[];
+  notes: Note[];
 };

@@ -1,9 +1,42 @@
-import { TeamMember, TeamMemberAuth } from "@/types/types";
+import {
+  Note,
+  Tag,
+  Task,
+  TaskAssinmentLink,
+  TaskTagLink,
+  Team,
+  TeamMember,
+  TeamMemberAuth,
+  TeamMemberTeamsLink,
+} from "@/types/types";
 
 const baseUrl = "http://localhost:3000";
 
-const getAllUsers = (): Promise<TeamMember[]> => {
-  return fetch(`${baseUrl}/teamMembers`).then((res) => res.json());
+const GetRequests = {
+  getAllUsers: (): Promise<TeamMember[]> => {
+    return fetch(`${baseUrl}/teamMembers`).then((res) => res.json());
+  },
+  getAllTeams: (): Promise<Team[]> => {
+    return fetch(`${baseUrl}/teams`).then((res) => res.json());
+  },
+  getAllTeamMemeberLinks: (): Promise<TeamMemberTeamsLink[]> => {
+    return fetch(`${baseUrl}/teamMemberTeamsLink`).then((res) => res.json());
+  },
+  getAllTasks: (): Promise<Task[]> => {
+    return fetch(`${baseUrl}/tasks`).then((res) => res.json());
+  },
+  getAllTaskAssignmentLinks: (): Promise<TaskAssinmentLink[]> => {
+    return fetch(`${baseUrl}/taskAssignmentLink`).then((res) => res.json());
+  },
+  getAllTags: (): Promise<Tag[]> => {
+    return fetch(`${baseUrl}/tags`).then((res) => res.json());
+  },
+  getAllTaskTagLinks: (): Promise<TaskTagLink[]> => {
+    return fetch(`${baseUrl}/taskTagLink`).then((res) => res.json());
+  },
+  getAllNotes: (): Promise<Note[]> => {
+    return fetch(`${baseUrl}/notes`).then((res) => res.json());
+  },
 };
 
 const getUserPassword = (teamMemberId: number) => {
@@ -33,8 +66,8 @@ const registerUserAuth = (userPassword: Omit<TeamMemberAuth, "id">) => {
 };
 
 export const Requests = {
+  GetRequests,
   registerUser,
   registerUserAuth,
-  getAllUsers,
   getUserPassword,
 };
