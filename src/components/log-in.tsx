@@ -4,8 +4,14 @@ import { useUser } from "./componentsProvider/UserProvider";
 import toast from "react-hot-toast";
 import { validations } from "@/functions/validation";
 import { transformations } from "@/functions/transformations";
+import { LogInInput } from "./logInInput";
 
-const defaultLogIn = {
+type DefaultLogIn = {
+  username: string;
+  password: string;
+};
+
+const defaultLogIn: DefaultLogIn = {
   username: "",
   password: "",
 };
@@ -49,42 +55,40 @@ export const LogIn = () => {
           className="user-entry"
         >
           <h3>Log in</h3>
-          <div className="input-group">
-            <label htmlFor="username" className="form-label">
-              Username:
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="username"
-              id="username"
-              autoComplete="off"
-              value={userLogIn.username}
-              onChange={(e) => {
+          <LogInInput
+            id="username"
+            label="Username"
+            userProps={{
+              type: "text",
+              className: "form-control",
+              name: "username",
+              id: "username",
+              autoComplete: "off",
+              value: userLogIn.username,
+              onChange: (e) => {
                 setUserLogIn({ ...userLogIn, username: e.currentTarget.value });
-              }}
-              disabled={isLoading}
-            />
-          </div>
+              },
+            }}
+          />
           {isLogInSubmit && userLogIn.username === "" && (
             <div className="userError">
               <p>Please enter a username</p>
             </div>
           )}
-          <div className="input-group">
-            <label htmlFor="password">Password: </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              autoComplete="off"
-              value={userLogIn.password}
-              onChange={(e) => {
+          <LogInInput
+            id="password"
+            label="Password"
+            userProps={{
+              type: "password",
+              name: "password",
+              id: "password",
+              autoComplete: "off",
+              value: userLogIn.password,
+              onChange: (e) => {
                 setUserLogIn({ ...userLogIn, password: e.currentTarget.value });
-              }}
-              disabled={isLoading ? true : false}
-            />
-          </div>
+              },
+            }}
+          />
           {isLogInSubmit && userLogIn.password === "" && (
             <div className="userError">
               <p>Please enter a password</p>
@@ -125,121 +129,124 @@ export const LogIn = () => {
           }}
         >
           <h3>Sign up</h3>
-          <div className="input-group">
-            <label htmlFor="createUserName">Create Username: </label>
-            <input
-              type="text"
-              name="createUsername"
-              id="createUsername"
-              autoComplete="off"
-              value={newUser.newUsername}
-              onChange={(e) => {
+          <LogInInput
+            id="createUserName"
+            label="Create Username"
+            userProps={{
+              type: "text",
+              name: "createUsername",
+              autoComplete: "off",
+              value: newUser.newUsername,
+              onChange: (e) => {
                 setNewUser({ ...newUser, newUsername: e.currentTarget.value });
-              }}
-              disabled={isLoading}
-            />
-          </div>
+              },
+              disabled: isLoading,
+            }}
+          />
           {isCreateFormSubmit && newUser.newUsername === "" && (
             <div className="userError">
               <p>Please enter a username</p>
             </div>
           )}
-          <div className="input-group">
-            <label htmlFor="firstName">First Name: </label>
-            <input
-              type="text"
-              name="firstName"
-              id="firstName"
-              autoComplete="off"
-              value={newUser.firstName}
-              onChange={(e) => {
+          <LogInInput
+            id="firstName"
+            label="First Name"
+            userProps={{
+              type: "text",
+              name: "firstName",
+              autoComplete: "off",
+              value: newUser.firstName,
+              onChange: (e) => {
                 setNewUser({ ...newUser, firstName: e.currentTarget.value });
-              }}
-              disabled={isLoading}
-            />
-          </div>
+              },
+            }}
+          />
           {isCreateFormSubmit &&
             (newUser.firstName === "" || !isName(newUser.firstName)) && (
               <div className="userError">
                 <p>Please enter a first name</p>
               </div>
             )}
-          <div className="input-group">
-            <label htmlFor="lastName">Last Name: </label>
-            <input
-              type="text"
-              name="lastName"
-              id="lastName"
-              autoComplete="off"
-              value={newUser.lastName}
-              onChange={(e) => {
+          <LogInInput
+            id="lastName"
+            label="Last Name"
+            userProps={{
+              type: "text",
+              name: "lastName",
+              id: "lastName",
+              autoComplete: "off",
+              value: newUser.lastName,
+              onChange: (e) => {
                 setNewUser({ ...newUser, lastName: e.currentTarget.value });
-              }}
-              disabled={isLoading}
-            />
-          </div>
+              },
+              disabled: isLoading,
+            }}
+          />
           {isCreateFormSubmit &&
             (newUser.lastName === "" || !isName(newUser.lastName)) && (
               <div className="userError">
                 <p>Please enter a last name</p>
               </div>
             )}
-          <div className="input-group">
-            <label htmlFor="email">Email: </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              autoComplete="off"
-              value={newUser.email}
-              onChange={(e) => {
+          <LogInInput
+            id="email"
+            label="Email"
+            userProps={{
+              type: "email",
+              name: "email",
+              id: "email",
+              autoComplete: "off",
+              value: newUser.email,
+              onChange: (e) => {
                 setNewUser({ ...newUser, email: e.currentTarget.value });
-              }}
-              disabled={isLoading}
-            />
-          </div>
+              },
+              disabled: isLoading,
+            }}
+          />
           {isCreateFormSubmit &&
             (newUser.email === "" || !isEmail(newUser.email)) && (
               <div className="userError">
                 <p>Please enter a email</p>
               </div>
             )}
-          <div className="input-group">
-            <label htmlFor="createPassword">Create Password: </label>
-            <input
-              type="password"
-              name="createPassword"
-              id="createPassword"
-              autoComplete="off"
-              value={newUser.newPassword}
-              onChange={(e) => {
+          <LogInInput
+            id="createPassword"
+            label="Crate Password"
+            userProps={{
+              type: "password",
+              name: "createPassword",
+              id: "createPassword",
+              autoComplete: "off",
+              value: newUser.newPassword,
+              onChange: (e) => {
                 setNewUser({ ...newUser, newPassword: e.currentTarget.value });
-              }}
-              disabled={isLoading}
-            />
-          </div>
+              },
+              disabled: isLoading,
+            }}
+          />
           {isCreateFormSubmit && newUser.newPassword === "" && (
             <div className="userError">
               <p>Please enter a password</p>
             </div>
           )}
-          <div className="input-group">
-            <label htmlFor="confirmPassword">Confirm Password: </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              id="confirmPassword"
-              autoComplete="off"
-              value={newUser.confirmPassword}
-              onChange={(e) => {
+          <LogInInput
+            id="confirmPassword"
+            label="Confirm Password"
+            userProps={{
+              type: "password",
+              name: "confirmPassword",
+              id: "confirmPassword",
+              autoComplete: "off",
+              value: newUser.confirmPassword,
+              onChange: (e) => {
                 setNewUser({
                   ...newUser,
                   confirmPassword: e.currentTarget.value,
                 });
-              }}
-              disabled={isLoading}
-            />
-          </div>
+              },
+              disabled: isLoading,
+            }}
+          />
           {isCreateFormSubmit &&
             newUser.confirmPassword !== newUser.newPassword && (
               <div className="userError">
