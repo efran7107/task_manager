@@ -12,7 +12,7 @@ import {
 
 const baseUrl = "http://localhost:3000";
 
-const GetRequests = {
+export const GetRequests = {
   getAllUsers: (): Promise<TeamMember[]> => {
     return fetch(`${baseUrl}/teamMembers`).then((res) => res.json());
   },
@@ -37,37 +37,36 @@ const GetRequests = {
   getAllNotes: (): Promise<Note[]> => {
     return fetch(`${baseUrl}/notes`).then((res) => res.json());
   },
+  getUserPassword : (teamMemberId: number) => {
+    return fetch(`${baseUrl}/teamMemberAuth/${teamMemberId}`).then((res) =>
+      res.json()
+    );
+  },
 };
 
-const getUserPassword = (teamMemberId: number) => {
-  return fetch(`${baseUrl}/teamMemberAuth/${teamMemberId}`).then((res) =>
-    res.json()
-  );
-};
+export const PostRequests = {
+   registerUser : (newUser: Omit<TeamMember, "id">): Promise<TeamMember> => {
+    return fetch(`${baseUrl}/teamMembers`, {
+      body: JSON.stringify(newUser),
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+    }).then((res) => res.json())
+  },
+   registerUserAuth: (userPassword: Omit<TeamMemberAuth, "id">) => {
+    return fetch(`${baseUrl}/teamMemberAuth`, {
+      body: JSON.stringify(userPassword),
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+  }
+}
 
-const registerUser = (newUser: Omit<TeamMember, "id">): Promise<TeamMember> => {
-  return fetch(`${baseUrl}/teamMembers`, {
-    body: JSON.stringify(newUser),
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-  }).then((res) => res.json());
-};
 
-const registerUserAuth = (userPassword: Omit<TeamMemberAuth, "id">) => {
-  return fetch(`${baseUrl}/teamMemberAuth`, {
-    body: JSON.stringify(userPassword),
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-  }).then((res) => res.json());
-};
 
-export const Requests = {
-  GetRequests,
-  registerUser,
-  registerUserAuth,
-  getUserPassword,
-};
+
+
+

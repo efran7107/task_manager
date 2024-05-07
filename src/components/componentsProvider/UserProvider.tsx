@@ -1,4 +1,4 @@
-import { Requests } from '@/api/api';
+import { GetRequests, PostRequests } from '@/api/api';
 import { functions } from '@/functions/functions';
 import { AllData, TeamMember } from '@/types/types';
 import {
@@ -47,7 +47,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			toast.error('User not found');
 			return;
 		}
-		Requests.getUserPassword(
+		GetRequests.getUserPassword(
 			allData!.users.filter((user) =>
 				user.username === username ? user : null
 			)[0].id
@@ -75,7 +75,21 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		);
 	};
 
-	const createUser = () => {};
+	const createUser = (teamMember: Omit<TeamMember, 'id'>, password: string) => {
+		PostRequests.registerUser(teamMember).then((user) => {
+			PostRequests.registerUserAuth({teamMemberId: user.id, password: password})
+			.then((res) => {
+				if(!res.ok){
+					toast.error('Error creating user');
+					return;
+				}
+			})
+			setUser(user);
+			setIsLoggedIn(true);
+			toast.success('User created successfully');
+			functions.getHeaderContainer();
+		}).catch(() => toast.error('Error creating user'))
+	};
 
 	useEffect(() => {
 		fetchallData();

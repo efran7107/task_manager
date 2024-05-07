@@ -1,4 +1,4 @@
-import { Requests } from "@/api/api";
+import { GetRequests } from "@/api/api";
 import { AllData } from "@/types/types";
 
 const getHeaderContainer = () => {
@@ -9,14 +9,14 @@ const getHeaderContainer = () => {
 
 const getAllData = async (): Promise<AllData> => {
   const allData = {
-    teams: await Requests.GetRequests.getAllTeams(),
-    users: await Requests.GetRequests.getAllUsers(),
-    userTeamLinks: await Requests.GetRequests.getAllTeamMemeberLinks(),
-    tasks: await Requests.GetRequests.getAllTasks(),
-    taskAssignments: await Requests.GetRequests.getAllTaskAssignmentLinks(),
-    tags: await Requests.GetRequests.getAllTags(),
-    taskTags: await Requests.GetRequests.getAllTaskTagLinks(),
-    notes: await Requests.GetRequests.getAllNotes(),
+    teams: await GetRequests.getAllTeams(),
+    users: await GetRequests.getAllUsers(),
+    userTeamLinks: await GetRequests.getAllTeamMemeberLinks(),
+    tasks: await GetRequests.getAllTasks(),
+    taskAssignments: await GetRequests.getAllTaskAssignmentLinks(),
+    tags: await GetRequests.getAllTags(),
+    taskTags: await GetRequests.getAllTaskTagLinks(),
+    notes: await GetRequests.getAllNotes(),
   };
   return allData;
 };
