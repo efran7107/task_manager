@@ -57,12 +57,14 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 				return;
 			}
 			toast.success('Login successful');
-			console.log(allData);
 			setUser(
 				allData!.users.filter((user) =>
 					user.username === username ? user : null
 				)[0]
 			);
+			localStorage.setItem("user", allData!.users.filter((user) =>
+				user.username === username ? user : null
+			)[0].username)
 			functions.getHeaderContainer();
 			setIsLoggedIn(true);
 		});
@@ -85,13 +87,26 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 				}
 			})
 			setUser(user);
+			localStorage.setItem('user', user.username)
 			setIsLoggedIn(true);
-			toast.success('User created successfully');
 			functions.getHeaderContainer();
 		}).catch(() => toast.error('Error creating user'))
+		fetchallData();
 	};
 
 	useEffect(() => {
+		if(localStorage.length > 0){
+			const userName = localStorage.getItem('user');
+			GetRequests.getUserByUsername(userName!)
+				.then((users) => {
+					const user = users[0];
+					setUser(user)
+					setIsLoggedIn(true)
+					functions.getHeaderContainer();
+				})
+			fetchallData()
+			return
+		}
 		fetchallData();
 	}, []);
 
