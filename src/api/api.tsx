@@ -42,7 +42,7 @@ export const GetRequests = {
       res.json()
     );
   },
-  getUserByUsername: (username: string): Promise<TeamMember> => {
+  getUserByUsername: (username: string): Promise<TeamMember[]> => {
     return fetch(`${baseUrl}/teamMembers?username=${username}`).then((res) => res.json())
   }
 };
