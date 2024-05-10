@@ -1,6 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
 import { GetRequests, PostRequests } from '@/api/api';
 import { functions } from '@/functions/functions';
-import { AllData, TeamMember } from '@/types/types';
+import { AllData, LogInStatus, TeamMember } from '@/types/types';
 import {
 	ReactNode,
 	createContext,
@@ -10,10 +11,21 @@ import {
 } from 'react';
 import toast from 'react-hot-toast';
 
+const defaultAllData: AllData = {
+	teams: [],
+	users: [],
+	userTeamLinks: [],
+	tasks: [],
+	taskAssignments: [],
+	tags: [],
+	taskTags: [],
+	notes: []
+}
+
 type TUserProvider = {
 	user: TeamMember | undefined;
-	isLoggedIn: boolean;
-	allData: AllData | undefined;
+	isLoggedIn: LogInStatus;
+	allData: AllData;
 	isLoading: boolean;
 	createUser: (user: Omit<TeamMember, 'id'>, password: string) => void;
 	userAuth: (username: string, password: string) => void;
@@ -24,12 +36,11 @@ const UserContext = createContext<TUserProvider>({} as TUserProvider);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<TeamMember>();
-	const [allData, setAllData] = useState<AllData>();
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [allData, setAllData] = useState<AllData>(defaultAllData);
+	const [isLoggedIn, setIsLoggedIn] = useState<LogInStatus>('undefined');
 	const [isLoading, setIsLoading] = useState(true);
 
 	const fetchallData = () => {
-		setIsLoading(true);
 		functions.getAllData().then((data) => {
 			setAllData(data);
 			setIsLoading(false);
@@ -62,11 +73,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 					user.username === username ? user : null
 				)[0]
 			);
+			setIsLoggedIn('logged in')
 			localStorage.setItem("user", allData!.users.filter((user) =>
 				user.username === username ? user : null
 			)[0].username)
 			functions.getHeaderContainer();
-			setIsLoggedIn(true);
+			
 		});
 	};
 
@@ -88,7 +100,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			})
 			setUser(user);
 			localStorage.setItem('user', user.username)
-			setIsLoggedIn(true);
+			setIsLoggedIn('logged in');
 			functions.getHeaderContainer();
 		}).catch(() => toast.error('Error creating user'))
 		fetchallData();
@@ -101,12 +113,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 				.then((users) => {
 					const user = users[0];
 					setUser(user)
-					setIsLoggedIn(true)
 					functions.getHeaderContainer();
 				})
 			fetchallData()
+			setIsLoggedIn('logged in')
 			return
 		}
+		setIsLoggedIn('not logged in')
 		fetchallData();
 	}, []);
 

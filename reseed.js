@@ -5,32 +5,26 @@ const db = {
     {
       id: 0,
       teamName: "Team 1",
-      teamLeaderId: 0,
     },
     {
       id: 1,
       teamName: "Team 2",
-      teamLeaderId: 1,
     },
     {
       id: 2,
       teamName: "Team 3",
-      teamLeaderId: 2,
     },
     {
       id: 3,
       teamName: "Team 4",
-      teamLeaderId: 3,
     },
     {
       id: 4,
       teamName: "Team 5",
-      teamLeaderId: 4,
     },
     {
       id: 5,
       teamName: "Team 6",
-      teamLeaderId: 5,
     },
   ],
   teamMembers: [

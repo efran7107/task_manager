@@ -1,7 +1,9 @@
+export type Status = "to-do" | "doing" | "done";
+export type LogInStatus = "logged in" | "not logged in" | "undefined"
+
 export type Team = {
   id: number;
   teamName: string;
-  teamLeaderId: number;
 };
 
 export type TeamMember = {
@@ -22,8 +24,6 @@ export type TeamMemberTeamsLink = {
   teamMemberId: number;
   teamId: number;
 };
-
-export type Status = "to-do" | "doing" | "done";
 
 export type Task = {
   id: number;
