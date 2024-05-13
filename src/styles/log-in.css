@@ -12,7 +12,7 @@ input:disabled {
 
 .form-btn {
   background-color: #ea580c;
-  color: var(--secondary);
+  color: var(--primary);
 }
 
 .form-btn:disabled {
