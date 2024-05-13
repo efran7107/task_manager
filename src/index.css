@@ -71,7 +71,8 @@
     border-radius: 20px;
     padding: 5px;
     background-color: #ea580c;
-    color: black;
+    color: var(--secondary);
+    cursor: pointer;
 }
 
 .link-btn:hover{

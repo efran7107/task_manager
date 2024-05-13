@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { GetRequests, PostRequests } from '@/api/api';
+import { defaultData } from '@/functions/DefaultStates';
 import { functions } from '@/functions/functions';
 import { AllData, LogInStatus, TeamMember } from '@/types/types';
 import {
@@ -11,19 +12,8 @@ import {
 } from 'react';
 import toast from 'react-hot-toast';
 
-const defaultAllData: AllData = {
-	teams: [],
-	users: [],
-	userTeamLinks: [],
-	tasks: [],
-	taskAssignments: [],
-	tags: [],
-	taskTags: [],
-	notes: []
-}
-
 type TUserProvider = {
-	user: TeamMember | undefined;
+	user: TeamMember;
 	isLoggedIn: LogInStatus;
 	allData: AllData;
 	isLoading: boolean;
@@ -35,15 +25,17 @@ type TUserProvider = {
 const UserContext = createContext<TUserProvider>({} as TUserProvider);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-	const [user, setUser] = useState<TeamMember>();
-	const [allData, setAllData] = useState<AllData>(defaultAllData);
+	const [user, setUser] = useState<TeamMember>(defaultData.getDefaultTeamMember());
+	const [allData, setAllData] = useState<AllData>(defaultData.getDefaultAllData());
 	const [isLoggedIn, setIsLoggedIn] = useState<LogInStatus>('undefined');
 	const [isLoading, setIsLoading] = useState(true);
 
-	const fetchallData = () => {
+	const fetchallData = (logInState: LogInStatus) => {
+		setIsLoggedIn('undefined')
 		functions.getAllData().then((data) => {
 			setAllData(data);
 			setIsLoading(false);
+			setIsLoggedIn(logInState)
 		});
 	};
 
@@ -103,11 +95,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			setIsLoggedIn('logged in');
 			functions.getHeaderContainer();
 		}).catch(() => toast.error('Error creating user'))
-		fetchallData();
+		fetchallData('logged in');
 	};
 
-	useEffect(() => {
-		if(localStorage.length > 0){
+	useEffect(() => {		
+		if(localStorage.getItem('users') !== null){
 			const userName = localStorage.getItem('user');
 			GetRequests.getUserByUsername(userName!)
 				.then((users) => {
@@ -115,12 +107,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 					setUser(user)
 					functions.getHeaderContainer();
 				})
-			fetchallData()
-			setIsLoggedIn('logged in')
+			fetchallData('logged in')
 			return
+		}else{
+			fetchallData('not logged in');
 		}
-		setIsLoggedIn('not logged in')
-		fetchallData();
+		
 	}, []);
 
 	return (

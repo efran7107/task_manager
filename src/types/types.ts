@@ -69,3 +69,5 @@ export type AllData = {
   taskTags: TaskTagLink[];
   notes: Note[];
 };
+
+export type TUserTeams = Array<{team: Team, users: TeamMember[]}>

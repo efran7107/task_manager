@@ -1,5 +1,5 @@
 import { GetRequests } from "@/api/api";
-import { AllData, Team, TeamMember, TeamMemberTeamsLink } from "@/types/types";
+import { AllData, Team, TeamMember, TeamMemberTeamsLink, TUserTeams } from "@/types/types";
 
 const getHeaderContainer = () => {
   const headerContainer = document.getElementById("header");
@@ -21,23 +21,30 @@ const getAllData = async (): Promise<AllData> => {
   return allData;
 };
 
-const getTeamMembers = (teams: Team[], users: TeamMember[], userTeamLinks: TeamMemberTeamsLink[], userId: number| undefined) => {
+const getTeamMembers = (teams: Team[], users: TeamMember[], userTeamLinks: TeamMemberTeamsLink[], userId: number): TUserTeams => {
   const userLinkIds = userTeamLinks.filter((link) => link.teamMemberId === userId).map(link => link.teamId)
-  const userTeams = []
+  const userTeams: Team[] = []
   for(const id of userLinkIds) {
-    userTeams.push(teams.find(team => team.id === id))
+    userTeams.push(...teams.filter(team => team.id === id))
   }
     const teamUsersLinks = []
    for(const team of userTeams) {
     teamUsersLinks.push(userTeamLinks.filter(link => link.teamId === team!.id))
    }
+   
+   const teamUsers: TUserTeams = []
+   for(const userSet of teamUsersLinks) {
+    const team: {team: Team, users: TeamMember[]} = {
+      team: userTeams[teamUsersLinks.indexOf(userSet)],
+      users: [],
+    }
+     for(const link of userSet) {
+     team.users.push(...users.filter(user => user.id === link.teamMemberId)) 
+     }
+     teamUsers.push(team)
+   }
 
-   console.log(teamUsersLinks);
-   
-   const teamMembers = []
-   
-   
-
+   return teamUsers
   
 }
 

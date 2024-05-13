@@ -44,7 +44,7 @@ export const GetRequests = {
   },
   getUserByUsername: (username: string): Promise<TeamMember[]> => {
     return fetch(`${baseUrl}/teamMembers?username=${username}`).then((res) => res.json())
-  }
+  },
 };
 
 export const PostRequests = {
