@@ -1,7 +1,9 @@
+export type Status = "to-do" | "doing" | "done";
+export type LogInStatus = "logged in" | "not logged in" | "undefined"
+
 export type Team = {
   id: number;
   teamName: string;
-  teamLeaderId: number;
 };
 
 export type TeamMember = {
@@ -22,8 +24,6 @@ export type TeamMemberTeamsLink = {
   teamMemberId: number;
   teamId: number;
 };
-
-export type Status = "to-do" | "doing" | "done";
 
 export type Task = {
   id: number;
@@ -52,17 +52,22 @@ export type TaskTagLink = {
   tagId: number;
 };
 
-export type Notes = {
+export type Note = {
   id: number;
   content: string;
   TeamMemberId: number;
   TaskId: number;
 };
 
-export type UserInfo = {
-  user: TeamMember;
-  team: Team[] | null;
-  teamMembers: TeamMember[];
-  task: Task[] | null;
-  notes: Notes[] | null;
+export type AllData = {
+  teams: Team[];
+  users: TeamMember[];
+  userTeamLinks: TeamMemberTeamsLink[];
+  tasks: Task[];
+  taskAssignments: TaskAssinmentLink[];
+  tags: Tag[];
+  taskTags: TaskTagLink[];
+  notes: Note[];
 };
+
+export type TUserTeams = Array<{team: Team, users: TeamMember[]}>

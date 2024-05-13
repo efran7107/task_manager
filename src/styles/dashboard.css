@@ -1,0 +1,11 @@
+.dashboard-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.link-btn.add-task {
+    border-radius: 25px;
+    font-weight: 700;
+    padding: 10px
+}

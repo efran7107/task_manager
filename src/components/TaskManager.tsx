@@ -4,5 +4,8 @@ import { LogIn } from "./log-in";
 
 export const TaskManager = () => {
   const { isLoggedIn } = useUser();
-  return <>{!isLoggedIn ? <LogIn /> : <UserDashboard />}</>;
+  return <>
+  {isLoggedIn === 'not logged in' && <LogIn/>}
+  {isLoggedIn === 'logged in' && <UserDashboard/>}
+  {isLoggedIn === 'undefined' && <div>...Loading</div>}</>;
 };

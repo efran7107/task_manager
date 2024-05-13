@@ -58,3 +58,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5px;
+}
+
+
+.link-btn {
+  border: 1px solid #ea580c;
+    border-radius: 20px;
+    padding: 5px;
+    background-color: #ea580c;
+    color: var(--secondary);
+    cursor: pointer;
+}
+
+.link-btn:hover{
+  text-decoration: underline;
+}

@@ -8,7 +8,7 @@ import { TaskManager } from "./components/TaskManager";
 function App() {
   return (
     <>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
         <Toaster />
         <div id="header" className="header-container">
           <h1 className="main-header">Task Manager</h1>
