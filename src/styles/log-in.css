@@ -5,9 +5,18 @@ input {
   border-radius: 5px;
   background-color: var(--primary);
 }
+
+input:disabled {
+  border-color: #993b09;
+}
+
 .form-btn {
   background-color: #ea580c;
-  color: white;
+  color: var(--secondary);
+}
+
+.form-btn:disabled {
+  background-color: #993b09;
 }
 
 .log-in-container {
