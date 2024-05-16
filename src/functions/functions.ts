@@ -1,5 +1,5 @@
 import { GetRequests } from "@/api/api";
-import { AllData, Team, TeamMember, TeamMemberTeamsLink, TUserTeams } from "@/types/types";
+import { AllData, Task, TaskAssinmentLink, Team, TeamMember, TeamMemberTeamsLink, TUserTeams } from "@/types/types";
 
 const getHeaderContainer = () => {
   const headerContainer = document.getElementById("header");
@@ -45,11 +45,37 @@ const getTeamMembers = (teams: Team[], users: TeamMember[], userTeamLinks: TeamM
    }
 
    return teamUsers
-  
+}
+
+const getUserTasks = (tasks: Task[], taskAssignments: TaskAssinmentLink[], userId: number): Task[] => {
+  const userTaskLinks = taskAssignments.filter(link => link.teamMemberId === userId)
+  const userTasks: Task[] = []
+  for(const link of userTaskLinks) {
+    userTasks.push(...tasks.filter(task => task.id === link.taskId))
+  }
+  return userTasks  
+}
+
+const sortTasks = (tasks: Task[]) => {
+  return tasks.sort((taskA, taskB) => {
+    if (taskA.status === 'to-do' && taskB.status!== 'to-do') {
+      return -1;
+    } else if (taskA.status === 'doing' && taskB.status === 'done') {
+      return -1;
+    } else if (taskA.status === 'done' && taskB.status!== 'done') {
+      return 1;
+    } else if (taskA.status === taskB.status) {
+      return 0;
+    } else {
+      return 1;
+    }
+  });
 }
 
 export const functions = {
   getHeaderContainer,
   getAllData,
-  getTeamMembers
+  getTeamMembers,
+  getUserTasks,
+  sortTasks
 };

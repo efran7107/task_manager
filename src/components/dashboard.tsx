@@ -2,13 +2,15 @@ import { useUser } from './componentsProvider/UserProvider';
 import '../styles/dashboard.css'
 import { functions } from '@/functions/functions';
 import { UserTeams } from './userTeam';
+import { TaskBoard } from './taskBoard';
 export const UserDashboard = () => {
 	const { user, allData } = useUser();
 
-	const {teams, users, userTeamLinks} = allData
-	const userTeams = functions.getTeamMembers(teams, users, userTeamLinks, user.id)
-
-
+	const {teams, users, userTeamLinks, tasks, taskAssignments} = allData
+	const userTeams = functions.getTeamMembers(teams, users, userTeamLinks, user.id);
+	const userTasks = functions.sortTasks(functions.getUserTasks(tasks, taskAssignments, user.id))
+	
+	
 
 	return (
 		<div className='container'>
@@ -21,6 +23,7 @@ export const UserDashboard = () => {
 			</div>
 			<div className="user-dashboard">
 				<UserTeams userTeams={userTeams}/>
+				<TaskBoard tasks={userTasks}/>
 			</div>
 		</div>
 	);

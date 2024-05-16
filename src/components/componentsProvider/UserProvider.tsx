@@ -98,11 +98,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 		fetchallData('logged in');
 	};
 
-	useEffect(() => {		
-		if(localStorage.getItem('users') === null ){
-			fetchallData('not logged in');
-			
-		}else{
+	useEffect(() => {
+		if(localStorage.getItem('user') !== null){
 			const userName = localStorage.getItem('user');
 			GetRequests.getUserByUsername(userName!)
 				.then((users) => {
@@ -111,6 +108,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 					functions.getHeaderContainer();
 				})
 			fetchallData('logged in')
+		}else{
+			fetchallData('not logged in');
 		}
 		
 	}, []);
