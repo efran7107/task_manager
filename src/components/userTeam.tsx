@@ -1,5 +1,5 @@
 import { TUserTeams } from "@/types/types";
-
+import '@/styles/userTeam.css'
 
 export const UserTeams = ({userTeams}: {userTeams: TUserTeams}) => {    
     return  (
@@ -7,7 +7,7 @@ export const UserTeams = ({userTeams}: {userTeams: TUserTeams}) => {
             <h2>Teams</h2>
             <div className="team-container">
                 {userTeams.map(userTeam => (
-                    <div key={userTeam.team.id}>
+                    <div className="users-cont" key={userTeam.team.id}>
                         <h3>{userTeam.team.teamName}</h3>
                         <div className="team-members">
                             {userTeam.users.map(user => (

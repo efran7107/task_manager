@@ -30,7 +30,7 @@ export type Task = {
   taskName: string;
   description: string;
   status: Status;
-  dueDate: Date;
+  dueDate: string;
   isImportant: boolean;
 };
 

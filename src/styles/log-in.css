@@ -1,5 +1,5 @@
 input {
-  border-color: #ea580c;
+  border-color: var(--default);
   border-width: 1px;
   border-style: solid;
   border-radius: 5px;
@@ -7,16 +7,16 @@ input {
 }
 
 input:disabled {
-  border-color: #993b09;
+  border-color: var(--disabled);
 }
 
 .form-btn {
-  background-color: #ea580c;
-  color: var(--secondary);
+  background-color: var(--default);
+  color: white;
 }
 
 .form-btn:disabled {
-  background-color: #993b09;
+  background-color: var(--disabled);
 }
 
 .log-in-container {
@@ -31,7 +31,7 @@ input:disabled {
   justify-content: space-between;
   align-items: stretch;
   gap: 10px;
-  border-color: #ea580c;
+  border-color: var(--default);
   border-width: 1px;
   border-style: solid;
   border-radius: 10px;
