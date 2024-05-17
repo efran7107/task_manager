@@ -84,7 +84,7 @@
       "id": 1,
       "taskName": "Task 2",
       "description": "test 2",
-      "status": "to-do",
+      "status": "done",
       "dueDate": "1/1/25",
       "isImportant": false
     },
@@ -108,7 +108,7 @@
       "id": 4,
       "taskName": "Task 5",
       "description": "test 5",
-      "status": "doing",
+      "status": "to-do",
       "dueDate": "1/1/25",
       "isImportant": false
     },
@@ -132,7 +132,7 @@
       "id": 7,
       "taskName": "Task 8",
       "description": "test 8",
-      "status": "done",
+      "status": "doing",
       "dueDate": "1/1/25",
       "isImportant": false
     },

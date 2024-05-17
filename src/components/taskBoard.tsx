@@ -1,6 +1,17 @@
 import { Task } from "@/types/types";
-import { Taks } from "./task";
+import "@/styles/taskBoard.css";
 
+
+const Tasks = ({task}: {task: Task}) => {
+    return (
+        <div className="task-card">
+            <h2>{task.taskName}</h2>
+            <p>{task.description}</p>
+            <p>Due Date: {task.dueDate}</p>
+            <p>status: {task.status}</p>
+        </div>
+    )
+}
 
 export const TaskBoard = ({tasks}: {tasks: Task[]}) => {
     
@@ -9,27 +20,35 @@ export const TaskBoard = ({tasks}: {tasks: Task[]}) => {
 		tasks.filter(task => task.status === 'doing'),
 		tasks.filter(task => task.status === 'done'),
 	]
-	const [toDo, doing, done] = sortedTasks
-    console.log(toDo, doing, done);
+	const [toDo, doing, done] = sortedTasks;
+
+    const date = new Date()
+    console.log(
+        date.getDate().toString().toString(),
+        (date.getMonth() + 1).toString(),
+        date.getFullYear().toString().slice(2)
+
+    );
+    
     
     return (
         <div className="task-board">
-            <div className="to-do">
+            <div className="task-section to-do">
                 <h3>To Do</h3>
                 {toDo.map(task => (
-                    <Taks task={task}/>
+                    <Tasks key={task.id} task={task}/>
                 ))}
             </div>
-            <div className="doing">
+            <div className="task-section doing">
             <h3>Doing</h3>
             {doing.map(task => (
-                    <Taks task={task}/>
+                    <Tasks key={task.id} task={task}/>
                 ))}
             </div>
-            <div className="done">
+            <div className="task-section done">
             <h3>Done</h3>
             {done.map(task => (
-                    <Taks task={task}/>
+                    <Tasks key={task.id} task={task}/>
                 ))}
             </div>
         </div>

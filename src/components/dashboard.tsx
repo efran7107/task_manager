@@ -3,6 +3,9 @@ import '../styles/dashboard.css'
 import { functions } from '@/functions/functions';
 import { UserTeams } from './userTeam';
 import { TaskBoard } from './taskBoard';
+import '@/styles/dashboard.css'
+
+
 export const UserDashboard = () => {
 	const { user, allData } = useUser();
 

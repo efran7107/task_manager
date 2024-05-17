@@ -2,10 +2,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
 }
 
 .link-btn.add-task {
     border-radius: 25px;
     font-weight: 700;
     padding: 10px
+}
+
+.user-dashboard {
+    display: flex;
+    gap: 50px;
 }
