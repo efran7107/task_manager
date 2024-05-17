@@ -21,14 +21,6 @@ export const TaskBoard = ({tasks}: {tasks: Task[]}) => {
 		tasks.filter(task => task.status === 'done'),
 	]
 	const [toDo, doing, done] = sortedTasks;
-
-    const date = new Date()
-    console.log(
-        date.getDate().toString().toString(),
-        (date.getMonth() + 1).toString(),
-        date.getFullYear().toString().slice(2)
-
-    );
     
     
     return (
