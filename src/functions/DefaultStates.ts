@@ -1,29 +1,40 @@
-import { AllData, TeamMember } from "@/types/types";
+import { AllData, Task, TeamMember } from "@/types/types";
 
 const getDefaultAllData = (): AllData => {
-    return {
-        teams: [],
-        users: [],
-        userTeamLinks: [],
-        tasks: [],
-        taskAssignments: [],
-        tags: [],
-        taskTags: [],
-        notes: []
-    }
-}
+  return {
+    teams: [],
+    users: [],
+    userTeamLinks: [],
+    tasks: [],
+    taskAssignments: [],
+    tags: [],
+    taskTags: [],
+    notes: [],
+  };
+};
 
 const getDefaultTeamMember = (): TeamMember => {
-    return {
-        id: 0,
-        username: '',
-        name: "",
-        email: "",
-    }
-}
+  return {
+    id: 0,
+    username: "",
+    name: "",
+    email: "",
+  };
+};
 
+const getDefaultTask = (): Task => {
+  return {
+    id: 0,
+    taskName: "",
+    description: "",
+    status: "to-do",
+    dueDate: "",
+    isImportant: false,
+  };
+};
 
 export const defaultData = {
-    getDefaultAllData,
-    getDefaultTeamMember
-}
+  getDefaultAllData,
+  getDefaultTeamMember,
+  getDefaultTask,
+};
