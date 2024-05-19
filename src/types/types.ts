@@ -43,12 +43,12 @@ export type TaskAssinmentLink = {
 export type Tag = {
   id: number;
   tagId: number;
-  TagName: string;
+  tagName: string;
 };
 
 export type TaskTagLink = {
   id: number;
-  taskID: number;
+  taskId: number;
   tagId: number;
 };
 

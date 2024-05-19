@@ -9,7 +9,7 @@ import '@/styles/dashboard.css'
 export const UserDashboard = () => {
 	const { user, allData } = useUser();
 
-	const {teams, users, userTeamLinks, tasks, taskAssignments} = allData
+	const {teams, users, userTeamLinks, tasks, taskAssignments, tags, taskTags} = allData
 	const userTeams = functions.getTeamMembers(teams, users, userTeamLinks, user.id);
 	const userTasks = functions.sortTasks(functions.getUserTasks(tasks, taskAssignments, user.id))
 	
@@ -26,7 +26,7 @@ export const UserDashboard = () => {
 			</div>
 			<div className="user-dashboard">
 				<UserTeams userTeams={userTeams}/>
-				<TaskBoard tasks={userTasks}/>
+				<TaskBoard tasks={userTasks} tags={tags} taskTags={taskTags}/>
 			</div>
 		</div>
 	);

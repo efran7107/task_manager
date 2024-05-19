@@ -1,4 +1,4 @@
-const isName = (name: string) => {
+ const isName = (name: string) => {
   return !/\d/.test(name);
 };
 
@@ -30,8 +30,22 @@ const isValidFormSub = (newUser: {
   else return false;
 };
 
+const isPastDue = (date: string, taskDate: string): boolean => {
+  const todayArr = date.split('/');
+  const taskDateArr = taskDate.split('/')
+  
+  if(
+    (todayArr[0] > taskDateArr[0] ||
+    todayArr[1] > taskDateArr[1]) &&
+    todayArr[2] >= taskDateArr[2]
+  )return true;
+  else return false;
+  
+}
+
 export const validations = {
   isName,
   isEmail,
   isValidFormSub,
+  isPastDue
 };
