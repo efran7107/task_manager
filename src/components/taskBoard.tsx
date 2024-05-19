@@ -9,7 +9,9 @@ const Tasks = ({task, date, tags}: {task: Task, date: string, tags: Tag[]}) => {
     console.log(tags);
     
     return (
-        <div className={isPastDue ? "task-card  past-due" : "task-card"}>
+        <div className={isPastDue ? "task-card  past-due" : "task-card"} onClick={(e) => {
+            e.preventDefault()
+        }}>
 
             <h2>{task.taskName}</h2>
             <p>{task.description}</p>

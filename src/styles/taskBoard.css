@@ -41,3 +41,7 @@
 .task-card.past-due p:nth-child(3) {
     font-weight: 700;
 }
+
+.task-card p span {
+    margin: 0px 2.5px;
+}
