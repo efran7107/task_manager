@@ -24,6 +24,7 @@ type TUserProvider = {
   setIsActiveTask: (active: boolean) => void;
   activeTask: Task;
   setActiveTask: (task: Task) => void;
+  closeActiveTask: () => void;
 };
 
 const UserContext = createContext<TUserProvider>({} as TUserProvider);
@@ -116,6 +117,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     fetchallData("logged in");
   };
 
+  const closeActiveTask = () => {
+	setActiveTask(defaultData.getDefaultTask())
+	setIsActiveTask(false)
+  }
+
   useEffect(() => {
     if (localStorage.getItem("user") !== null) {
       const userName = localStorage.getItem("user");
@@ -144,6 +150,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setIsActiveTask,
         activeTask,
         setActiveTask,
+		closeActiveTask
       }}
     >
       {children}

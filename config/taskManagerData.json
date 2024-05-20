@@ -78,14 +78,14 @@
       "description": "A long dawn out explination to try to lengthen the content to at least get two lines to see how it all looks",
       "status": "to-do",
       "dueDate": "5/17/24",
-      "isImportant": false
+      "isImportant": true
     },
     {
       "id": 1,
       "taskName": "Task 2",
       "description": "test 2",
       "status": "done",
-      "dueDate": "1/1/25",
+      "dueDate": "1/1/24",
       "isImportant": false
     },
     {
