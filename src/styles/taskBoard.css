@@ -87,6 +87,9 @@
     top: 10px;
     left: 10px;
 }
+.fa-solid.fa-triangle-exclamation.important {
+    color: var(--invert);
+}
 
 .fa-solid.fa-pen-to-square {
     bottom: 10px;

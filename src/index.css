@@ -29,6 +29,7 @@
     --on-orange: white;
     font-family: "Roboto Condensed", sans-serif;
     --border-outline: black;
+    --invert: white;
   }
 
   .dark {
@@ -52,6 +53,7 @@
     --input: 12 6.5% 15.1%;
     --ring: 20.5 90.2% 48.2%;
     --border-outline: white;
+    --invert: black;
   }
 }
 
