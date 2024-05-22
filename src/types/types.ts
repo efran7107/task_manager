@@ -42,7 +42,6 @@ export type TaskAssinmentLink = {
 
 export type Tag = {
   id: number;
-  tagId: number;
   tagName: string;
 };
 
@@ -71,3 +70,5 @@ export type AllData = {
 };
 
 export type TUserTeams = Array<{team: Team, users: TeamMember[]}>
+
+export type TagInputButton = 'add' | 'delete' | 'not-enough'

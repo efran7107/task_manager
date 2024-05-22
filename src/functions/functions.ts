@@ -1,5 +1,5 @@
 import { GetRequests } from "@/api/api";
-import { AllData, Tag, Task, TaskAssinmentLink, TaskTagLink, Team, TeamMember, TeamMemberTeamsLink, TUserTeams } from "@/types/types";
+import { AllData, Tag, TagInputButton, Task, TaskAssinmentLink, TaskTagLink, Team, TeamMember, TeamMemberTeamsLink, TUserTeams } from "@/types/types";
 
 const getHeaderContainer = () => {
   const headerContainer = document.getElementById("header");
@@ -88,6 +88,25 @@ const getTags = (tags: Tag[], tagAssignment: TaskTagLink[], taskId: number): Tag
   return taskTags
 }
 
+const disableButton = (taskTag: Tag[], tagInput: string): TagInputButton => {
+  const tags = taskTag.map((tag) => {
+    return {
+      ...tag, tagName: tag.tagName.slice(1),
+    }
+  })
+  const availTag = tags.find(tag => tag.tagName.toLowerCase() === tagInput.toLowerCase())
+  if(availTag !== undefined){
+    return 'delete'
+  }else if( tagInput === '') {
+    return 'not-enough'
+  }else {
+    return 'add'
+  }
+  
+}
+
+
+
 export const functions = {
   getHeaderContainer,
   getAllData,
@@ -95,5 +114,6 @@ export const functions = {
   getUserTasks,
   sortTasks,
   getTodaysDate,
-  getTags
+  getTags,
+  disableButton
 };
