@@ -1,5 +1,5 @@
 import { GetRequests } from "@/api/api";
-import { AllData, Task, TaskAssinmentLink, Team, TeamMember, TeamMemberTeamsLink, TUserTeams } from "@/types/types";
+import { AllData, Tag, TagInputButton, Task, TaskAssinmentLink, TaskTagLink, Team, TeamMember, TeamMemberTeamsLink, TUserTeams } from "@/types/types";
 
 const getHeaderContainer = () => {
   const headerContainer = document.getElementById("header");
@@ -29,7 +29,7 @@ const getTeamMembers = (teams: Team[], users: TeamMember[], userTeamLinks: TeamM
   }
     const teamUsersLinks = []
    for(const team of userTeams) {
-    teamUsersLinks.push(userTeamLinks.filter(link => link.teamId === team!.id))
+    teamUsersLinks.push(userTeamLinks.filter(link => link.teamId === team.id))
    }
    
    const teamUsers: TUserTeams = []
@@ -72,10 +72,48 @@ const sortTasks = (tasks: Task[]) => {
   });
 }
 
+const getTodaysDate = (): string => {
+  const today = new Date();
+  return `${today.getMonth() + 1}/${today.getDate()}/${Number(today.getFullYear().toString().slice(2))}`;
+}
+
+const getTags = (tags: Tag[], tagAssignment: TaskTagLink[], taskId: number): Tag[] => {
+  const taskTagAssignment = tagAssignment.filter(tagLink => tagLink.taskId === taskId)
+  const taskTags: Tag[] = []
+  
+  for(const tagLink of taskTagAssignment) {
+    taskTags.push(...tags.filter(tag => tag.id === tagLink.tagId))
+  }  
+
+  return taskTags
+}
+
+const disableButton = (taskTag: Tag[], tagInput: string): TagInputButton => {
+  const tags = taskTag.map((tag) => {
+    return {
+      ...tag, tagName: tag.tagName.slice(1),
+    }
+  })
+  const availTag = tags.find(tag => tag.tagName.toLowerCase() === tagInput.toLowerCase())
+  if(availTag !== undefined){
+    return 'delete'
+  }else if( tagInput === '') {
+    return 'not-enough'
+  }else {
+    return 'add'
+  }
+  
+}
+
+
+
 export const functions = {
   getHeaderContainer,
   getAllData,
   getTeamMembers,
   getUserTasks,
-  sortTasks
+  sortTasks,
+  getTodaysDate,
+  getTags,
+  disableButton
 };

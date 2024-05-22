@@ -6,17 +6,9 @@ input {
   background-color: var(--primary);
 }
 
-input:disabled {
-  border-color: var(--disabled);
-}
-
 .form-btn {
   background-color: var(--default);
   color: white;
-}
-
-.form-btn:disabled {
-  background-color: var(--disabled);
 }
 
 .log-in-container {
