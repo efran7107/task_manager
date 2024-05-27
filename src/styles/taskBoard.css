@@ -47,18 +47,21 @@
 }
 
 .modal-container {
+    opacity: 0;
     position: absolute;
-    top: 20vw;
-    left: -40vw;
+    visibility: none;
+    top: 20%;
+    left: 37%;
     width: 0;
     height: 0;
-    transition: all .1s ease-out;
+    transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) .3s;
 }
 
 .modal-container.active {
+    opacity: 1;
     position: absolute;
-    left: 40vw;
-    top: 20vw;
+    left: 37%;
+    top: 20%;
     width: 500px;
     height: 300px;
     padding: 10px;
@@ -67,7 +70,7 @@
     border: 3px solid var(--border-outline);
     border-radius: 25px;
     box-shadow: 0px 0px 30px var(--border-outline);
-    transition: all 0.2s ease-in;
+    transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) .3s;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -84,6 +87,7 @@
 .modal-container.active.past-duedate.edit {
     gap: 10px;
     height: 400px;
+    transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
 }
 
 

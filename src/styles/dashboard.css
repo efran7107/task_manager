@@ -12,6 +12,7 @@
 }
 
 .user-dashboard {
+    position: relative;
     display: flex;
     gap: 50px;
 }

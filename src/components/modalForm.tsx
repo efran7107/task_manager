@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useUser } from "./componentsProvider/UserProvider";
-import { Task } from "@/types/types";
+import { Tag, Task } from "@/types/types";
 import "@/styles/modalForm.css";
 import "@/styles/taskBoard.css";
 import { functions } from "@/functions/functions";
@@ -18,7 +18,7 @@ export const TaskModalForm = ({
   const {tags, taskTags} = allData
   const [userTask, setUserTask] = useState<Task>(task);
   const [tagInput, setTagInput] = useState('');
-  const taskTag = functions.getTags(tags, taskTags, userTask.id)
+  const [tagList, setTagList] = useState<Tag[]>(functions.getTags(tags, taskTags, userTask.id));
 
   return (
     <form
@@ -26,12 +26,16 @@ export const TaskModalForm = ({
     >
       <i
         className="fa-solid fa-xmark"
-        onClick={(e) => {
-          e.preventDefault();
+        onClick={() => {
           editTask(false);
           closeActiveTask();
         }}
       ></i>
+      <i className={userTask.isImportant ? "fa-solid fa-triangle-exclamation important" :"fa-solid fa-triangle-exclamation"}></i>
+      <i className="fa-solid fa-cloud-arrow-up"></i>
+      <a className="cancel-form" onClick={() => {
+        editTask(false);
+      }}>Cancel</a>
       <div className="task-name-input">
         <label htmlFor="taskName">Task Name:</label>
         <input
@@ -61,6 +65,7 @@ export const TaskModalForm = ({
           <label htmlFor="month">Month: </label>
           <input
             max="12"
+            min='1'
             name="month"
             type="text"
             id="month"
@@ -78,6 +83,8 @@ export const TaskModalForm = ({
           />
           /<label htmlFor="day">Day: </label>
           <input
+            min='1'
+            max={functions.getMaxDaysForMonth(Number(userTask.dueDate.split('/')[0]), Number(userTask.dueDate.split('/')[2]))}
             name="day"
             type="text"
             id="day"
@@ -114,42 +121,36 @@ export const TaskModalForm = ({
       </div>
       <div className="status-update">
         <label htmlFor="status">Status: </label>
-        <div className="to-do-radio">
           <label htmlFor="to-do">to-do</label>
           <input
             type="radio"
             name="to-do"
             id="to-do"
-            checked={userTask.status === "to-do"}
-            onClick={() => {
+            defaultChecked={userTask.status === "to-do"}
+            onChange={() => {
               setUserTask({ ...userTask, status: "to-do" });
             }}
           />
-        </div>
-        <div className="doing-radio">
           <label htmlFor="doing">doing</label>
           <input
             type="radio"
             name="doing"
             id="doing"
-            checked={userTask.status === "doing"}
+            defaultChecked={userTask.status === "doing"}
             onChange={() => {
               setUserTask({ ...userTask, status: "doing" });
             }}
           />
-        </div>
-        <div className="done-radio">
           <label htmlFor="done">done</label>
           <input
             type="radio"
             name="done"
             id="done"
-            checked={userTask.status === "done"}
+            defaultChecked={userTask.status === "done"}
             onChange={() => {
               setUserTask({ ...userTask, status: "done" });
             }}
           />
-        </div>
       </div>
       <div className="important-input">
         <label htmlFor="important">Important: </label>
@@ -157,7 +158,7 @@ export const TaskModalForm = ({
           type="checkbox"
           name="important"
           id="important"
-          checked={userTask.isImportant}
+          defaultChecked={userTask.isImportant}
           onChange={() => {
             setUserTask({ ...userTask, isImportant: !userTask.isImportant });
           }}
@@ -165,27 +166,32 @@ export const TaskModalForm = ({
       </div>
       <div className="tags-edit">
         <label htmlFor="tags">Tags: </label>
-        <input type="text" list="tags"
+        <input type="text" 
+        value={tagInput}
         onChange={(e) => {
           setTagInput(e.currentTarget.value)
           
         }}/>
-        <datalist id="tags">
-          {taskTag.map(tag => (
-            <option key={tag.id} value={tag.tagName}>{tag.tagName}</option>
-          ))}
-        </datalist>
         <button 
-          disabled={functions.disableButton(taskTag, tagInput) === 'delete' || functions.disableButton(taskTag, tagInput) === 'not-enough'}
-          onClick={(e) => {
-          e.preventDefault()
+          disabled={functions.disableButton(tagList, tagInput) === 'delete' || functions.disableButton(tagList, tagInput) === 'not-enough'}
+          onClick={() => {
+            tagList.push({id: tagList.length, tagName: '#' + tagInput})
+            setTagList(tagList)
+            setTagInput('')
+            
         }}>add</button>
         <button 
-          disabled={functions.disableButton(taskTag, tagInput) === 'add' || functions.disableButton(taskTag, tagInput) === 'not-enough'}
-          onClick={(e) => {
-            e.preventDefault()
+          disabled={functions.disableButton(tagList, tagInput) === 'add' || functions.disableButton(tagList, tagInput) === 'not-enough'}
+          onClick={() => {
+            setTagList(tagList.filter(tag => tag.tagName.slice(1) !== tagInput))
+            setTagInput('')
           }}
         >delete</button>
+      </div>
+      <div className="tags-list">
+        {tagList.map((tag) => (
+          <p key={tag.id}>{tag.tagName}</p>
+        ))}
       </div>
     </form>
   );
