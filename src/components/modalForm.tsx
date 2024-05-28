@@ -15,10 +15,12 @@ export const TaskModalForm = ({
   editTask: (edit: boolean) => void;
 }) => {
   const { closeActiveTask, allData } = useUser();
-  const {tags, taskTags} = allData
+  const { tags, taskTags } = allData;
   const [userTask, setUserTask] = useState<Task>(task);
-  const [tagInput, setTagInput] = useState('');
-  const [tagList, setTagList] = useState<Tag[]>(functions.getTags(tags, taskTags, userTask.id));
+  const [tagInput, setTagInput] = useState("");
+  const [tagList, setTagList] = useState<Tag[]>(
+    functions.getTags(tags, taskTags, userTask.id)
+  );
 
   return (
     <form
@@ -31,11 +33,22 @@ export const TaskModalForm = ({
           closeActiveTask();
         }}
       ></i>
-      <i className={userTask.isImportant ? "fa-solid fa-triangle-exclamation important" :"fa-solid fa-triangle-exclamation"}></i>
+      <i
+        className={
+          userTask.isImportant
+            ? "fa-solid fa-triangle-exclamation important"
+            : "fa-solid fa-triangle-exclamation"
+        }
+      ></i>
       <i className="fa-solid fa-cloud-arrow-up"></i>
-      <a className="cancel-form" onClick={() => {
-        editTask(false);
-      }}>Cancel</a>
+      <a
+        className="cancel-form"
+        onClick={() => {
+          editTask(false);
+        }}
+      >
+        Cancel
+      </a>
       <div className="task-name-input">
         <label htmlFor="taskName">Task Name:</label>
         <input
@@ -65,7 +78,7 @@ export const TaskModalForm = ({
           <label htmlFor="month">Month: </label>
           <input
             max="12"
-            min='1'
+            min="1"
             name="month"
             type="text"
             id="month"
@@ -83,8 +96,11 @@ export const TaskModalForm = ({
           />
           /<label htmlFor="day">Day: </label>
           <input
-            min='1'
-            max={functions.getMaxDaysForMonth(Number(userTask.dueDate.split('/')[0]), Number(userTask.dueDate.split('/')[2]))}
+            min="1"
+            max={functions.getMaxDaysForMonth(
+              Number(userTask.dueDate.split("/")[0]),
+              Number(userTask.dueDate.split("/")[2])
+            )}
             name="day"
             type="text"
             id="day"
@@ -121,36 +137,36 @@ export const TaskModalForm = ({
       </div>
       <div className="status-update">
         <label htmlFor="status">Status: </label>
-          <label htmlFor="to-do">to-do</label>
-          <input
-            type="radio"
-            name="to-do"
-            id="to-do"
-            defaultChecked={userTask.status === "to-do"}
-            onChange={() => {
-              setUserTask({ ...userTask, status: "to-do" });
-            }}
-          />
-          <label htmlFor="doing">doing</label>
-          <input
-            type="radio"
-            name="doing"
-            id="doing"
-            defaultChecked={userTask.status === "doing"}
-            onChange={() => {
-              setUserTask({ ...userTask, status: "doing" });
-            }}
-          />
-          <label htmlFor="done">done</label>
-          <input
-            type="radio"
-            name="done"
-            id="done"
-            defaultChecked={userTask.status === "done"}
-            onChange={() => {
-              setUserTask({ ...userTask, status: "done" });
-            }}
-          />
+        <label htmlFor="to-do">to-do</label>
+        <input
+          type="radio"
+          name="to-do"
+          id="to-do"
+          checked={userTask.status === "to-do"}
+          onChange={() => {
+            setUserTask({ ...userTask, status: "to-do" });
+          }}
+        />
+        <label htmlFor="doing">doing</label>
+        <input
+          type="radio"
+          name="doing"
+          id="doing"
+          checked={userTask.status === "doing"}
+          onChange={() => {
+            setUserTask({ ...userTask, status: "doing" });
+          }}
+        />
+        <label htmlFor="done">done</label>
+        <input
+          type="radio"
+          name="done"
+          id="done"
+          checked={userTask.status === "done"}
+          onChange={() => {
+            setUserTask({ ...userTask, status: "done" });
+          }}
+        />
       </div>
       <div className="important-input">
         <label htmlFor="important">Important: </label>
@@ -166,33 +182,47 @@ export const TaskModalForm = ({
       </div>
       <div className="tags-edit">
         <label htmlFor="tags">Tags: </label>
-        <input type="text" 
-        value={tagInput}
-        onChange={(e) => {
-          setTagInput(e.currentTarget.value)
-          
-        }}/>
-        <button 
-          disabled={functions.disableButton(tagList, tagInput) === 'delete' || functions.disableButton(tagList, tagInput) === 'not-enough'}
-          onClick={() => {
-            tagList.push({id: tagList.length, tagName: '#' + tagInput})
-            setTagList(tagList)
-            setTagInput('')
-            
-        }}>add</button>
-        <button 
-          disabled={functions.disableButton(tagList, tagInput) === 'add' || functions.disableButton(tagList, tagInput) === 'not-enough'}
-          onClick={() => {
-            setTagList(tagList.filter(tag => tag.tagName.slice(1) !== tagInput))
-            setTagInput('')
+        <input
+          type="text"
+          value={tagInput}
+          onChange={(e) => {
+            setTagInput(e.currentTarget.value);
           }}
-        >delete</button>
+        />
+        <button
+          disabled={
+            functions.disableButton(tagList, tagInput) === "delete" ||
+            functions.disableButton(tagList, tagInput) === "not-enough"
+          }
+          onClick={() => {
+            tagList.push({ id: tagList.length, tagName: "#" + tagInput });
+            setTagList(tagList);
+            setTagInput("");
+          }}
+        >
+          add
+        </button>
+        <button
+          disabled={
+            functions.disableButton(tagList, tagInput) === "add" ||
+            functions.disableButton(tagList, tagInput) === "not-enough"
+          }
+          onClick={() => {
+            setTagList(
+              tagList.filter((tag) => tag.tagName.slice(1) !== tagInput)
+            );
+            setTagInput("");
+          }}
+        >
+          delete
+        </button>
       </div>
       <div className="tags-list">
         {tagList.map((tag) => (
           <p key={tag.id}>{tag.tagName}</p>
         ))}
       </div>
+      <div className="create-note"></div>
     </form>
   );
 };
