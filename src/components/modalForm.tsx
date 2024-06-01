@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useUser } from "./componentsProvider/UserProvider";
-import { Tag, Task } from "@/types/types";
+import { Note, Tag, Task } from "@/types/types";
 import "@/styles/modalForm.css";
 import "@/styles/taskBoard.css";
 import { functions } from "@/functions/functions";
@@ -14,17 +14,26 @@ export const TaskModalForm = ({
   pastDue: boolean;
   editTask: (edit: boolean) => void;
 }) => {
-  const { closeActiveTask, allData } = useUser();
+  const { closeActiveTask, allData, user, updateTags} = useUser();
   const { tags, taskTags } = allData;
   const [userTask, setUserTask] = useState<Task>(task);
   const [tagInput, setTagInput] = useState("");
   const [tagList, setTagList] = useState<Tag[]>(
-    functions.getTags(tags, taskTags, userTask.id)
+    functions.getTaskTags(tags, taskTags, userTask.id)
   );
+  const [note, setNote] = useState<Omit<Note, 'id'>>({
+    noteTitle: '',
+    content: '',
+    teamMemberId: user.id,
+    taskId: userTask.id
+  });
+
+  
 
   return (
     <form
       className={`modal-container active ${pastDue ? "past-duedate" : ""} edit`}
+      onSubmit={(e) => e.preventDefault()}
     >
       <i
         className="fa-solid fa-xmark"
@@ -195,8 +204,7 @@ export const TaskModalForm = ({
             functions.disableButton(tagList, tagInput) === "not-enough"
           }
           onClick={() => {
-            tagList.push({ id: tagList.length, tagName: "#" + tagInput });
-            setTagList(tagList);
+            updateTags(tagInput, userTask.id, 'add')
             setTagInput("");
           }}
         >
@@ -208,9 +216,7 @@ export const TaskModalForm = ({
             functions.disableButton(tagList, tagInput) === "not-enough"
           }
           onClick={() => {
-            setTagList(
-              tagList.filter((tag) => tag.tagName.slice(1) !== tagInput)
-            );
+            updateTags(tagInput, userTask.id, 'delete')
             setTagInput("");
           }}
         >
@@ -222,7 +228,31 @@ export const TaskModalForm = ({
           <p key={tag.id}>{tag.tagName}</p>
         ))}
       </div>
-      <div className="create-note"></div>
+      <div className="create-note">
+        <p>Create New Note: </p>
+        <div className="note-title">
+          <label htmlFor="noteTitle">Note Title:</label>
+          <input 
+            type="text" 
+            name="noteTitle" 
+            id="noteTitle" 
+            onChange={(e) => {
+              setNote({...note, noteTitle: e.currentTarget.value})
+            }}  
+            value={note.noteTitle}
+          />
+        </div>
+        <div className="note-content">
+          <label htmlFor="note">Content:</label>
+          <textarea 
+            name="note" 
+            id="note" 
+            value={note.content}
+            onChange={(e) => setNote({...note ,content: e.currentTarget.value})}
+            ></textarea>
+        </div>
+        <input className="submit-note" type="submit" value="Create Note" disabled={note.content === '' || note.noteTitle === ''} />
+      </div>
     </form>
   );
 };

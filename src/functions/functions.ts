@@ -12,6 +12,8 @@ import {
   TUserTeams,
 } from "@/types/types";
 
+
+
 const getHeaderContainer = () => {
   const headerContainer = document.getElementById("header");
   headerContainer?.classList.add("dashboard");
@@ -105,7 +107,7 @@ const getTodaysDate = (): string => {
   )}`;
 };
 
-const getTags = (
+const getTaskTags = (
   tags: Tag[],
   tagAssignment: TaskTagLink[],
   taskId: number
@@ -166,6 +168,15 @@ const getMaxDaysForMonth = (month: number, year: number): number=> {
   }
 }
 
+const doesTagExist = (tag: string, tags:Tag[]): boolean => {
+  return tags.find(existingTag => existingTag.tagName.slice(1) === tag) !== undefined
+}
+
+const isOnlyOneLink = (tagName: string, tags: Tag[], tagLinks: TaskTagLink[]) => {
+  const tag = tags.find(availTags => availTags.tagName.slice(1) === tagName)
+  return tagLinks.filter(link => link.tagId === tag?.id).length >= 1;
+}
+
 export const functions = {
   getHeaderContainer,
   getAllData,
@@ -173,7 +184,9 @@ export const functions = {
   getUserTasks,
   sortTasks,
   getTodaysDate,
-  getTags,
+  getTaskTags,
   disableButton,
-  getMaxDaysForMonth
+  getMaxDaysForMonth,
+  doesTagExist,
+  isOnlyOneLink
 };

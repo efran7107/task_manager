@@ -83,7 +83,6 @@
 .modal-container.active.edit,
 .modal-container.active.past-duedate.edit {
   gap: 10px;
-  height: 400px;
   transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
 }
 

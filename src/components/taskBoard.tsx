@@ -159,7 +159,7 @@ export const TaskBoard = ({
               key={task.id}
               task={task}
               date={todaysDate}
-              tags={functions.getTags(tags, taskTags, task.id)}
+              tags={functions.getTaskTags(tags, taskTags, task.id)}
             />
           ))}
         </div>
@@ -170,7 +170,7 @@ export const TaskBoard = ({
               key={task.id}
               task={task}
               date={todaysDate}
-              tags={functions.getTags(tags, taskTags, task.id)}
+              tags={functions.getTaskTags(tags, taskTags, task.id)}
             />
           ))}
         </div>
@@ -181,13 +181,13 @@ export const TaskBoard = ({
               key={task.id}
               task={task}
               date={todaysDate}
-              tags={functions.getTags(tags, taskTags, task.id)}
+              tags={functions.getTaskTags(tags, taskTags, task.id)}
             />
           ))}
         </div>
       </div>
       <TaskModal
-        tags={functions.getTags(tags, taskTags, activeTask.id)}
+        tags={functions.getTaskTags(tags, taskTags, activeTask.id)}
         task={activeTask}
         date={todaysDate}
       />

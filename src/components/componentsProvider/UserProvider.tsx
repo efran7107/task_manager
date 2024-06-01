@@ -1,8 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
-import { GetRequests, PostRequests } from "@/api/api";
+import { DeleteRequests, GetRequests, PostRequests } from "@/api/api";
 import { defaultData } from "@/functions/DefaultStates";
 import { functions } from "@/functions/functions";
-import { AllData, LogInStatus, Task, TeamMember } from "@/types/types";
+import { AllData, LogInStatus, TagInputButton, Task, TeamMember } from "@/types/types";
 import {
   ReactNode,
   createContext,
@@ -25,7 +25,9 @@ type TUserProvider = {
   activeTask: Task;
   setActiveTask: (task: Task) => void;
   closeActiveTask: () => void;
+  updateTags: (tagInput: string, taskId: number, status: TagInputButton) => void;
 };
+
 
 const UserContext = createContext<TUserProvider>({} as TUserProvider);
 
@@ -122,6 +124,79 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 	setIsActiveTask(false)
   }
 
+  
+  const updateTags = (tagInput: string, taskId: number, status: TagInputButton) => {
+    switch(status) {
+      case 'add':
+        switch(functions.doesTagExist(tagInput, allData.tags)){
+          case true:
+            PostRequests.postTaskTagLink({
+              tagId: allData.tags.find(currentTask => currentTask.tagName.slice(1) === tagInput)!.id, 
+              taskId: taskId
+            }).then((res) => {
+              if(!res.ok){
+                setAllData(allData)
+              }
+              fetchallData(isLoggedIn)
+            })
+            break;
+          case false: 
+            PostRequests.postNewTag({tagName: `#${tagInput}`})
+              .then((newTag) => {
+                PostRequests.postTaskTagLink({tagId: newTag.id, taskId: taskId})
+                  .then((res) => {
+                    if(!res.ok){
+                      setAllData(allData)
+                    }
+                    fetchallData(isLoggedIn)
+                  })
+                
+              })
+            break;
+          default:
+            break;
+        }
+      break;
+      case 'delete': 
+        switch(functions.isOnlyOneLink(tagInput, allData.tags, allData.taskTags)){
+          case true:
+            DeleteRequests.deleteTaskTagLink(allData.taskTags.find(link => {
+              if(link.tagId === allData.tags.find(tag => tag.tagName === tagInput)!.id && link.taskId === taskId){
+                return link
+              }
+            })!.id)
+            .then((res) => {
+              if(!res.ok){
+                setAllData(allData)
+              }
+              DeleteRequests.deleteTag(allData.tags.find(tag => tag.tagName === tagInput)!.id)
+                .then((res) => {
+                  if(!res.ok){
+                    setAllData(allData)
+                  }
+                  fetchallData(isLoggedIn)
+                })
+            })
+            break;
+          case false:
+            DeleteRequests.deleteTaskTagLink(allData.taskTags.find(link => {
+              if(link.tagId === allData.tags.find(tag => tag.tagName === tagInput)!.id && link.taskId === taskId){
+                return link
+              }
+            })!.id)
+            .then((res) => {
+              if(!res.ok){
+                setAllData(allData)
+              }
+              fetchallData(isLoggedIn);
+            })
+            break;
+        }
+      break;
+    }
+  }
+  
+
   useEffect(() => {
     if (localStorage.getItem("user") !== null) {
       const userName = localStorage.getItem("user");
@@ -150,7 +225,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setIsActiveTask,
         activeTask,
         setActiveTask,
-		closeActiveTask
+        closeActiveTask,
+        updateTags
       }}
     >
       {children}

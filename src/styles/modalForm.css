@@ -32,7 +32,7 @@
   gap: 10px;
 }
 
-#taskDescription {
+#taskDescription,#note {
   width: 295px;
   height: 96px;
   background-color: var(--invert);
@@ -43,23 +43,27 @@
   resize: none;
 }
 
-#taskDescription::-webkit-scrollbar {
+#taskDescription::-webkit-scrollbar,
+#note::-webkit-scrollbar {
   width: 6px;
   height: 8px;
   margin-right: 10px;
 }
 
-#taskDescription::-webkit-scrollbar-button {
+#taskDescription::-webkit-scrollbar-button,
+#note::-webkit-scrollbar-button {
   display: none;
 }
 
-#taskDescription::-webkit-scrollbar-track {
+#taskDescription::-webkit-scrollbar-track,
+#note::-webkit-scrollbar-track {
   background: var(--invert);
   border-radius: 15px;
   height: 140px;
 }
 
-#taskDescription::-webkit-scrollbar-thumb {
+#taskDescription::-webkit-scrollbar-thumb,
+#note::-webkit-scrollbar-thumb {
   background-color: var(--border-outline);
   border-radius: 15px;
 }
@@ -112,12 +116,14 @@
   align-items: center;
 }
 
-.tags-edit input {
+.tags-edit input,
+.note-title input {
   background-color: var(--invert);
   border: 1px solid var(--border-outline);
 }
 
-.tags-edit button {
+.tags-edit button,
+.create-note .submit-note {
   transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
   background-color: var(--border-outline);
   border: 1px solid var(--invert);
@@ -127,17 +133,32 @@
   cursor: pointer;
 }
 
-.tags-edit button:hover {
+.tags-edit button:hover,
+.create-note .submit-note:hover {
   transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
   background-color: var(--invert);
   border: 1px solid var(--border-outline);
   color: var(--border-outline);
 }
 
-.tags-edit button:disabled {
+.tags-edit button:disabled,
+.create-note .submit-note:disabled {
   transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
   background-color: var(--invert);
   border: 1px solid var(--border-outline);
   color: var(--border-outline);
   cursor: default;
+}
+
+.create-note {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.note-title,
+.note-content {
+  display: flex;
+  gap: 10px;
 }

@@ -48,7 +48,7 @@ export const GetRequests = {
 };
 
 export const PostRequests = {
-   registerUser : (newUser: Omit<TeamMember, "id">): Promise<TeamMember> => {
+  registerUser : (newUser: Omit<TeamMember, "id">): Promise<TeamMember> => {
     return fetch(`${baseUrl}/teamMembers`, {
       body: JSON.stringify(newUser),
       method: "POST",
@@ -57,7 +57,7 @@ export const PostRequests = {
       },
     }).then((res) => res.json())
   },
-   registerUserAuth: (userPassword: Omit<TeamMemberAuth, "id">) => {
+  registerUserAuth: (userPassword: Omit<TeamMemberAuth, "id">) => {
     return fetch(`${baseUrl}/teamMemberAuth`, {
       body: JSON.stringify(userPassword),
       method: "POST",
@@ -65,11 +65,36 @@ export const PostRequests = {
         "content-type": "application/json",
       },
     })
+  },
+  postNewTag: (tag:Omit<Tag, 'id'>): Promise<Tag> => {
+    return fetch(`${baseUrl}/tags`, {
+      body: JSON.stringify(tag),
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+    }).then((res) => res.json())
+  },
+  postTaskTagLink: (taskTaglink: Omit<TaskTagLink, 'id'>) => {
+    return fetch(`${baseUrl}/taskTagLink`, {
+      body:JSON.stringify(taskTaglink),
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      }
+    })
   }
 }
 
-
-
-
-
-
+export const DeleteRequests = {
+  deleteTaskTagLink:(linkId: number) => {
+    return fetch(`${baseUrl}/taskTagLink/${linkId}`, {
+      method: "DELETE"
+    })
+  },
+  deleteTag: (tagId: number) => {
+    return fetch(`${baseUrl}/tags/${tagId}`, {
+      method: "DELETE"
+    })
+  }
+}
