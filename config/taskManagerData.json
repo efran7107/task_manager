@@ -23,7 +23,7 @@
     {
       "id": 5,
       "teamName": "Team 6"
-    }
+    } 
   ],
   "teamMembers": [
     {
@@ -179,12 +179,12 @@
   ],
   "tasks": [
     {
-      "id": 0,
       "taskName": "Task 1",
-      "description": "A long dawn out explination to try to lengthen the content to at least get two lines to see how it all looks",
+      "description": "A long dawn out explination",
       "status": "to-do",
-      "dueDate": "5/17/24",
-      "isImportant": false
+      "dueDate": "6/12/24",
+      "isImportant": true,
+      "id": 0
     },
     {
       "id": 1,
@@ -372,10 +372,6 @@
     {
       "id": 5,
       "tagName": "#tag6"
-    },
-    {
-      "tagName": "#tag",
-      "id": 6
     }
   ],
   "taskTagLink": [
@@ -438,11 +434,6 @@
       "id": 11,
       "tagId": 5,
       "taskId": 5
-    },
-    {
-      "tagId": 6,
-      "taskId": 0,
-      "id": 12
     }
   ],
   "notes": [

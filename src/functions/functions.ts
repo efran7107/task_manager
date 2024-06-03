@@ -174,8 +174,10 @@ const doesTagExist = (tag: string, tags:Tag[]): boolean => {
 
 const isOnlyOneLink = (tagName: string, tags: Tag[], tagLinks: TaskTagLink[]) => {
   const tag = tags.find(availTags => availTags.tagName.slice(1) === tagName)
-  return tagLinks.filter(link => link.tagId === tag?.id).length >= 1;
+  return tagLinks.filter(link => link.tagId === tag!.id).length <= 1;
 }
+
+
 
 export const functions = {
   getHeaderContainer,

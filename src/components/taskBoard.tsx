@@ -3,7 +3,6 @@ import "@/styles/taskBoard.css";
 import { functions } from "@/functions/functions";
 import { validations } from "@/functions/validation";
 import { useUser } from "./componentsProvider/UserProvider";
-import { useState } from "react";
 import { TaskModalForm } from "./modalForm";
 
 const TaskModal = ({
@@ -15,18 +14,17 @@ const TaskModal = ({
   tags: Tag[];
   date: string;
 }) => {
-  const [isEditingTask, setIsEditingTask] = useState(false);
-  const { activeTask, isActiveTask, closeActiveTask, allData } = useUser();
+  const { user, activeTask, isActiveTask, closeActiveTask, allData, isEditTask, setIsEditTask } = useUser();
   const taskNotes = allData.notes.filter(
     (note) => note.taskId === activeTask.id
   );
   const isPastDue = validations.isPastDue(date, task.dueDate);
+  validations.isUsersTask(user.id, activeTask.id, allData.taskAssignments)
   return (
     <>
-      {isEditingTask ? (
+      {isEditTask ? (
         <TaskModalForm
           task={activeTask}
-          editTask={setIsEditingTask}
           pastDue={isPastDue}
         />
       ) : (
@@ -46,7 +44,7 @@ const TaskModal = ({
             className="fa-solid fa-pen-to-square"
             onClick={(e) => {
               e.preventDefault();
-              setIsEditingTask(true);
+              setIsEditTask(true);
             }}
           ></i>
           <i
@@ -56,6 +54,7 @@ const TaskModal = ({
               closeActiveTask();
             }}
           ></i>
+          {}
           <h3>{task.taskName}</h3>
           <p>{task.description}</p>
           <div className="statuses">
@@ -139,6 +138,7 @@ export const TaskBoard = ({
   taskTags: TaskTagLink[];
 }) => {
   const todaysDate = functions.getTodaysDate();
+  
 
   const { activeTask } = useUser();
 

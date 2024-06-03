@@ -83,6 +83,15 @@ export const PostRequests = {
         "content-type": "application/json"
       }
     })
+  },
+  postNewNote: (note: Omit<Note, 'id'>) => {
+    return fetch(`${baseUrl}/notes`, {
+      body:JSON.stringify(note),
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      }
+    })
   }
 }
 

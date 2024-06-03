@@ -2,7 +2,7 @@
 import { DeleteRequests, GetRequests, PostRequests } from "@/api/api";
 import { defaultData } from "@/functions/DefaultStates";
 import { functions } from "@/functions/functions";
-import { AllData, LogInStatus, TagInputButton, Task, TeamMember } from "@/types/types";
+import { AllData, LogInStatus, Note, TagInputButton, Task, TeamMember } from "@/types/types";
 import {
   ReactNode,
   createContext,
@@ -26,6 +26,9 @@ type TUserProvider = {
   setActiveTask: (task: Task) => void;
   closeActiveTask: () => void;
   updateTags: (tagInput: string, taskId: number, status: TagInputButton) => void;
+  isEditTask: boolean;
+  setIsEditTask: (isEdit: boolean) => void;
+  updateNotes: (note: Omit<Note, 'id'>) => void
 };
 
 
@@ -44,6 +47,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [activeTask, setActiveTask] = useState<Task>(
     defaultData.getDefaultTask()
   );
+  const [isEditTask, setIsEditTask] = useState(false);
 
   const fetchallData = (logInState: LogInStatus) => {
     setIsLoggedIn("undefined");
@@ -51,7 +55,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       setAllData(data);
       setIsLoading(false);
       setIsLoggedIn(logInState);
-    });
+    }).catch(() => toast.error('error loading data'));
   };
 
   const userAuth = (username: string, password: string) => {
@@ -137,7 +141,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
               if(!res.ok){
                 setAllData(allData)
               }
-              fetchallData(isLoggedIn)
+              functions.getAllData().then((data) => {
+                    setAllData(data)
+                  })
             })
             break;
           case false: 
@@ -148,7 +154,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                     if(!res.ok){
                       setAllData(allData)
                     }
-                    fetchallData(isLoggedIn)
+                    functions.getAllData().then((data) => {
+                    setAllData(data)
+                  })
                   })
                 
               })
@@ -161,7 +169,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         switch(functions.isOnlyOneLink(tagInput, allData.tags, allData.taskTags)){
           case true:
             DeleteRequests.deleteTaskTagLink(allData.taskTags.find(link => {
-              if(link.tagId === allData.tags.find(tag => tag.tagName === tagInput)!.id && link.taskId === taskId){
+              if(link.tagId === allData.tags.find(tag => tag.tagName.slice(1) === tagInput)!.id && link.taskId === taskId){
                 return link
               }
             })!.id)
@@ -169,18 +177,20 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
               if(!res.ok){
                 setAllData(allData)
               }
-              DeleteRequests.deleteTag(allData.tags.find(tag => tag.tagName === tagInput)!.id)
+              DeleteRequests.deleteTag(allData.tags.find(tag => tag.tagName.slice(1) === tagInput)!.id)
                 .then((res) => {
                   if(!res.ok){
                     setAllData(allData)
                   }
-                  fetchallData(isLoggedIn)
+                  functions.getAllData().then((data) => {
+                    setAllData(data)
+                  })
                 })
             })
             break;
           case false:
             DeleteRequests.deleteTaskTagLink(allData.taskTags.find(link => {
-              if(link.tagId === allData.tags.find(tag => tag.tagName === tagInput)!.id && link.taskId === taskId){
+              if(link.tagId === allData.tags.find(tag => tag.tagName.slice(1) === tagInput)!.id && link.taskId === taskId){
                 return link
               }
             })!.id)
@@ -188,7 +198,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
               if(!res.ok){
                 setAllData(allData)
               }
-              fetchallData(isLoggedIn);
+              functions.getAllData().then((data) => {
+                setAllData(data)
+              })
             })
             break;
         }
@@ -196,6 +208,16 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }
   }
   
+  const updateNotes = (note: Omit<Note, 'id'>) => {
+    PostRequests.postNewNote(note).then((res) => {
+      if(!res.ok){
+        setAllData(allData)
+      }
+      functions.getAllData().then((data) => {
+        setAllData(data)
+      })
+    })
+  }
 
   useEffect(() => {
     if (localStorage.getItem("user") !== null) {
@@ -226,7 +248,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         activeTask,
         setActiveTask,
         closeActiveTask,
-        updateTags
+        updateTags,
+        isEditTask,
+        setIsEditTask,
+        updateNotes
       }}
     >
       {children}

@@ -1,32 +1,25 @@
 import { useState } from "react";
 import { useUser } from "./componentsProvider/UserProvider";
-import { Note, Tag, Task } from "@/types/types";
+import { Note, Task } from "@/types/types";
 import "@/styles/modalForm.css";
 import "@/styles/taskBoard.css";
 import { functions } from "@/functions/functions";
+import { validations } from "@/functions/validation";
+import { defaultData } from "@/functions/DefaultStates";
 
 export const TaskModalForm = ({
   task,
   pastDue,
-  editTask,
 }: {
   task: Task;
   pastDue: boolean;
-  editTask: (edit: boolean) => void;
 }) => {
-  const { closeActiveTask, allData, user, updateTags} = useUser();
+  const { closeActiveTask, allData, user, updateTags, setIsEditTask, updateNotes} = useUser();
   const { tags, taskTags } = allData;
   const [userTask, setUserTask] = useState<Task>(task);
   const [tagInput, setTagInput] = useState("");
-  const [tagList, setTagList] = useState<Tag[]>(
-    functions.getTaskTags(tags, taskTags, userTask.id)
-  );
-  const [note, setNote] = useState<Omit<Note, 'id'>>({
-    noteTitle: '',
-    content: '',
-    teamMemberId: user.id,
-    taskId: userTask.id
-  });
+  const tagList= functions.getTaskTags(tags, taskTags, userTask.id)
+  const [note, setNote] = useState<Omit<Note, 'id'>>(defaultData.getDefaultNote);
 
   
 
@@ -38,7 +31,7 @@ export const TaskModalForm = ({
       <i
         className="fa-solid fa-xmark"
         onClick={() => {
-          editTask(false);
+          setIsEditTask(false);
           closeActiveTask();
         }}
       ></i>
@@ -53,7 +46,7 @@ export const TaskModalForm = ({
       <a
         className="cancel-form"
         onClick={() => {
-          editTask(false);
+          setIsEditTask(false);
         }}
       >
         Cancel
@@ -251,7 +244,19 @@ export const TaskModalForm = ({
             onChange={(e) => setNote({...note ,content: e.currentTarget.value})}
             ></textarea>
         </div>
-        <input className="submit-note" type="submit" value="Create Note" disabled={note.content === '' || note.noteTitle === ''} />
+        <input 
+          className="submit-note" 
+          type="submit" 
+          value="Create Note" 
+          disabled={validations.isNoteNotEmpty(note.noteTitle, note.content)} 
+          onClick={() => {
+            updateNotes({...note, 
+              teamMemberId: user.id,
+              taskId: userTask.id
+            })
+            setNote(defaultData.getDefaultNote)
+          }}
+        />
       </div>
     </form>
   );

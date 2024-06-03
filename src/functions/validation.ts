@@ -1,3 +1,5 @@
+import { TaskAssinmentLink } from "@/types/types";
+
  const isName = (name: string) => {
   return !/\d/.test(name);
 };
@@ -31,15 +33,17 @@ const isValidFormSub = (newUser: {
 };
 
 const isPastDue = (date: string, taskDate: string): boolean => {
-  const todayArr = date.split('/');
-  const taskDateArr = taskDate.split('/')
-  
-  if(
-    (todayArr[0] > taskDateArr[0] ||
-    todayArr[1] > taskDateArr[1]) &&
-    todayArr[2] >= taskDateArr[2]
-  )return true;
-  else return false;
+  const today = new Date(date);
+  const dueDate = new Date(taskDate)
+  return today > dueDate
+}
+
+const isNoteNotEmpty = (noteTitle: string, noteDesc: string) => {
+  return noteTitle.trim().length === 0 || noteDesc.trim().length === 0;
+}
+
+const isUsersTask = (userId: number, taskId: number, taskAssignments: TaskAssinmentLink[] ) => {
+  console.log();
   
 }
 
@@ -47,5 +51,7 @@ export const validations = {
   isName,
   isEmail,
   isValidFormSub,
-  isPastDue
+  isPastDue,
+  isNoteNotEmpty,
+  isUsersTask
 };

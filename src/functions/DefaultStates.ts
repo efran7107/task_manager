@@ -1,4 +1,4 @@
-import { AllData, Task, TeamMember } from "@/types/types";
+import { AllData, Note, Task, TeamMember } from "@/types/types";
 
 const getDefaultAllData = (): AllData => {
   return {
@@ -33,8 +33,19 @@ const getDefaultTask = (): Task => {
   };
 };
 
+const getDefaultNote = (): Omit<Note, 'id'> => {
+  return {
+      noteTitle: '',
+      content: '',
+      teamMemberId: 0,
+      taskId: 0,
+    }
+  
+}
+
 export const defaultData = {
   getDefaultAllData,
   getDefaultTeamMember,
   getDefaultTask,
+  getDefaultNote
 };
