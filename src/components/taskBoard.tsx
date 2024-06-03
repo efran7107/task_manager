@@ -14,19 +14,30 @@ const TaskModal = ({
   tags: Tag[];
   date: string;
 }) => {
-  const { user, activeTask, isActiveTask, closeActiveTask, allData, isEditTask, setIsEditTask } = useUser();
+  const {
+    user,
+    activeTask,
+    isActiveTask,
+    closeActiveTask,
+    allData,
+    isEditTask,
+    setIsEditTask,
+    deleteTask,
+  } = useUser();
   const taskNotes = allData.notes.filter(
     (note) => note.taskId === activeTask.id
   );
   const isPastDue = validations.isPastDue(date, task.dueDate);
-  validations.isUsersTask(user.id, activeTask.id, allData.taskAssignments)
+  const isTaskCreater = validations.isUsersTask(
+    user.id,
+    activeTask.id,
+    allData.taskCreater
+  );
+
   return (
     <>
       {isEditTask ? (
-        <TaskModalForm
-          task={activeTask}
-          pastDue={isPastDue}
-        />
+        <TaskModalForm task={activeTask} pastDue={isPastDue} />
       ) : (
         <div
           className={`modal-container ${isActiveTask ? "active" : ""} ${
@@ -54,7 +65,15 @@ const TaskModal = ({
               closeActiveTask();
             }}
           ></i>
-          {}
+          {isTaskCreater && (
+            <i
+              className="fa-solid fa-trash"
+              onClick={(e) => {
+                e.preventDefault();
+                deleteTask();
+              }}
+            ></i>
+          )}
           <h3>{task.taskName}</h3>
           <p>{task.description}</p>
           <div className="statuses">
@@ -138,7 +157,6 @@ export const TaskBoard = ({
   taskTags: TaskTagLink[];
 }) => {
   const todaysDate = functions.getTodaysDate();
-  
 
   const { activeTask } = useUser();
 

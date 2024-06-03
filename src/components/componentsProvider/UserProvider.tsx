@@ -2,7 +2,14 @@
 import { DeleteRequests, GetRequests, PostRequests } from "@/api/api";
 import { defaultData } from "@/functions/DefaultStates";
 import { functions } from "@/functions/functions";
-import { AllData, LogInStatus, Note, TagInputButton, Task, TeamMember } from "@/types/types";
+import {
+  AllData,
+  LogInStatus,
+  Note,
+  TagInputButton,
+  Task,
+  TeamMember,
+} from "@/types/types";
 import {
   ReactNode,
   createContext,
@@ -25,12 +32,16 @@ type TUserProvider = {
   activeTask: Task;
   setActiveTask: (task: Task) => void;
   closeActiveTask: () => void;
-  updateTags: (tagInput: string, taskId: number, status: TagInputButton) => void;
+  updateTags: (
+    tagInput: string,
+    taskId: number,
+    status: TagInputButton
+  ) => void;
   isEditTask: boolean;
   setIsEditTask: (isEdit: boolean) => void;
-  updateNotes: (note: Omit<Note, 'id'>) => void
+  updateNotes: (note: Omit<Note, "id">) => void;
+  deleteTask: () => void;
 };
-
 
 const UserContext = createContext<TUserProvider>({} as TUserProvider);
 
@@ -51,11 +62,14 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchallData = (logInState: LogInStatus) => {
     setIsLoggedIn("undefined");
-    functions.getAllData().then((data) => {
-      setAllData(data);
-      setIsLoading(false);
-      setIsLoggedIn(logInState);
-    }).catch(() => toast.error('error loading data'));
+    functions
+      .getAllData()
+      .then((data) => {
+        setAllData(data);
+        setIsLoading(false);
+        setIsLoggedIn(logInState);
+      })
+      .catch(() => toast.error("error loading data"));
   };
 
   const userAuth = (username: string, password: string) => {
@@ -123,101 +137,140 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     fetchallData("logged in");
   };
 
-  const closeActiveTask = () => {
-	setActiveTask(defaultData.getDefaultTask())
-	setIsActiveTask(false)
-  }
+  const deleteTask = () => {
+    const taskCreater = allData.taskCreater.find(
+      (creater) =>
+        creater.taskId === activeTask.id && creater.teamMemberId === user.id
+    );
+    const taskAssignments = allData.taskAssignments.filter(
+      (task) => task.taskId === activeTask.id
+    );
+    const taskTaglinks = allData.taskTags.filter(
+      (link) => link.taskId === activeTask.id
+    );
+    const notes = allData.notes.filter((note) => note.taskId === activeTask.id);
+  };
 
-  
-  const updateTags = (tagInput: string, taskId: number, status: TagInputButton) => {
-    switch(status) {
-      case 'add':
-        switch(functions.doesTagExist(tagInput, allData.tags)){
+  const closeActiveTask = () => {
+    setActiveTask(defaultData.getDefaultTask());
+    setIsActiveTask(false);
+  };
+
+  const updateTags = (
+    tagInput: string,
+    taskId: number,
+    status: TagInputButton
+  ) => {
+    switch (status) {
+      case "add":
+        switch (functions.doesTagExist(tagInput, allData.tags)) {
           case true:
             PostRequests.postTaskTagLink({
-              tagId: allData.tags.find(currentTask => currentTask.tagName.slice(1) === tagInput)!.id, 
-              taskId: taskId
+              tagId: allData.tags.find(
+                (currentTask) => currentTask.tagName.slice(1) === tagInput
+              )!.id,
+              taskId: taskId,
             }).then((res) => {
-              if(!res.ok){
-                setAllData(allData)
+              if (!res.ok) {
+                setAllData(allData);
               }
               functions.getAllData().then((data) => {
-                    setAllData(data)
-                  })
-            })
+                setAllData(data);
+              });
+            });
             break;
-          case false: 
-            PostRequests.postNewTag({tagName: `#${tagInput}`})
-              .then((newTag) => {
-                PostRequests.postTaskTagLink({tagId: newTag.id, taskId: taskId})
-                  .then((res) => {
-                    if(!res.ok){
-                      setAllData(allData)
-                    }
-                    functions.getAllData().then((data) => {
-                    setAllData(data)
-                  })
-                  })
-                
-              })
+          case false:
+            PostRequests.postNewTag({ tagName: `#${tagInput}` }).then(
+              (newTag) => {
+                PostRequests.postTaskTagLink({
+                  tagId: newTag.id,
+                  taskId: taskId,
+                }).then((res) => {
+                  if (!res.ok) {
+                    setAllData(allData);
+                  }
+                  functions.getAllData().then((data) => {
+                    setAllData(data);
+                  });
+                });
+              }
+            );
             break;
           default:
             break;
         }
-      break;
-      case 'delete': 
-        switch(functions.isOnlyOneLink(tagInput, allData.tags, allData.taskTags)){
+        break;
+      case "delete":
+        switch (
+          functions.isOnlyOneLink(tagInput, allData.tags, allData.taskTags)
+        ) {
           case true:
-            DeleteRequests.deleteTaskTagLink(allData.taskTags.find(link => {
-              if(link.tagId === allData.tags.find(tag => tag.tagName.slice(1) === tagInput)!.id && link.taskId === taskId){
-                return link
+            DeleteRequests.deleteTaskTagLink(
+              allData.taskTags.find((link) => {
+                if (
+                  link.tagId ===
+                    allData.tags.find(
+                      (tag) => tag.tagName.slice(1) === tagInput
+                    )!.id &&
+                  link.taskId === taskId
+                ) {
+                  return link;
+                }
+              })!.id
+            ).then((res) => {
+              if (!res.ok) {
+                setAllData(allData);
               }
-            })!.id)
-            .then((res) => {
-              if(!res.ok){
-                setAllData(allData)
-              }
-              DeleteRequests.deleteTag(allData.tags.find(tag => tag.tagName.slice(1) === tagInput)!.id)
-                .then((res) => {
-                  if(!res.ok){
-                    setAllData(allData)
-                  }
-                  functions.getAllData().then((data) => {
-                    setAllData(data)
-                  })
-                })
-            })
+              DeleteRequests.deleteTag(
+                allData.tags.find((tag) => tag.tagName.slice(1) === tagInput)!
+                  .id
+              ).then((res) => {
+                if (!res.ok) {
+                  setAllData(allData);
+                }
+                functions.getAllData().then((data) => {
+                  setAllData(data);
+                });
+              });
+            });
             break;
           case false:
-            DeleteRequests.deleteTaskTagLink(allData.taskTags.find(link => {
-              if(link.tagId === allData.tags.find(tag => tag.tagName.slice(1) === tagInput)!.id && link.taskId === taskId){
-                return link
-              }
-            })!.id)
-            .then((res) => {
-              if(!res.ok){
-                setAllData(allData)
+            DeleteRequests.deleteTaskTagLink(
+              allData.taskTags.find((link) => {
+                if (
+                  link.tagId ===
+                    allData.tags.find(
+                      (tag) => tag.tagName.slice(1) === tagInput
+                    )!.id &&
+                  link.taskId === taskId
+                ) {
+                  return link;
+                }
+              })!.id
+            ).then((res) => {
+              if (!res.ok) {
+                setAllData(allData);
               }
               functions.getAllData().then((data) => {
-                setAllData(data)
-              })
-            })
+                setAllData(data);
+              });
+            });
             break;
         }
-      break;
+        break;
     }
-  }
-  
-  const updateNotes = (note: Omit<Note, 'id'>) => {
+  };
+
+  const updateNotes = (note: Omit<Note, "id">) => {
     PostRequests.postNewNote(note).then((res) => {
-      if(!res.ok){
-        setAllData(allData)
+      if (!res.ok) {
+        setAllData(allData);
       }
       functions.getAllData().then((data) => {
-        setAllData(data)
-      })
-    })
-  }
+        setAllData(data);
+      });
+    });
+  };
 
   useEffect(() => {
     if (localStorage.getItem("user") !== null) {
@@ -251,7 +304,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         updateTags,
         isEditTask,
         setIsEditTask,
-        updateNotes
+        updateNotes,
+        deleteTask,
       }}
     >
       {children}

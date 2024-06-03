@@ -12,8 +12,6 @@ import {
   TUserTeams,
 } from "@/types/types";
 
-
-
 const getHeaderContainer = () => {
   const headerContainer = document.getElementById("header");
   headerContainer?.classList.add("dashboard");
@@ -26,6 +24,7 @@ const getAllData = async (): Promise<AllData> => {
     users: await GetRequests.getAllUsers(),
     userTeamLinks: await GetRequests.getAllTeamMemeberLinks(),
     tasks: await GetRequests.getAllTasks(),
+    taskCreater: await GetRequests.getAllTaskCreaters(),
     taskAssignments: await GetRequests.getAllTaskAssignmentLinks(),
     tags: await GetRequests.getAllTags(),
     taskTags: await GetRequests.getAllTaskTagLinks(),
@@ -143,10 +142,10 @@ const disableButton = (taskTag: Tag[], tagInput: string): TagInputButton => {
   }
 };
 
-const getMaxDaysForMonth = (month: number, year: number): number=> {  
-  switch(month) {
+const getMaxDaysForMonth = (month: number, year: number): number => {
+  switch (month) {
     case 1:
-    case 3: 
+    case 3:
     case 5:
     case 7:
     case 8:
@@ -159,25 +158,30 @@ const getMaxDaysForMonth = (month: number, year: number): number=> {
     case 11:
       return 30;
     case 2:
-      if(year%4 ===0){
+      if (year % 4 === 0) {
         return 29;
       }
       return 28;
     default:
       return 1;
   }
-}
+};
 
-const doesTagExist = (tag: string, tags:Tag[]): boolean => {
-  return tags.find(existingTag => existingTag.tagName.slice(1) === tag) !== undefined
-}
+const doesTagExist = (tag: string, tags: Tag[]): boolean => {
+  return (
+    tags.find((existingTag) => existingTag.tagName.slice(1) === tag) !==
+    undefined
+  );
+};
 
-const isOnlyOneLink = (tagName: string, tags: Tag[], tagLinks: TaskTagLink[]) => {
-  const tag = tags.find(availTags => availTags.tagName.slice(1) === tagName)
-  return tagLinks.filter(link => link.tagId === tag!.id).length <= 1;
-}
-
-
+const isOnlyOneLink = (
+  tagName: string,
+  tags: Tag[],
+  tagLinks: TaskTagLink[]
+) => {
+  const tag = tags.find((availTags) => availTags.tagName.slice(1) === tagName);
+  return tagLinks.filter((link) => link.tagId === tag!.id).length <= 1;
+};
 
 export const functions = {
   getHeaderContainer,
@@ -190,5 +194,5 @@ export const functions = {
   disableButton,
   getMaxDaysForMonth,
   doesTagExist,
-  isOnlyOneLink
+  isOnlyOneLink,
 };

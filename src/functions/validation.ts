@@ -1,6 +1,6 @@
 import { TaskAssinmentLink } from "@/types/types";
 
- const isName = (name: string) => {
+const isName = (name: string) => {
   return !/\d/.test(name);
 };
 
@@ -34,18 +34,25 @@ const isValidFormSub = (newUser: {
 
 const isPastDue = (date: string, taskDate: string): boolean => {
   const today = new Date(date);
-  const dueDate = new Date(taskDate)
-  return today > dueDate
-}
+  const dueDate = new Date(taskDate);
+  return today > dueDate;
+};
 
 const isNoteNotEmpty = (noteTitle: string, noteDesc: string) => {
   return noteTitle.trim().length === 0 || noteDesc.trim().length === 0;
-}
+};
 
-const isUsersTask = (userId: number, taskId: number, taskAssignments: TaskAssinmentLink[] ) => {
-  console.log();
-  
-}
+const isUsersTask = (
+  userId: number,
+  taskId: number,
+  taskCreaters: TaskAssinmentLink[]
+) => {
+  return (
+    taskCreaters.find(
+      (creator) => creator.taskId === taskId && creator.teamMemberId === userId
+    ) !== undefined
+  );
+};
 
 export const validations = {
   isName,
@@ -53,5 +60,5 @@ export const validations = {
   isValidFormSub,
   isPastDue,
   isNoteNotEmpty,
-  isUsersTask
+  isUsersTask,
 };

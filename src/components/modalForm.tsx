@@ -14,14 +14,23 @@ export const TaskModalForm = ({
   task: Task;
   pastDue: boolean;
 }) => {
-  const { closeActiveTask, allData, user, updateTags, setIsEditTask, updateNotes} = useUser();
-  const { tags, taskTags } = allData;
+  const {
+    closeActiveTask,
+    allData,
+    user,
+    updateTags,
+    setIsEditTask,
+    updateNotes,
+  } = useUser();
+  const { tags, taskTags, taskCreater } = allData;
   const [userTask, setUserTask] = useState<Task>(task);
   const [tagInput, setTagInput] = useState("");
-  const tagList= functions.getTaskTags(tags, taskTags, userTask.id)
-  const [note, setNote] = useState<Omit<Note, 'id'>>(defaultData.getDefaultNote);
+  const tagList = functions.getTaskTags(tags, taskTags, userTask.id);
+  const [note, setNote] = useState<Omit<Note, "id">>(
+    defaultData.getDefaultNote
+  );
 
-  
+  const isTaskCreater = validations.isUsersTask(user.id, task.id, taskCreater);
 
   return (
     <form
@@ -51,6 +60,7 @@ export const TaskModalForm = ({
       >
         Cancel
       </a>
+      {isTaskCreater && <i className="fa-solid fa-trash"></i>}
       <div className="task-name-input">
         <label htmlFor="taskName">Task Name:</label>
         <input
@@ -197,7 +207,7 @@ export const TaskModalForm = ({
             functions.disableButton(tagList, tagInput) === "not-enough"
           }
           onClick={() => {
-            updateTags(tagInput, userTask.id, 'add')
+            updateTags(tagInput, userTask.id, "add");
             setTagInput("");
           }}
         >
@@ -209,7 +219,7 @@ export const TaskModalForm = ({
             functions.disableButton(tagList, tagInput) === "not-enough"
           }
           onClick={() => {
-            updateTags(tagInput, userTask.id, 'delete')
+            updateTags(tagInput, userTask.id, "delete");
             setTagInput("");
           }}
         >
@@ -225,36 +235,39 @@ export const TaskModalForm = ({
         <p>Create New Note: </p>
         <div className="note-title">
           <label htmlFor="noteTitle">Note Title:</label>
-          <input 
-            type="text" 
-            name="noteTitle" 
-            id="noteTitle" 
+          <input
+            type="text"
+            name="noteTitle"
+            id="noteTitle"
             onChange={(e) => {
-              setNote({...note, noteTitle: e.currentTarget.value})
-            }}  
+              setNote({ ...note, noteTitle: e.currentTarget.value });
+            }}
             value={note.noteTitle}
           />
         </div>
         <div className="note-content">
           <label htmlFor="note">Content:</label>
-          <textarea 
-            name="note" 
-            id="note" 
+          <textarea
+            name="note"
+            id="note"
             value={note.content}
-            onChange={(e) => setNote({...note ,content: e.currentTarget.value})}
-            ></textarea>
+            onChange={(e) =>
+              setNote({ ...note, content: e.currentTarget.value })
+            }
+          ></textarea>
         </div>
-        <input 
-          className="submit-note" 
-          type="submit" 
-          value="Create Note" 
-          disabled={validations.isNoteNotEmpty(note.noteTitle, note.content)} 
+        <input
+          className="submit-note"
+          type="submit"
+          value="Create Note"
+          disabled={validations.isNoteNotEmpty(note.noteTitle, note.content)}
           onClick={() => {
-            updateNotes({...note, 
+            updateNotes({
+              ...note,
               teamMemberId: user.id,
-              taskId: userTask.id
-            })
-            setNote(defaultData.getDefaultNote)
+              taskId: userTask.id,
+            });
+            setNote(defaultData.getDefaultNote);
           }}
         />
       </div>
