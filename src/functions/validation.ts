@@ -42,17 +42,7 @@ const isNoteNotEmpty = (noteTitle: string, noteDesc: string) => {
   return noteTitle.trim().length === 0 || noteDesc.trim().length === 0;
 };
 
-const isUsersTask = (
-  userId: number,
-  taskId: number,
-  taskCreaters: TaskAssinmentLink[]
-) => {
-  return (
-    taskCreaters.find(
-      (creator) => creator.taskId === taskId && creator.teamMemberId === userId
-    ) !== undefined
-  );
-};
+
 
 export const validations = {
   isName,
@@ -60,5 +50,4 @@ export const validations = {
   isValidFormSub,
   isPastDue,
   isNoteNotEmpty,
-  isUsersTask,
 };

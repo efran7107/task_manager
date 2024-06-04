@@ -32,6 +32,7 @@ export type Task = {
   status: Status;
   dueDate: string;
   isImportant: boolean;
+  taskCreater: number
 };
 
 export type TaskAssinmentLink = {
@@ -64,7 +65,6 @@ export type AllData = {
   users: TeamMember[];
   userTeamLinks: TeamMemberTeamsLink[];
   tasks: Task[];
-  taskCreater: TaskAssinmentLink[];
   taskAssignments: TaskAssinmentLink[];
   tags: Tag[];
   taskTags: TaskTagLink[];

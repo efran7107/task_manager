@@ -6,8 +6,10 @@ import {
   AllData,
   LogInStatus,
   Note,
+  Tag,
   TagInputButton,
   Task,
+  TaskTagLink,
   TeamMember,
 } from "@/types/types";
 import {
@@ -138,17 +140,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const deleteTask = () => {
-    const taskCreater = allData.taskCreater.find(
-      (creater) =>
-        creater.taskId === activeTask.id && creater.teamMemberId === user.id
-    );
-    const taskAssignments = allData.taskAssignments.filter(
-      (task) => task.taskId === activeTask.id
-    );
-    const taskTaglinks = allData.taskTags.filter(
-      (link) => link.taskId === activeTask.id
-    );
-    const notes = allData.notes.filter((note) => note.taskId === activeTask.id);
+    const taskTagLinks = allData.taskTags.filter(link => link.taskId === activeTask.id)
+    const assTags: Array<[]> = [];
+    taskTagLinks.forEach(link => assTags.push(allData.tags.find(tag => tag.id === link.tagId)!))
+    const assTagLinks: Array<TaskTagLink[]> = []
+    assTags.forEach(tag => assTagLinks.push(allData.taskTags.filter(link => link.tagId === tag.id)))
+    console.log(assTagLinks, assTags, taskTagLinks);
+    
   };
 
   const closeActiveTask = () => {

@@ -24,7 +24,6 @@ const getAllData = async (): Promise<AllData> => {
     users: await GetRequests.getAllUsers(),
     userTeamLinks: await GetRequests.getAllTeamMemeberLinks(),
     tasks: await GetRequests.getAllTasks(),
-    taskCreater: await GetRequests.getAllTaskCreaters(),
     taskAssignments: await GetRequests.getAllTaskAssignmentLinks(),
     tags: await GetRequests.getAllTags(),
     taskTags: await GetRequests.getAllTaskTagLinks(),

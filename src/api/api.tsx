@@ -106,11 +106,6 @@ export const DeleteRequests = {
       method: "DELETE",
     });
   },
-  deleteCreater: (createrId: number) => {
-    return fetch(`${baseUrl}/taskCreater/${createrId}`, {
-      method: "DELETE",
-    });
-  },
   deleteTaskAssignmentLink: (linkId: number) => {
     return fetch(`${baseUrl}/taskAssignmentLink/${linkId}`, {
       method: "DELETE",

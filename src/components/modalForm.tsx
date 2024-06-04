@@ -22,15 +22,13 @@ export const TaskModalForm = ({
     setIsEditTask,
     updateNotes,
   } = useUser();
-  const { tags, taskTags, taskCreater } = allData;
+  const { tags, taskTags } = allData;
   const [userTask, setUserTask] = useState<Task>(task);
   const [tagInput, setTagInput] = useState("");
   const tagList = functions.getTaskTags(tags, taskTags, userTask.id);
   const [note, setNote] = useState<Omit<Note, "id">>(
     defaultData.getDefaultNote
   );
-
-  const isTaskCreater = validations.isUsersTask(user.id, task.id, taskCreater);
 
   return (
     <form
@@ -60,7 +58,7 @@ export const TaskModalForm = ({
       >
         Cancel
       </a>
-      {isTaskCreater && <i className="fa-solid fa-trash"></i>}
+      <i className="fa-solid fa-trash"></i>
       <div className="task-name-input">
         <label htmlFor="taskName">Task Name:</label>
         <input

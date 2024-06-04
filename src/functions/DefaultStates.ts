@@ -30,6 +30,7 @@ const getDefaultTask = (): Task => {
     status: "to-do",
     dueDate: "",
     isImportant: false,
+    taskCreater: 0
   };
 };
 
