@@ -104,21 +104,33 @@ export const DeleteRequests = {
   deleteTask: (taskId: number) => {
     return fetch(`${baseUrl}/tasks/${taskId}`, {
       method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
     });
   },
   deleteTaskAssignmentLink: (linkId: number) => {
     return fetch(`${baseUrl}/taskAssignmentLink/${linkId}`, {
       method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
     });
   },
   deleteTaskTagLink: (linkId: number) => {
     return fetch(`${baseUrl}/taskTagLink/${linkId}`, {
       method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
     });
   },
   deleteTag: (tagId: number) => {
     return fetch(`${baseUrl}/tags/${tagId}`, {
       method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
     });
   },
 };

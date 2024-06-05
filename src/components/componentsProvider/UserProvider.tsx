@@ -63,6 +63,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [isEditTask, setIsEditTask] = useState(false);
 
   const fetchallData = (logInState: LogInStatus) => {
+    setIsLoading(true);
     setIsLoggedIn("undefined");
     functions
       .getAllData()
@@ -140,13 +141,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const deleteTask = () => {
-    const taskTagLinks = allData.taskTags.filter(link => link.taskId === activeTask.id)
-    const assTags: Array<[]> = [];
-    taskTagLinks.forEach(link => assTags.push(allData.tags.find(tag => tag.id === link.tagId)!))
-    const assTagLinks: Array<TaskTagLink[]> = []
-    assTags.forEach(tag => assTagLinks.push(allData.taskTags.filter(link => link.tagId === tag.id)))
-    console.log(assTagLinks, assTags, taskTagLinks);
-    
+    setIsLoading(true);
+
+    closeActiveTask();
   };
 
   const closeActiveTask = () => {
