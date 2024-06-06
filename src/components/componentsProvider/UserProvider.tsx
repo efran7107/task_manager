@@ -140,10 +140,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     fetchallData("logged in");
   };
 
-  const deleteTask = () => {
+  const deleteTask = async () => {
     setIsLoading(true);
 
-    closeActiveTask();
+    try {
+    } catch (error) {
+      toast.error("failed to delete task");
+    }
   };
 
   const closeActiveTask = () => {

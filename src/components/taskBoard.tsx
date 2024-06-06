@@ -28,7 +28,7 @@ const TaskModal = ({
     (note) => note.taskId === activeTask.id
   );
   const isPastDue = validations.isPastDue(date, task.dueDate);
-  const isTaskCreater = task.taskCreater === user.id
+  const isTaskCreater = task.taskCreater === user.id;
 
   return (
     <>
@@ -47,16 +47,16 @@ const TaskModal = ({
                 : "fa-solid fa-triangle-exclamation"
             }
           ></i>
-          {isTaskCreater && 
+          {isTaskCreater && (
             <i
-            className="fa-solid fa-pen-to-square"
-            onClick={(e) => {
-              e.preventDefault();
-              setIsEditTask(true);
-            }}
-          ></i>
-          }
-          
+              className="fa-solid fa-pen-to-square"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsEditTask(true);
+              }}
+            ></i>
+          )}
+
           <i
             className="fa-solid fa-xmark"
             onClick={(e) => {
