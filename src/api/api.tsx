@@ -133,4 +133,13 @@ export const DeleteRequests = {
       },
     });
   },
+  deleteNote: (noteId: number) => {
+    return fetch(`${baseUrl}/notes/${noteId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+  }
 };

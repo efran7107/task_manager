@@ -142,8 +142,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const deleteTask = async () => {
     setIsLoading(true);
-
+    const taskNotes = allData.notes.filter(note => note.taskId === activeTask.id)
+    const taskTagLinks = allData.taskTags.filter(link => link.taskId === activeTask.id)
     try {
+      
     } catch (error) {
       toast.error("failed to delete task");
     }
