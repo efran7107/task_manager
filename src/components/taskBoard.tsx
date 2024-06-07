@@ -67,8 +67,7 @@ const TaskModal = ({
           {isTaskCreater && (
             <i
               className="fa-solid fa-trash"
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 deleteTask();
               }}
             ></i>

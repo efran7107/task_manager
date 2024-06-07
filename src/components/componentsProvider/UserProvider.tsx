@@ -6,10 +6,8 @@ import {
   AllData,
   LogInStatus,
   Note,
-  Tag,
   TagInputButton,
   Task,
-  TaskTagLink,
   TeamMember,
 } from "@/types/types";
 import {

@@ -1,5 +1,3 @@
-import { TaskAssinmentLink } from "@/types/types";
-
 const isName = (name: string) => {
   return !/\d/.test(name);
 };
@@ -42,7 +40,9 @@ const isNoteNotEmpty = (noteTitle: string, noteDesc: string) => {
   return noteTitle.trim().length === 0 || noteDesc.trim().length === 0;
 };
 
-
+const isNotBlank = (input: string) => {
+  return input.trim().length === 0 
+}
 
 export const validations = {
   isName,
@@ -50,4 +50,5 @@ export const validations = {
   isValidFormSub,
   isPastDue,
   isNoteNotEmpty,
+  isNotBlank
 };

@@ -21,6 +21,7 @@ export const TaskModalForm = ({
     updateTags,
     setIsEditTask,
     updateNotes,
+    deleteTask
   } = useUser();
   const { tags, taskTags } = allData;
   const [userTask, setUserTask] = useState<Task>(task);
@@ -49,7 +50,14 @@ export const TaskModalForm = ({
             : "fa-solid fa-triangle-exclamation"
         }
       ></i>
-      <i className="fa-solid fa-cloud-arrow-up"></i>
+      <i 
+        className="fa-solid fa-cloud-arrow-up"
+        onClick={() => {
+          if(
+            
+          )
+        }}
+      ></i>
       <a
         className="cancel-form"
         onClick={() => {
@@ -58,7 +66,11 @@ export const TaskModalForm = ({
       >
         Cancel
       </a>
-      <i className="fa-solid fa-trash"></i>
+      <i className="fa-solid fa-trash"
+              onClick={() => {
+                deleteTask();
+              }}
+              ></i>
       <div className="task-name-input">
         <label htmlFor="taskName">Task Name:</label>
         <input
