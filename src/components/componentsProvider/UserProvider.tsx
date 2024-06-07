@@ -140,15 +140,44 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     fetchallData("logged in");
   };
 
-  const deleteTask = async () => {
+  const deleteTask = () => {
     setIsLoading(true);
-    const taskNotes = allData.notes.filter(note => note.taskId === activeTask.id)
-    const taskTagLinks = allData.taskTags.filter(link => link.taskId === activeTask.id)
-    try {
-      
-    } catch (error) {
-      toast.error("failed to delete task");
-    }
+    const taskAssinments = allData.taskAssignments.filter(
+      (ass) => ass.taskId === activeTask.id
+    );
+    const taskNotes = allData.notes.filter(
+      (note) => note.taskId === activeTask.id
+    );
+    const taskTagLinks = allData.taskTags.filter(
+      (link) => link.taskId === activeTask.id
+    );
+    taskAssinments.forEach((ass) => {
+      functions.deleteTaskAssignment(ass.id);
+    });
+    taskTagLinks.forEach((link) => {
+      const tag = allData.tags.find((tag) => tag.id === link.tagId)!;
+      if (
+        allData.taskTags.filter((link) => link.tagId === tag.id).length <= 1
+      ) {
+        functions.deleteTag(tag.id);
+      }
+      functions.deleteTaskTag(link.id);
+    });
+    taskNotes.forEach((note) => {
+      functions.deleteNote(note.id);
+    });
+    functions.deleteTask(activeTask.id);
+    closeActiveTask();
+    functions
+      .getAllData()
+      .then((data) => {
+        setAllData(data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setAllData(allData);
+        setIsLoading(false);
+      });
   };
 
   const closeActiveTask = () => {

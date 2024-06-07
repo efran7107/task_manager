@@ -1,4 +1,4 @@
-import { GetRequests } from "@/api/api";
+import { DeleteRequests, GetRequests } from "@/api/api";
 import {
   AllData,
   Tag,
@@ -11,6 +11,7 @@ import {
   TeamMemberTeamsLink,
   TUserTeams,
 } from "@/types/types";
+import toast from "react-hot-toast";
 
 const getHeaderContainer = () => {
   const headerContainer = document.getElementById("header");
@@ -182,6 +183,36 @@ const isOnlyOneLink = (
   return tagLinks.filter((link) => link.tagId === tag!.id).length <= 1;
 };
 
+const deleteTag = async (tagId: number) => {
+  await DeleteRequests.deleteTag(tagId).catch(() =>
+    toast.error("Oops something went wrong deleting task")
+  );
+};
+
+const deleteTaskTag = async (taskTagId: number) => {
+  await DeleteRequests.deleteTaskTagLink(taskTagId).catch(() =>
+    toast.error("Oops something went wrong deleting task")
+  );
+};
+
+const deleteNote = async (noteId: number) => {
+  await DeleteRequests.deleteNote(noteId).catch(() =>
+    toast.error("Oops something went wrong deleting task")
+  );
+};
+
+const deleteTaskAssignment = async (assId: number) => {
+  await DeleteRequests.deleteTaskAssignmentLink(assId).catch(() =>
+    toast.error("Oops something went wrong deleting task")
+  );
+};
+
+const deleteTask = async (taskId: number) => {
+  await DeleteRequests.deleteTask(taskId).catch(() =>
+    toast.error("Oops something went wrong deleting task")
+  );
+};
+
 export const functions = {
   getHeaderContainer,
   getAllData,
@@ -194,4 +225,9 @@ export const functions = {
   getMaxDaysForMonth,
   doesTagExist,
   isOnlyOneLink,
+  deleteTag,
+  deleteTaskTag,
+  deleteNote,
+  deleteTask,
+  deleteTaskAssignment,
 };
