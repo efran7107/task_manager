@@ -1,5 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
-import { DeleteRequests, GetRequests, PostRequests } from "@/api/api";
+import {
+  DeleteRequests,
+  GetRequests,
+  PostRequests,
+  PutRequest,
+} from "@/api/api";
 import { defaultData } from "@/functions/DefaultStates";
 import { functions } from "@/functions/functions";
 import {
@@ -41,6 +46,7 @@ type TUserProvider = {
   setIsEditTask: (isEdit: boolean) => void;
   updateNotes: (note: Omit<Note, "id">) => void;
   deleteTask: () => void;
+  editTask: (task: Task, taskId: number) => void;
 };
 
 const UserContext = createContext<TUserProvider>({} as TUserProvider);
@@ -138,6 +144,23 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     fetchallData("logged in");
   };
 
+  const editTask = (task: Task, taskId: number) => {
+    PutRequest.updateTask(task).then((res) => {
+      if (!res.ok) {
+        toast.error("Error updating task");
+        setAllData(allData);
+        setActiveTask(allData.tasks.find((task) => task.id === taskId)!);
+        setIsEditTask(false);
+        return;
+      }
+      functions.getAllData().then((data) => {
+        setAllData(data);
+        setActiveTask(data.tasks.find((task) => task.id === taskId)!);
+        setIsEditTask(false);
+      });
+    });
+  };
+
   const deleteTask = () => {
     setIsLoading(true);
     const taskAssinments = allData.taskAssignments.filter(
@@ -200,9 +223,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             }).then((res) => {
               if (!res.ok) {
                 setAllData(allData);
+                toast.error("error adding tag");
               }
               functions.getAllData().then((data) => {
                 setAllData(data);
+                toast.success("sucessfully added tag");
               });
             });
             break;
@@ -215,9 +240,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                 }).then((res) => {
                   if (!res.ok) {
                     setAllData(allData);
+                    toast.error("error adding tag");
                   }
                   functions.getAllData().then((data) => {
                     setAllData(data);
+                    toast.success("sucessfully added tag");
                   });
                 });
               }
@@ -247,6 +274,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             ).then((res) => {
               if (!res.ok) {
                 setAllData(allData);
+                toast.error("error deleting tag");
               }
               DeleteRequests.deleteTag(
                 allData.tags.find((tag) => tag.tagName.slice(1) === tagInput)!
@@ -254,9 +282,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
               ).then((res) => {
                 if (!res.ok) {
                   setAllData(allData);
+                  toast.error("error deleting tag");
                 }
                 functions.getAllData().then((data) => {
                   setAllData(data);
+                  toast.success("sucessfully deleted tag");
                 });
               });
             });
@@ -277,9 +307,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             ).then((res) => {
               if (!res.ok) {
                 setAllData(allData);
+                toast.error("error deleting tag");
               }
               functions.getAllData().then((data) => {
                 setAllData(data);
+                toast.success("sucessfully deleted tag");
               });
             });
             break;
@@ -333,6 +365,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setIsEditTask,
         updateNotes,
         deleteTask,
+        editTask,
       }}
     >
       {children}

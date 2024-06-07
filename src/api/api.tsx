@@ -100,6 +100,18 @@ export const PostRequests = {
   },
 };
 
+export const PutRequest = {
+  updateTask: (task: Task) => {
+    return fetch(`${baseUrl}/tasks/${task.id}`, {
+      body: JSON.stringify(task),
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+  },
+};
+
 export const DeleteRequests = {
   deleteTask: (taskId: number) => {
     return fetch(`${baseUrl}/tasks/${taskId}`, {

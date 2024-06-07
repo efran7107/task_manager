@@ -6,6 +6,7 @@ import "@/styles/taskBoard.css";
 import { functions } from "@/functions/functions";
 import { validations } from "@/functions/validation";
 import { defaultData } from "@/functions/DefaultStates";
+import toast from "react-hot-toast";
 
 export const TaskModalForm = ({
   task,
@@ -21,7 +22,8 @@ export const TaskModalForm = ({
     updateTags,
     setIsEditTask,
     updateNotes,
-    deleteTask
+    deleteTask,
+    editTask,
   } = useUser();
   const { tags, taskTags } = allData;
   const [userTask, setUserTask] = useState<Task>(task);
@@ -50,12 +52,24 @@ export const TaskModalForm = ({
             : "fa-solid fa-triangle-exclamation"
         }
       ></i>
-      <i 
+      <i
         className="fa-solid fa-cloud-arrow-up"
         onClick={() => {
-          if(
-            
-          )
+          if (
+            validations.isNotBlank(userTask.taskName) ||
+            validations.isNotBlank(userTask.description)
+          ) {
+            setUserTask({
+              ...userTask,
+              taskName: task.taskName,
+              description: task.description,
+            });
+            toast.error(
+              "Please fill in both task name and description to save changes."
+            );
+            return;
+          }
+          editTask(userTask, userTask.id);
         }}
       ></i>
       <a
@@ -66,11 +80,12 @@ export const TaskModalForm = ({
       >
         Cancel
       </a>
-      <i className="fa-solid fa-trash"
-              onClick={() => {
-                deleteTask();
-              }}
-              ></i>
+      <i
+        className="fa-solid fa-trash"
+        onClick={() => {
+          deleteTask();
+        }}
+      ></i>
       <div className="task-name-input">
         <label htmlFor="taskName">Task Name:</label>
         <input
@@ -219,6 +234,7 @@ export const TaskModalForm = ({
           onClick={() => {
             updateTags(tagInput, userTask.id, "add");
             setTagInput("");
+            toast.success("tag added");
           }}
         >
           add
@@ -278,6 +294,7 @@ export const TaskModalForm = ({
               taskId: userTask.id,
             });
             setNote(defaultData.getDefaultNote);
+            toast.success("note added");
           }}
         />
       </div>
