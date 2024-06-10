@@ -1,5 +1,5 @@
 export type Status = "to-do" | "doing" | "done";
-export type LogInStatus = "logged in" | "not logged in" | "undefined";
+export type LogInStatus = "logged in" | "not logged in" | 'create task' | "undefined";
 
 export type Team = {
   id: number;
