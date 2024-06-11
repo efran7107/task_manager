@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { useUser } from "./componentsProvider/UserProvider";
-import { Note, Task } from "@/types/types";
+import { Task } from "@/types/types";
 import "@/styles/modalForm.css";
 import "@/styles/taskBoard.css";
 import { functions } from "@/functions/functions";
 import { validations } from "@/functions/validation";
-import { defaultData } from "@/functions/DefaultStates";
 import toast from "react-hot-toast";
 import { UserInput, UserTextArea } from "./taskModalComponentForm/UserInput";
 import { DateInputs } from "./taskModalComponentForm/dateInput";
 import { StatusInputs } from "./taskModalComponentForm/StatusInput";
+import { ImportantInput } from "./taskModalComponentForm/InportantInput";
+import { TagList } from "./apiComponents/tagList";
+import { CreateNote } from "./apiComponents/addNote";
 
 export const TaskModalForm = ({
   task,
@@ -22,9 +24,7 @@ export const TaskModalForm = ({
     closeActiveTask,
     allData,
     user,
-    updateTags,
     setIsEditTask,
-    updateNotes,
     deleteTask,
     editTask,
   } = useUser();
@@ -32,9 +32,6 @@ export const TaskModalForm = ({
   const [userTask, setUserTask] = useState<Task>(task);
   const [tagInput, setTagInput] = useState("");
   const tagList = functions.getTaskTags(tags, taskTags, userTask.id);
-  const [note, setNote] = useState<Omit<Note, "id">>(
-    defaultData.getDefaultNote
-  );
 
   return (
     <form
@@ -94,10 +91,7 @@ export const TaskModalForm = ({
         label="Task Name"
         className="task-name-input"
         userProps={{
-          id: "taskName",
           type: "text",
-          name: "taskName",
-          autoComplete: "off",
           value: userTask.taskName,
           onChange: (e) => {
             setUserTask({ ...userTask, taskName: e.target.value });
@@ -129,99 +123,28 @@ export const TaskModalForm = ({
         userTask={userTask}
         setUserTask={setUserTask}
       />
-      <div className="important-input">
-        <label htmlFor="important">Important: </label>
-        <input
-          type="checkbox"
-          name="important"
-          id="important"
-          defaultChecked={userTask.isImportant}
-          onChange={() => {
-            setUserTask({ ...userTask, isImportant: !userTask.isImportant });
-          }}
-        />
-      </div>
-      <div className="tags-edit">
-        <label htmlFor="tags">Tags: </label>
-        <input
-          type="text"
-          value={tagInput}
-          onChange={(e) => {
-            setTagInput(e.currentTarget.value);
-          }}
-        />
-        <button
-          disabled={
-            functions.disableButton(tagList, tagInput) === "delete" ||
-            functions.disableButton(tagList, tagInput) === "not-enough"
-          }
-          onClick={() => {
-            updateTags(tagInput, userTask.id, "add");
-            setTagInput("");
-            toast.success("tag added");
-          }}
-        >
-          add
-        </button>
-        <button
-          disabled={
-            functions.disableButton(tagList, tagInput) === "add" ||
-            functions.disableButton(tagList, tagInput) === "not-enough"
-          }
-          onClick={() => {
-            updateTags(tagInput, userTask.id, "delete");
-            setTagInput("");
-          }}
-        >
-          delete
-        </button>
-      </div>
+      <ImportantInput
+        id="important"
+        label="Important"
+        className="important-input"
+        task={userTask}
+        setImportant={setUserTask}
+      />
+      <TagList
+        id="tags"
+        label="Tags"
+        className="tags-edit"
+        tagList={tagList}
+        tagInput={tagInput}
+        setTagInput={setTagInput}
+        task={userTask}
+      />
       <div className="tags-list">
         {tagList.map((tag) => (
           <p key={tag.id}>{tag.tagName}</p>
         ))}
       </div>
-      <div className="create-note">
-        <p>Create New Note: </p>
-        <div className="note-title">
-          <label htmlFor="noteTitle">Note Title:</label>
-          <input
-            type="text"
-            name="noteTitle"
-            id="noteTitle"
-            onChange={(e) => {
-              setNote({ ...note, noteTitle: e.currentTarget.value });
-            }}
-            value={note.noteTitle}
-          />
-        </div>
-        <div className="note-content">
-          <label htmlFor="note">Content:</label>
-          <textarea
-            name="note"
-            id="note"
-            value={note.content}
-            onChange={(e) =>
-              setNote({ ...note, content: e.currentTarget.value })
-            }
-          ></textarea>
-        </div>
-        <input
-          className="submit-note"
-          type="submit"
-          value="Create Note"
-          disabled={validations.isNoteNotEmpty(note.noteTitle, note.content)}
-          onClick={() => {
-            updateNotes({
-              ...note,
-              teamMemberId: user.id,
-              taskId: userTask.id,
-            });
-            setNote(defaultData.getDefaultNote);
-            toast.success("note added");
-          }}
-        />
-      </div>
+      <CreateNote userId={user.id} taskId={userTask.id} />
     </form>
   );
 };

@@ -27,7 +27,7 @@ const defaultRegistration = {
 
 export const LogIn = () => {
   const { createUser, userAuth, isExistingUser, isLoading } = useUser();
-  const { isValidFormSub, isName, isEmail } = validations;
+  const { isInvalidFormSub, isName, isEmail } = validations;
   const { formatName } = transformations;
 
   const [isLogInSubmit, setIsLogInSubmit] = useState(false);
@@ -103,7 +103,7 @@ export const LogIn = () => {
           className="user-entry"
           onSubmit={(e) => {
             e.preventDefault();
-            if (isValidFormSub(newUser)) {
+            if (isInvalidFormSub(newUser)) {
               toast.error("Please fill out all fields on the form");
               setIsCreateFormSubmit(true);
               return;
@@ -120,7 +120,6 @@ export const LogIn = () => {
               },
               newUser.newPassword
             );
-            toast.success("User created successfully");
             setIsCreateFormSubmit(false);
             setNewUser(defaultRegistration);
           }}

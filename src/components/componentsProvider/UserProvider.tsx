@@ -1,12 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
-import {
-  DeleteRequests,
-  GetRequests,
-  PostRequests,
-  PutRequest,
-} from "@/api/api";
+import { GetRequests, PostRequests, PutRequest } from "@/api/api";
 import { defaultData } from "@/functions/DefaultStates";
+import { apiFunctions } from "@/functions/apiFunctions";
 import { functions } from "@/functions/functions";
+import { validations } from "@/functions/validation";
 import {
   AllData,
   LogInStatus,
@@ -80,40 +77,36 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const userAuth = (username: string, password: string) => {
-    if (username === "" || password === "") {
-      toast.error("Please enter a username and/or password");
-      return;
-    } else if (
-      allData!.users.filter((user) => user.username === username && user)
-        .length === 0
-    ) {
-      toast.error("User not found");
-      return;
-    }
-    GetRequests.getUserPassword(
-      allData!.users.filter((user) =>
-        user.username === username ? user : null
-      )[0].id
-    ).then((passwordAuth) => {
-      if (passwordAuth.password !== password) {
-        toast.error("Wrong password");
+    switch (validations.isUserExist(username, password, allData)) {
+      case true:
+        GetRequests.getUserPassword(
+          allData!.users.filter((user) =>
+            user.username === username ? user : null
+          )[0].id
+        ).then((passwordAuth) => {
+          if (passwordAuth.password !== password) {
+            toast.error("Wrong password");
+            return;
+          }
+          toast.success("Login successful");
+          setUser(
+            allData!.users.filter((user) =>
+              user.username === username ? user : null
+            )[0]
+          );
+          setIsLoggedIn("logged in");
+          localStorage.setItem(
+            "user",
+            allData!.users.filter((user) =>
+              user.username === username ? user : null
+            )[0].username
+          );
+          functions.getHeaderContainer();
+        });
+        break;
+      default:
         return;
-      }
-      toast.success("Login successful");
-      setUser(
-        allData!.users.filter((user) =>
-          user.username === username ? user : null
-        )[0]
-      );
-      setIsLoggedIn("logged in");
-      localStorage.setItem(
-        "user",
-        allData!.users.filter((user) =>
-          user.username === username ? user : null
-        )[0].username
-      );
-      functions.getHeaderContainer();
-    });
+    }
   };
 
   const isExistingUser = (username: string): boolean => {
@@ -213,109 +206,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   ) => {
     switch (status) {
       case "add":
-        switch (functions.doesTagExist(tagInput, allData.tags)) {
-          case true:
-            PostRequests.postTaskTagLink({
-              tagId: allData.tags.find(
-                (currentTask) => currentTask.tagName.slice(1) === tagInput
-              )!.id,
-              taskId: taskId,
-            }).then((res) => {
-              if (!res.ok) {
-                setAllData(allData);
-                toast.error("error adding tag");
-              }
-              functions.getAllData().then((data) => {
-                setAllData(data);
-                toast.success("sucessfully added tag");
-              });
-            });
-            break;
-          case false:
-            PostRequests.postNewTag({ tagName: `#${tagInput}` }).then(
-              (newTag) => {
-                PostRequests.postTaskTagLink({
-                  tagId: newTag.id,
-                  taskId: taskId,
-                }).then((res) => {
-                  if (!res.ok) {
-                    setAllData(allData);
-                    toast.error("error adding tag");
-                  }
-                  functions.getAllData().then((data) => {
-                    setAllData(data);
-                    toast.success("sucessfully added tag");
-                  });
-                });
-              }
-            );
-            break;
-          default:
-            break;
-        }
+        apiFunctions.addTag(tagInput, taskId, allData, setAllData);
         break;
       case "delete":
-        switch (
-          functions.isOnlyOneLink(tagInput, allData.tags, allData.taskTags)
-        ) {
-          case true:
-            DeleteRequests.deleteTaskTagLink(
-              allData.taskTags.find((link) => {
-                if (
-                  link.tagId ===
-                    allData.tags.find(
-                      (tag) => tag.tagName.slice(1) === tagInput
-                    )!.id &&
-                  link.taskId === taskId
-                ) {
-                  return link;
-                }
-              })!.id
-            ).then((res) => {
-              if (!res.ok) {
-                setAllData(allData);
-                toast.error("error deleting tag");
-              }
-              DeleteRequests.deleteTag(
-                allData.tags.find((tag) => tag.tagName.slice(1) === tagInput)!
-                  .id
-              ).then((res) => {
-                if (!res.ok) {
-                  setAllData(allData);
-                  toast.error("error deleting tag");
-                }
-                functions.getAllData().then((data) => {
-                  setAllData(data);
-                  toast.success("sucessfully deleted tag");
-                });
-              });
-            });
-            break;
-          case false:
-            DeleteRequests.deleteTaskTagLink(
-              allData.taskTags.find((link) => {
-                if (
-                  link.tagId ===
-                    allData.tags.find(
-                      (tag) => tag.tagName.slice(1) === tagInput
-                    )!.id &&
-                  link.taskId === taskId
-                ) {
-                  return link;
-                }
-              })!.id
-            ).then((res) => {
-              if (!res.ok) {
-                setAllData(allData);
-                toast.error("error deleting tag");
-              }
-              functions.getAllData().then((data) => {
-                setAllData(data);
-                toast.success("sucessfully deleted tag");
-              });
-            });
-            break;
-        }
+        apiFunctions.deleteTag(tagInput, taskId, allData, setAllData);
         break;
     }
   };
@@ -324,9 +218,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     PostRequests.postNewNote(note).then((res) => {
       if (!res.ok) {
         setAllData(allData);
+        toast.error("error adding note");
       }
       functions.getAllData().then((data) => {
         setAllData(data);
+        toast.success("added note successully");
       });
     });
   };

@@ -1,3 +1,5 @@
+import { AllData } from "@/types/types";
+
 const isName = (name: string) => {
   return !/\d/.test(name);
 };
@@ -7,7 +9,7 @@ const isEmail = (email: string) => {
   return !!email?.match(regex);
 };
 
-const isValidFormSub = (newUser: {
+const isInvalidFormSub = (newUser: {
   newUsername: string;
   firstName: string;
   lastName: string;
@@ -41,14 +43,32 @@ const isNoteNotEmpty = (noteTitle: string, noteDesc: string) => {
 };
 
 const isNotBlank = (input: string) => {
-  return input.trim().length === 0 
-}
+  return input.trim().length === 0;
+};
+
+const isUserExist = (
+  username: string,
+  password: string,
+  allData: AllData
+): boolean => {
+  if (isNoteNotEmpty(username, password)) {
+    return false;
+  } else if (
+    allData.users.filter((user) => user.username === username && user)
+      .length === 0
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+};
 
 export const validations = {
   isName,
   isEmail,
-  isValidFormSub,
+  isInvalidFormSub,
   isPastDue,
   isNoteNotEmpty,
-  isNotBlank
+  isNotBlank,
+  isUserExist,
 };
