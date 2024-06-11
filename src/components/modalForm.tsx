@@ -7,6 +7,7 @@ import { functions } from "@/functions/functions";
 import { validations } from "@/functions/validation";
 import { defaultData } from "@/functions/DefaultStates";
 import toast from "react-hot-toast";
+import { UserInput, UserTextArea } from "./UserInput";
 
 export const TaskModalForm = ({
   task,
@@ -86,29 +87,34 @@ export const TaskModalForm = ({
           deleteTask();
         }}
       ></i>
-      <div className="task-name-input">
-        <label htmlFor="taskName">Task Name:</label>
-        <input
-          type="text"
-          name="taskName"
-          id="taskName"
-          value={`${userTask.taskName}`}
-          onChange={(e) => {
+      <UserInput
+        id="taskName"
+        label="Task Name"
+        className="task-name-input"
+        userProps={{
+          id: "taskName",
+          type: "text",
+          name: "taskName",
+          autoComplete: "off",
+          value: userTask.taskName,
+          onChange: (e) => {
             setUserTask({ ...userTask, taskName: e.target.value });
-          }}
-        />
-      </div>
-      <div className="task-description-input">
-        <label htmlFor="taskDescription">Task: </label>
-        <textarea
-          name="taskDescription"
-          id="taskDescription"
-          value={userTask.description}
-          onChange={(e) => {
+          },
+        }}
+      />
+      <UserTextArea
+        id="taskDescription"
+        label="Task"
+        className="task-description-input"
+        userProps={{
+          id: "taskDescription",
+          name: "taskDescription",
+          value: userTask.description,
+          onChange: (e) => {
             setUserTask({ ...userTask, description: e.target.value });
-          }}
-        ></textarea>
-      </div>
+          },
+        }}
+      />
       <div className="date-input">
         <label htmlFor="dueDate">Due Date:</label>
         <div className="date">
