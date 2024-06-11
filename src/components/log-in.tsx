@@ -4,7 +4,7 @@ import { useUser } from "./componentsProvider/UserProvider";
 import toast from "react-hot-toast";
 import { validations } from "@/functions/validation";
 import { transformations } from "@/functions/transformations";
-import { UserInput } from "./UserInput";
+import { UserInput } from "./taskModalComponentForm/UserInput";
 
 type DefaultLogIn = {
   username: string;
@@ -61,9 +61,6 @@ export const LogIn = () => {
             className="input-group"
             userProps={{
               type: "text",
-              className: "form-control",
-              name: "username",
-              autoComplete: "off",
               value: userLogIn.username,
               onChange: (e) => {
                 setUserLogIn({ ...userLogIn, username: e.currentTarget.value });
@@ -82,8 +79,6 @@ export const LogIn = () => {
             className="input-group"
             userProps={{
               type: "password",
-              name: "password",
-              autoComplete: "off",
               value: userLogIn.password,
               onChange: (e) => {
                 setUserLogIn({ ...userLogIn, password: e.currentTarget.value });
@@ -137,8 +132,6 @@ export const LogIn = () => {
             className="input-group"
             userProps={{
               type: "text",
-              name: "createUsername",
-              autoComplete: "off",
               value: newUser.newUsername,
               onChange: (e) => {
                 setNewUser({ ...newUser, newUsername: e.currentTarget.value });
@@ -157,8 +150,6 @@ export const LogIn = () => {
             className="input-group"
             userProps={{
               type: "text",
-              name: "firstName",
-              autoComplete: "off",
               value: newUser.firstName,
               onChange: (e) => {
                 setNewUser({ ...newUser, firstName: e.currentTarget.value });
@@ -177,9 +168,6 @@ export const LogIn = () => {
             className="input-group"
             userProps={{
               type: "text",
-              name: "lastName",
-              id: "lastName",
-              autoComplete: "off",
               value: newUser.lastName,
               onChange: (e) => {
                 setNewUser({ ...newUser, lastName: e.currentTarget.value });
@@ -199,9 +187,6 @@ export const LogIn = () => {
             className="input-group"
             userProps={{
               type: "email",
-              name: "email",
-              id: "email",
-              autoComplete: "off",
               value: newUser.email,
               onChange: (e) => {
                 setNewUser({ ...newUser, email: e.currentTarget.value });
@@ -221,9 +206,6 @@ export const LogIn = () => {
             className="input-group"
             userProps={{
               type: "password",
-              name: "createPassword",
-              id: "createPassword",
-              autoComplete: "off",
               value: newUser.newPassword,
               onChange: (e) => {
                 setNewUser({ ...newUser, newPassword: e.currentTarget.value });
@@ -242,9 +224,6 @@ export const LogIn = () => {
             className="input-group"
             userProps={{
               type: "password",
-              name: "confirmPassword",
-              id: "confirmPassword",
-              autoComplete: "off",
               value: newUser.confirmPassword,
               onChange: (e) => {
                 setNewUser({

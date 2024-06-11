@@ -7,7 +7,9 @@ import { functions } from "@/functions/functions";
 import { validations } from "@/functions/validation";
 import { defaultData } from "@/functions/DefaultStates";
 import toast from "react-hot-toast";
-import { UserInput, UserTextArea } from "./UserInput";
+import { UserInput, UserTextArea } from "./taskModalComponentForm/UserInput";
+import { DateInputs } from "./taskModalComponentForm/dateInput";
+import { StatusInputs } from "./taskModalComponentForm/StatusInput";
 
 export const TaskModalForm = ({
   task,
@@ -107,110 +109,26 @@ export const TaskModalForm = ({
         label="Task"
         className="task-description-input"
         userProps={{
-          id: "taskDescription",
-          name: "taskDescription",
           value: userTask.description,
           onChange: (e) => {
             setUserTask({ ...userTask, description: e.target.value });
           },
         }}
       />
-      <div className="date-input">
-        <label htmlFor="dueDate">Due Date:</label>
-        <div className="date">
-          <label htmlFor="month">Month: </label>
-          <input
-            max="12"
-            min="1"
-            name="month"
-            type="text"
-            id="month"
-            inputMode="numeric"
-            maxLength={2}
-            value={userTask.dueDate.split("/")[0]}
-            onChange={(e) => {
-              setUserTask({
-                ...userTask,
-                dueDate: `${e.target.value}/${userTask.dueDate.split("/")[1]}/${
-                  userTask.dueDate.split("/")[2]
-                }`,
-              });
-            }}
-          />
-          /<label htmlFor="day">Day: </label>
-          <input
-            min="1"
-            max={functions.getMaxDaysForMonth(
-              Number(userTask.dueDate.split("/")[0]),
-              Number(userTask.dueDate.split("/")[2])
-            )}
-            name="day"
-            type="text"
-            id="day"
-            inputMode="numeric"
-            maxLength={2}
-            value={userTask.dueDate.split("/")[1]}
-            onChange={(e) => {
-              setUserTask({
-                ...userTask,
-                dueDate: `${userTask.dueDate.split("/")[0]}/${e.target.value}/${
-                  userTask.dueDate.split("/")[2]
-                }`,
-              });
-            }}
-          />
-          /<label htmlFor="year">Year: </label>
-          <input
-            name="year"
-            type="text"
-            id="year"
-            inputMode="numeric"
-            maxLength={2}
-            value={userTask.dueDate.split("/")[2]}
-            onChange={(e) => {
-              setUserTask({
-                ...userTask,
-                dueDate: `${userTask.dueDate.split("/")[0]}/${
-                  userTask.dueDate.split("/")[1]
-                }/${e.target.value}`,
-              });
-            }}
-          />
-        </div>
-      </div>
-      <div className="status-update">
-        <label htmlFor="status">Status: </label>
-        <label htmlFor="to-do">to-do</label>
-        <input
-          type="radio"
-          name="to-do"
-          id="to-do"
-          checked={userTask.status === "to-do"}
-          onChange={() => {
-            setUserTask({ ...userTask, status: "to-do" });
-          }}
-        />
-        <label htmlFor="doing">doing</label>
-        <input
-          type="radio"
-          name="doing"
-          id="doing"
-          checked={userTask.status === "doing"}
-          onChange={() => {
-            setUserTask({ ...userTask, status: "doing" });
-          }}
-        />
-        <label htmlFor="done">done</label>
-        <input
-          type="radio"
-          name="done"
-          id="done"
-          checked={userTask.status === "done"}
-          onChange={() => {
-            setUserTask({ ...userTask, status: "done" });
-          }}
-        />
-      </div>
+      <DateInputs
+        id="dueDate"
+        label="Due Date"
+        className="date-input"
+        userTask={userTask}
+        setUserTask={setUserTask}
+      />
+      <StatusInputs
+        id="status"
+        label="Status"
+        className="status-update"
+        userTask={userTask}
+        setUserTask={setUserTask}
+      />
       <div className="important-input">
         <label htmlFor="important">Important: </label>
         <input
