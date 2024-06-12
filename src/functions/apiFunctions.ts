@@ -1,7 +1,60 @@
-import { AllData } from "@/types/types";
+import { AllData, LogInStatus, TeamMember } from "@/types/types";
 import { functions } from "./functions";
-import { DeleteRequests, PostRequests } from "@/api/api";
+import { DeleteRequests, GetRequests, PostRequests } from "@/api/api";
 import toast from "react-hot-toast";
+
+
+const createUser = (
+  teamMember: Omit<TeamMember, 'id'>, 
+  password: string,
+  setUser: (user: TeamMember) => void,
+  setIsLoggedIn: (status: LogInStatus) => void,
+  allData: AllData,
+  setAllData: (data: AllData) => void,
+  fetchallData: (status: LogInStatus) => void,
+) => {
+  PostRequests.registerUser(teamMember)
+    .then((user) => {
+      PostRequests.registerUserAuth({
+        teamMemberId: user.id,
+        password: password
+      })
+      toast.success('user created')
+      setUser(user)
+      setIsLoggedIn('logged in')
+      localStorage.setItem("user", user.username)
+      functions.getHeaderContainer();
+      fetchallData('logged in');
+    }).catch(() => {
+      setAllData(allData)
+      fetchallData('not logged in')
+      toast.error('Failed to create user')
+    })
+}
+
+const authUser = (
+  username: string,
+  password: string,
+  setUser: (user: TeamMember) => void,
+  setIsLoggedIn: (status: LogInStatus) => void,
+  allData: AllData,
+) => {
+  GetRequests.getUserPassword(
+    allData.users.filter((user => 
+      user.username === username ? user : null
+    ))[0].id
+  ).then((passwordAuth) => {
+    if(passwordAuth.password !== password){
+      toast.error('Incorrect password')
+      return;
+    }
+    toast.success('Login successfull')
+    setUser(allData.users.filter((user => user.username === username))[0])
+    setIsLoggedIn('logged in')
+    localStorage.setItem("user", username)
+  })
+  functions.getHeaderContainer();
+}
 
 const addTag = (
   tagInput: string,
@@ -113,7 +166,10 @@ const deleteTag = (
   }
 };
 
+
 export const apiFunctions = {
   addTag,
   deleteTag,
+  createUser,
+  authUser,
 };

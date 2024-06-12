@@ -79,30 +79,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const userAuth = (username: string, password: string) => {
     switch (validations.isUserExist(username, password, allData)) {
       case true:
-        GetRequests.getUserPassword(
-          allData!.users.filter((user) =>
-            user.username === username ? user : null
-          )[0].id
-        ).then((passwordAuth) => {
-          if (passwordAuth.password !== password) {
-            toast.error("Wrong password");
-            return;
-          }
-          toast.success("Login successful");
-          setUser(
-            allData!.users.filter((user) =>
-              user.username === username ? user : null
-            )[0]
-          );
-          setIsLoggedIn("logged in");
-          localStorage.setItem(
-            "user",
-            allData!.users.filter((user) =>
-              user.username === username ? user : null
-            )[0].username
-          );
-          functions.getHeaderContainer();
-        });
+        apiFunctions.authUser(username, password, setUser, setIsLoggedIn, allData)
         break;
       default:
         return;
@@ -117,24 +94,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const createUser = (teamMember: Omit<TeamMember, "id">, password: string) => {
-    PostRequests.registerUser(teamMember)
-      .then((user) => {
-        PostRequests.registerUserAuth({
-          teamMemberId: user.id,
-          password: password,
-        }).then((res) => {
-          if (!res.ok) {
-            toast.error("Error creating user");
-            return;
-          }
-        });
-        setUser(user);
-        localStorage.setItem("user", user.username);
-        setIsLoggedIn("logged in");
-        functions.getHeaderContainer();
-      })
-      .catch(() => toast.error("Error creating user"));
-    fetchallData("logged in");
+    apiFunctions.createUser(teamMember, password, setUser, setIsLoggedIn, allData, setAllData, fetchallData)
   };
 
   const editTask = (task: Task, taskId: number) => {

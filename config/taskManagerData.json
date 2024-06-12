@@ -61,6 +61,12 @@
       "name": "Logan Howlett",
       "username": "wolverine",
       "email": "logan@email.com"
+    },
+    {
+      "name": "Ernie Franssen",
+      "username": "rummil",
+      "email": "efran@email.com",
+      "id": 6
     }
   ],
   "teamMemberAuth": [
@@ -93,6 +99,11 @@
       "id": 5,
       "teamMemberId": 5,
       "password": "bub"
+    },
+    {
+      "teamMemberId": 6,
+      "password": "1234",
+      "id": 6
     }
   ],
   "teamMemberTeamsLink": [
