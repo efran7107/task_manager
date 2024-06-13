@@ -61,12 +61,6 @@
       "name": "Logan Howlett",
       "username": "wolverine",
       "email": "logan@email.com"
-    },
-    {
-      "name": "Ernie Franssen",
-      "username": "rummil",
-      "email": "efran@email.com",
-      "id": 6
     }
   ],
   "teamMemberAuth": [
@@ -99,11 +93,6 @@
       "id": 5,
       "teamMemberId": 5,
       "password": "bub"
-    },
-    {
-      "teamMemberId": 6,
-      "password": "1234",
-      "id": 6
     }
   ],
   "teamMemberTeamsLink": [
@@ -203,24 +192,6 @@
       "taskName": "Task 2",
       "description": "test 2",
       "status": "done",
-      "dueDate": "1/1/25",
-      "isImportant": false,
-      "taskCreater": 0
-    },
-    {
-      "id": 2,
-      "taskName": "Task 3",
-      "description": "test 3",
-      "status": "to-do",
-      "dueDate": "1/1/25",
-      "isImportant": false,
-      "taskCreater": 0
-    },
-    {
-      "id": 3,
-      "taskName": "Task 4",
-      "description": "test 4",
-      "status": "doing",
       "dueDate": "1/1/25",
       "isImportant": false,
       "taskCreater": 0
@@ -333,16 +304,6 @@
       "taskId": 1
     },
     {
-      "id": 12,
-      "teamMemberId": 0,
-      "taskId": 2
-    },
-    {
-      "id": 13,
-      "teamMemberId": 0,
-      "taskId": 3
-    },
-    {
       "id": 14,
       "teamMemberId": 0,
       "taskId": 4
@@ -380,10 +341,6 @@
     {
       "id": 2,
       "tagName": "#tag3"
-    },
-    {
-      "id": 3,
-      "tagName": "#tag4"
     },
     {
       "id": 4,
@@ -424,26 +381,6 @@
       "id": 5,
       "tagId": 2,
       "taskId": 1
-    },
-    {
-      "id": 6,
-      "tagId": 0,
-      "taskId": 2
-    },
-    {
-      "id": 7,
-      "tagId": 1,
-      "taskId": 2
-    },
-    {
-      "id": 8,
-      "tagId": 2,
-      "taskId": 2
-    },
-    {
-      "id": 9,
-      "tagId": 3,
-      "taskId": 3
     },
     {
       "id": 10,

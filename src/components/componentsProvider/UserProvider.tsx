@@ -28,7 +28,6 @@ type TUserProvider = {
   isLoading: boolean;
   createUser: (user: Omit<TeamMember, "id">, password: string) => void;
   userAuth: (username: string, password: string) => void;
-  isExistingUser: (username: string) => boolean;
   isActiveTask: boolean;
   setIsActiveTask: (active: boolean) => void;
   activeTask: Task;
@@ -86,13 +85,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const isExistingUser = (username: string): boolean => {
-    return (
-      allData!.users.filter((user) => user.username === username && user)
-        .length > 0
-    );
-  };
-
   const createUser = (teamMember: Omit<TeamMember, "id">, password: string) => {
     apiFunctions.createUser(teamMember, password, setUser, setIsLoggedIn, allData, setAllData, fetchallData)
   };
@@ -125,33 +117,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const taskTagLinks = allData.taskTags.filter(
       (link) => link.taskId === activeTask.id
     );
-    taskAssinments.forEach((ass) => {
-      functions.deleteTaskAssignment(ass.id);
-    });
-    taskTagLinks.forEach((link) => {
-      const tag = allData.tags.find((tag) => tag.id === link.tagId)!;
-      if (
-        allData.taskTags.filter((link) => link.tagId === tag.id).length <= 1
-      ) {
-        functions.deleteTag(tag.id);
-      }
-      functions.deleteTaskTag(link.id);
-    });
-    taskNotes.forEach((note) => {
-      functions.deleteNote(note.id);
-    });
-    functions.deleteTask(activeTask.id);
-    closeActiveTask();
-    functions
-      .getAllData()
-      .then((data) => {
-        setAllData(data);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setAllData(allData);
-        setIsLoading(false);
-      });
+    apiFunctions.deleteTask(taskAssinments, taskNotes, taskTagLinks, allData, setAllData, activeTask)
+    setIsLoading(false);
   };
 
   const closeActiveTask = () => {
@@ -210,7 +177,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         isLoading,
         createUser,
         userAuth,
-        isExistingUser,
         isActiveTask,
         setIsActiveTask,
         activeTask,

@@ -1,4 +1,4 @@
-import { AllData, LogInStatus, TeamMember } from "@/types/types";
+import { AllData, LogInStatus, Note, Task, TaskAssinmentLink, TaskTagLink, TeamMember } from "@/types/types";
 import { functions } from "./functions";
 import { DeleteRequests, GetRequests, PostRequests } from "@/api/api";
 import toast from "react-hot-toast";
@@ -54,6 +54,39 @@ const authUser = (
     localStorage.setItem("user", username)
   })
   functions.getHeaderContainer();
+}
+
+const deleteTask = (
+  taskAssinments: TaskAssinmentLink[], 
+  taskNotes: Note[], 
+  taskTagLinks: TaskTagLink[], 
+  allData: AllData,
+  setAllData: (allData: AllData) => void,
+  activeTask: Task
+) => {
+  taskAssinments.forEach((ass) => {
+    functions.deleteTaskAssignment(ass.id);
+  });
+  taskTagLinks.forEach((link) => {
+    const tag = allData.tags.find((tag) => tag.id === link.tagId)!;
+    if (
+      allData.taskTags.filter((link) => link.tagId === tag.id).length <= 1
+    ) {
+      functions.deleteTag(tag.id);
+    }
+  });
+  taskNotes.forEach((note) => {
+    functions.deleteNote(note.id);
+  });
+  functions.deleteTask(activeTask.id);
+  functions
+      .getAllData()
+      .then((data) => {
+        setAllData(data);
+      })
+      .catch(() => {
+        setAllData(allData);
+      });
 }
 
 const addTag = (
@@ -168,8 +201,9 @@ const deleteTag = (
 
 
 export const apiFunctions = {
-  addTag,
-  deleteTag,
   createUser,
   authUser,
+  deleteTask,
+  addTag,
+  deleteTag,
 };

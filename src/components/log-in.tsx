@@ -5,37 +5,19 @@ import toast from "react-hot-toast";
 import { validations } from "@/functions/validation";
 import { transformations } from "@/functions/transformations";
 import { UserInput } from "./taskModalComponentForm/UserInput";
-
-type DefaultLogIn = {
-  username: string;
-  password: string;
-};
-
-const defaultLogIn: DefaultLogIn = {
-  username: "",
-  password: "",
-};
-
-const defaultRegistration = {
-  newUsername: "",
-  firstName: "",
-  lastName: "",
-  email: "",
-  newPassword: "",
-  confirmPassword: "",
-};
+import { defaultData } from "@/functions/DefaultStates";
 
 export const LogIn = () => {
-  const { createUser, userAuth, isExistingUser, isLoading } = useUser();
+  const { createUser, userAuth, isLoading, allData } = useUser();
   const { isInvalidFormSub, isName, isEmail } = validations;
   const { formatName } = transformations;
 
   const [isLogInSubmit, setIsLogInSubmit] = useState(false);
   const [isCreateFormSubmit, setIsCreateFormSubmit] = useState(false);
 
-  const [userLogIn, setUserLogIn] = useState(defaultLogIn);
+  const [userLogIn, setUserLogIn] = useState(defaultData.defaultLogIn);
 
-  const [newUser, setNewUser] = useState(defaultRegistration);
+  const [newUser, setNewUser] = useState(defaultData.defaultRegistration);
 
   return (
     <>
@@ -50,7 +32,7 @@ export const LogIn = () => {
             }
             userAuth(userLogIn.username, userLogIn.password);
             setIsLogInSubmit(false);
-            setUserLogIn(defaultLogIn);
+            setUserLogIn(defaultData.defaultLogIn);
           }}
           className="user-entry"
         >
@@ -107,7 +89,7 @@ export const LogIn = () => {
               toast.error("Please fill out all fields on the form");
               setIsCreateFormSubmit(true);
               return;
-            } else if (isExistingUser(newUser.newUsername)) {
+            } else if (validations.isUserExist(newUser.newUsername, newUser.newPassword, allData )) {
               toast.error("user already exists");
               setIsCreateFormSubmit(true);
               return;
@@ -121,7 +103,7 @@ export const LogIn = () => {
               newUser.newPassword
             );
             setIsCreateFormSubmit(false);
-            setNewUser(defaultRegistration);
+            setNewUser(defaultData.defaultRegistration);
           }}
         >
           <h3>Sign up</h3>
