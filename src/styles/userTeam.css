@@ -1,7 +1,7 @@
 .user-teams {
     padding: 20px 20px 0px 20px;
     display: flex;
-    width: 150px;
+    width: 200px;
     height: fit-content;
     flex-direction: column;
     gap: 20px;

@@ -1,120 +1,141 @@
 .task-board {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .task-section {
-    width: 100%;
-    padding: 0 30px
+  width: 100%;
+  padding: 0 30px;
 }
 
 .task-section h3 {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
-.task-section.to-do{
-    border-right: 1px solid var(--border-outline)
+.task-section.to-do {
+  border-right: 1px solid var(--border-outline);
 }
 
 .task-section.done {
-    border-left: 1px solid var(--border-outline)
+  border-left: 1px solid var(--border-outline);
 }
 
 .task-card {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin: 10px;
-    padding: 20px;
-    background-color: var(--default);
-    color: white;
-    border: 2px solid var(--border-outline);
-    border-radius: 25px;
-    text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 10px;
+  padding: 20px;
+  background-color: var(--default);
+  color: white;
+  border: 2px solid var(--border-outline);
+  border-radius: 25px;
+  text-align: left;
 }
 
 .task-card.past-due {
-    background-color: var(--past-due);
+  background-color: var(--past-due);
 }
 
 .task-card.past-due p:nth-child(3) {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .task-card p span {
-    margin: 0px 2.5px;
+  margin: 0px 2.5px;
 }
 
 .modal-container {
-    position: absolute;
-    top: 20vw;
-    left: -40vw;
-    width: 0;
-    height: 0;
-    transition: all .1s ease-out;
+  opacity: 0;
+  position: absolute;
+  top: 20%;
+  left: -37%;
+  transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 0.3s;
+  width: 500px;
+  height: fit-content;
+  padding: 10px;
+  color: white;
+  background-color: var(--default);
+  border: 3px solid var(--border-outline);
+  border-radius: 25px;
+  box-shadow: 0px 0px 30px var(--border-outline);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  text-align: left;
 }
 
 .modal-container.active {
-    position: absolute;
-    left: 40vw;
-    top: 20vw;
-    width: 500px;
-    height: 300px;
-    padding: 10px;
-    color: white;
-    background-color: var(--default);
-    border: 3px solid var(--border-outline);
-    border-radius: 25px;
-    box-shadow: 0px 0px 30px var(--border-outline);
-    transition: all 0.2s ease-in;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    text-align: left;
+  opacity: 1;
+  position: absolute;
+  left: 37%;
+  top: 20%;
+  transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 0.3s;
 }
 
 .modal-container.active.past-duedate {
-    background-color: var(--past-due);
+  background-color: var(--past-due);
 }
 
 .modal-container.active.edit,
 .modal-container.active.past-duedate.edit {
-    gap: 10px;
-    height: 400px;
+  gap: 10px;
+  transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
 }
-
-
 
 .fa-solid {
-    position: absolute;
+  position: absolute;
 }
 .fa-solid.fa-triangle-exclamation {
-    top: 10px;
-    left: 10px;
+  top: 10px;
+  left: 10px;
 }
 .fa-solid.fa-triangle-exclamation.important {
-    color: var(--invert);
+  color: var(--invert);
 }
 
 .fa-solid.fa-pen-to-square {
-    bottom: 10px;
-    right: 10px;
+  bottom: 10px;
+  right: 10px;
 }
 
 .fa-solid.fa-xmark {
-    top: 10px;
-    right: 10px;
+  top: 10px;
+  right: 10px;
 }
-.statuses, .tags {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+
+.fa-solid.fa-trash {
+  bottom: 10px;
+  left: 10px;
+}
+.statuses,
+.tags {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 .statuses p:nth-child(1),
 .statuses p:nth-child(3) {
-    font-weight: 700;
+  font-weight: 700;
+}
+
+.tags-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.notes-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.note {
+  width: 80%;
 }

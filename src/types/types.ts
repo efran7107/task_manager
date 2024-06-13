@@ -1,5 +1,5 @@
 export type Status = "to-do" | "doing" | "done";
-export type LogInStatus = "logged in" | "not logged in" | "undefined"
+export type LogInStatus = "logged in" | "not logged in" | 'create task' | "undefined";
 
 export type Team = {
   id: number;
@@ -32,6 +32,7 @@ export type Task = {
   status: Status;
   dueDate: string;
   isImportant: boolean;
+  taskCreater: number
 };
 
 export type TaskAssinmentLink = {
@@ -53,9 +54,10 @@ export type TaskTagLink = {
 
 export type Note = {
   id: number;
+  noteTitle: string;
   content: string;
-  TeamMemberId: number;
-  TaskId: number;
+  teamMemberId: number;
+  taskId: number;
 };
 
 export type AllData = {
@@ -69,6 +71,11 @@ export type AllData = {
   notes: Note[];
 };
 
-export type TUserTeams = Array<{team: Team, users: TeamMember[]}>
+export type TUserTeams = Array<{ team: Team; users: TeamMember[] }>;
 
-export type TagInputButton = 'add' | 'delete' | 'not-enough'
+export type TagInputButton = "add" | "delete" | "not-enough";
+
+export type DefaultLogIn = {
+  username: string;
+  password: string;
+};

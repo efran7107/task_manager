@@ -1,8 +1,17 @@
 /* eslint-disable react-refresh/only-export-components */
-import { GetRequests, PostRequests } from "@/api/api";
+import { GetRequests, PostRequests, PutRequest } from "@/api/api";
 import { defaultData } from "@/functions/DefaultStates";
+import { apiFunctions } from "@/functions/apiFunctions";
 import { functions } from "@/functions/functions";
-import { AllData, LogInStatus, Task, TeamMember } from "@/types/types";
+import { validations } from "@/functions/validation";
+import {
+  AllData,
+  LogInStatus,
+  Note,
+  TagInputButton,
+  Task,
+  TeamMember,
+} from "@/types/types";
 import {
   ReactNode,
   createContext,
@@ -19,12 +28,21 @@ type TUserProvider = {
   isLoading: boolean;
   createUser: (user: Omit<TeamMember, "id">, password: string) => void;
   userAuth: (username: string, password: string) => void;
-  isExistingUser: (username: string) => boolean;
   isActiveTask: boolean;
   setIsActiveTask: (active: boolean) => void;
   activeTask: Task;
   setActiveTask: (task: Task) => void;
   closeActiveTask: () => void;
+  updateTags: (
+    tagInput: string,
+    taskId: number,
+    status: TagInputButton
+  ) => void;
+  isEditTask: boolean;
+  setIsEditTask: (isEdit: boolean) => void;
+  updateNotes: (note: Omit<Note, "id">) => void;
+  deleteTask: () => void;
+  editTask: (task: Task, taskId: number) => void;
 };
 
 const UserContext = createContext<TUserProvider>({} as TUserProvider);
@@ -42,85 +60,99 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [activeTask, setActiveTask] = useState<Task>(
     defaultData.getDefaultTask()
   );
+  const [isEditTask, setIsEditTask] = useState(false);
 
   const fetchallData = (logInState: LogInStatus) => {
+    setIsLoading(true);
     setIsLoggedIn("undefined");
-    functions.getAllData().then((data) => {
-      setAllData(data);
-      setIsLoading(false);
-      setIsLoggedIn(logInState);
-    });
+    functions
+      .getAllData()
+      .then((data) => {
+        setAllData(data);
+        setIsLoading(false);
+        setIsLoggedIn(logInState);
+      })
+      .catch(() => toast.error("error loading data"));
   };
 
   const userAuth = (username: string, password: string) => {
-    if (username === "" || password === "") {
-      toast.error("Please enter a username and/or password");
-      return;
-    } else if (
-      allData!.users.filter((user) => user.username === username && user)
-        .length === 0
-    ) {
-      toast.error("User not found");
-      return;
-    }
-    GetRequests.getUserPassword(
-      allData!.users.filter((user) =>
-        user.username === username ? user : null
-      )[0].id
-    ).then((passwordAuth) => {
-      if (passwordAuth.password !== password) {
-        toast.error("Wrong password");
+    switch (validations.isUserExist(username, password, allData)) {
+      case true:
+        apiFunctions.authUser(username, password, setUser, setIsLoggedIn, allData)
+        break;
+      default:
         return;
-      }
-      toast.success("Login successful");
-      setUser(
-        allData!.users.filter((user) =>
-          user.username === username ? user : null
-        )[0]
-      );
-      setIsLoggedIn("logged in");
-      localStorage.setItem(
-        "user",
-        allData!.users.filter((user) =>
-          user.username === username ? user : null
-        )[0].username
-      );
-      functions.getHeaderContainer();
-    });
-  };
-
-  const isExistingUser = (username: string): boolean => {
-    return (
-      allData!.users.filter((user) => user.username === username && user)
-        .length > 0
-    );
+    }
   };
 
   const createUser = (teamMember: Omit<TeamMember, "id">, password: string) => {
-    PostRequests.registerUser(teamMember)
-      .then((user) => {
-        PostRequests.registerUserAuth({
-          teamMemberId: user.id,
-          password: password,
-        }).then((res) => {
-          if (!res.ok) {
-            toast.error("Error creating user");
-            return;
-          }
-        });
-        setUser(user);
-        localStorage.setItem("user", user.username);
-        setIsLoggedIn("logged in");
-        functions.getHeaderContainer();
-      })
-      .catch(() => toast.error("Error creating user"));
-    fetchallData("logged in");
+    apiFunctions.createUser(teamMember, password, setUser, setIsLoggedIn, allData, setAllData, fetchallData)
+  };
+
+  const editTask = (task: Task, taskId: number) => {
+    PutRequest.updateTask(task).then((res) => {
+      if (!res.ok) {
+        toast.error("Error updating task");
+        setAllData(allData);
+        setActiveTask(allData.tasks.find((task) => task.id === taskId)!);
+        setIsEditTask(false);
+        return;
+      }
+      functions.getAllData().then((data) => {
+        setAllData(data);
+        setActiveTask(data.tasks.find((task) => task.id === taskId)!);
+        setIsEditTask(false);
+      });
+    });
+  };
+
+  const deleteTask = () => {
+    setIsLoading(true);
+    const taskAssinments = allData.taskAssignments.filter(
+      (ass) => ass.taskId === activeTask.id
+    );
+    const taskNotes = allData.notes.filter(
+      (note) => note.taskId === activeTask.id
+    );
+    const taskTagLinks = allData.taskTags.filter(
+      (link) => link.taskId === activeTask.id
+    );
+    apiFunctions.deleteTask(taskAssinments, taskNotes, taskTagLinks, allData, setAllData, activeTask)
+    setIsLoading(false);
   };
 
   const closeActiveTask = () => {
-	setActiveTask(defaultData.getDefaultTask())
-	setIsActiveTask(false)
-  }
+    setActiveTask(defaultData.getDefaultTask());
+    setIsActiveTask(false);
+  };
+
+  const updateTags = (
+    tagInput: string,
+    taskId: number,
+    status: TagInputButton
+  ) => {
+    switch (status) {
+      case "add":
+        apiFunctions.addTag(tagInput, taskId, allData, setAllData);
+        break;
+      case "delete":
+        apiFunctions.deleteTag(tagInput, taskId, allData, setAllData);
+        break;
+    }
+  };
+
+  const updateNotes = (note: Omit<Note, "id">) => {
+    PostRequests.postNewNote(note).then((res) => {
+      if (!res.ok) {
+        setAllData(allData);
+        toast.error("error adding note");
+      }
+      functions.getAllData().then((data) => {
+        setAllData(data);
+        toast.success("added note successully");
+      });
+    });
+  };
 
   useEffect(() => {
     if (localStorage.getItem("user") !== null) {
@@ -145,12 +177,17 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         isLoading,
         createUser,
         userAuth,
-        isExistingUser,
         isActiveTask,
         setIsActiveTask,
         activeTask,
         setActiveTask,
-		closeActiveTask
+        closeActiveTask,
+        updateTags,
+        isEditTask,
+        setIsEditTask,
+        updateNotes,
+        deleteTask,
+        editTask,
       }}
     >
       {children}

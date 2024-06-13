@@ -1,4 +1,6 @@
- const isName = (name: string) => {
+import { AllData } from "@/types/types";
+
+const isName = (name: string) => {
   return !/\d/.test(name);
 };
 
@@ -7,7 +9,7 @@ const isEmail = (email: string) => {
   return !!email?.match(regex);
 };
 
-const isValidFormSub = (newUser: {
+const isInvalidFormSub = (newUser: {
   newUsername: string;
   firstName: string;
   lastName: string;
@@ -31,21 +33,42 @@ const isValidFormSub = (newUser: {
 };
 
 const isPastDue = (date: string, taskDate: string): boolean => {
-  const todayArr = date.split('/');
-  const taskDateArr = taskDate.split('/')
-  
-  if(
-    (todayArr[0] > taskDateArr[0] ||
-    todayArr[1] > taskDateArr[1]) &&
-    todayArr[2] >= taskDateArr[2]
-  )return true;
-  else return false;
-  
-}
+  const today = new Date(date);
+  const dueDate = new Date(taskDate);
+  return today > dueDate;
+};
+
+const isNoteNotEmpty = (noteTitle: string, noteDesc: string) => {
+  return noteTitle.trim().length === 0 || noteDesc.trim().length === 0;
+};
+
+const isNotBlank = (input: string) => {
+  return input.trim().length === 0;
+};
+
+const isUserExist = (
+  username: string,
+  password: string,
+  allData: AllData
+): boolean => {
+  if (isNoteNotEmpty(username, password)) {
+    return false;
+  } else if (
+    allData.users.filter((user) => user.username === username && user)
+      .length === 0
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+};
 
 export const validations = {
   isName,
   isEmail,
-  isValidFormSub,
-  isPastDue
+  isInvalidFormSub,
+  isPastDue,
+  isNoteNotEmpty,
+  isNotBlank,
+  isUserExist,
 };

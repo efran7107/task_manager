@@ -1,4 +1,4 @@
-import { AllData, Task, TeamMember } from "@/types/types";
+import { AllData, DefaultLogIn, Note, Task, TeamMember } from "@/types/types";
 
 const getDefaultAllData = (): AllData => {
   return {
@@ -30,11 +30,38 @@ const getDefaultTask = (): Task => {
     status: "to-do",
     dueDate: "",
     isImportant: false,
+    taskCreater: 0
   };
 };
 
+const getDefaultNote = (): Omit<Note, 'id'> => {
+  return {
+      noteTitle: '',
+      content: '',
+      teamMemberId: 0,
+      taskId: 0,
+    }
+  
+}
+
+const defaultRegistration = {
+  newUsername: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  newPassword: "",
+  confirmPassword: "",
+};
+
+const defaultLogIn: DefaultLogIn = {
+  username: "",
+  password: "",
+};
 export const defaultData = {
   getDefaultAllData,
   getDefaultTeamMember,
   getDefaultTask,
+  getDefaultNote,
+  defaultRegistration,
+  defaultLogIn
 };

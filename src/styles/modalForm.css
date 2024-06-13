@@ -1,131 +1,164 @@
-.task-name-input{
-    display: flex;
-    gap: 10px
+.fa-solid.fa-cloud-arrow-up {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.cancel-form {
+  position: absolute;
+  bottom: 5px;
+  right: 40px;
+  cursor: pointer;
+}
+
+.task-name-input {
+  display: flex;
+  gap: 10px;
 }
 .date {
-    display: flex;
-    gap: 5px;
+  display: flex;
+  gap: 5px;
 }
 
 .task-name-input #taskName {
-    background-color: var(--invert);
-    border: 1px solid var(--on-orange);
-    color: var(--border-outline);
+  background-color: var(--invert);
+  border: 1px solid var(--on-orange);
+  color: var(--border-outline);
 }
 
 .task-description-input,
 .date-input {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
-#taskDescription {
-    width: 295px;
-    height: 96px;
-    background-color: var(--invert);
-    border: 1px solid var(--on-orange);
-    color: var(--border-outline);
-    border-radius: 5px;
-    padding: 5px 10px 5px 5px;
-    resize: none;
+#taskDescription,#note {
+  width: 295px;
+  height: 96px;
+  background-color: var(--invert);
+  border: 1px solid var(--on-orange);
+  color: var(--border-outline);
+  border-radius: 5px;
+  padding: 5px 10px 5px 5px;
+  resize: none;
 }
 
-#taskDescription::-webkit-scrollbar {
-    width: 6px;
-    height: 8px;
-    margin-right: 10px;
-
+#taskDescription::-webkit-scrollbar,
+#note::-webkit-scrollbar {
+  width: 6px;
+  height: 8px;
+  margin-right: 10px;
 }
 
-#taskDescription::-webkit-scrollbar-button { 
-    display: none;
+#taskDescription::-webkit-scrollbar-button,
+#note::-webkit-scrollbar-button {
+  display: none;
 }
 
-#taskDescription::-webkit-scrollbar-track {
-    background: var(--invert);
-    border-radius: 15px;
-    height: 140px;
+#taskDescription::-webkit-scrollbar-track,
+#note::-webkit-scrollbar-track {
+  background: var(--invert);
+  border-radius: 15px;
+  height: 140px;
 }
 
-#taskDescription::-webkit-scrollbar-thumb {
-    background-color: var(--border-outline);
-    border-radius: 15px;
+#taskDescription::-webkit-scrollbar-thumb,
+#note::-webkit-scrollbar-thumb {
+  background-color: var(--border-outline);
+  border-radius: 15px;
 }
 
 .date input {
-    width: 25px;
-    text-align: center;
-    background-color: var(--invert);
-    border: 1px solid var(--border-outline);
-    color: var(--border-outline);
+  width: 25px;
+  text-align: center;
+  background-color: var(--invert);
+  border: 1px solid var(--border-outline);
+  color: var(--border-outline);
 }
 
-
 .status-update {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .status-update div,
 .important-input {
-    display: flex;
-    gap: 5px;
+  display: flex;
+  gap: 5px;
 }
 
 .status-update #to-do,
 .status-update #doing,
 .status-update #done,
 .important-input #important {
-    transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
-    accent-color: var(--border-outline);
+  accent-color: var(--border-outline);
+  cursor: pointer;
 }
 
 .status-update #to-do:checked,
 .status-update #doing:checked,
 .status-update #done:checked,
 .important-input #important:checked {
-    transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
-    accent-color: var(--invert);
+  accent-color: var(--invert);
+  border-color: var(--border-outline);
 }
 
 .status-update #to-do:hover,
 .status-update #doing:hover,
 .status-update #done:hover,
 .important-input #important:hover {
-    transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
-    accent-color: var(--invert);
+  accent-color: var(--invert);
 }
 
 .tags-edit {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-.tags-edit input {
-    background-color: var(--invert);
-    border: 1px solid var(--border-outline);
+.tags-edit input,
+.note-title input {
+  background-color: var(--invert);
+  border: 1px solid var(--border-outline);
 }
 
-.tags-edit button {
-    transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
-    background-color: var(--border-outline);
-    border: 1px solid var(--invert);
-    color: var(--invert);
-    padding: 5px 10px;
-    border-radius: 15px;
+.tags-edit button,
+.create-note .submit-note {
+  transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
+  background-color: var(--border-outline);
+  border: 1px solid var(--invert);
+  color: var(--invert);
+  padding: 5px 10px;
+  border-radius: 15px;
+  cursor: pointer;
 }
 
-.tags-edit button:hover {
-    transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
-    background-color: var(--invert);
-    border: 1px solid var(--border-outline);
-    color: var(--border-outline);
+.tags-edit button:hover,
+.create-note .submit-note:hover {
+  transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
+  background-color: var(--invert);
+  border: 1px solid var(--border-outline);
+  color: var(--border-outline);
 }
 
-.tags-edit button:disabled {
-    transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
-    background-color: var(--invert);
-    border: 1px solid var(--border-outline);
-    color: var(--border-outline);
+.tags-edit button:disabled,
+.create-note .submit-note:disabled {
+  transition: cubic-bezier(0.89, 0.05, 0.04, 0.98) 1s;
+  background-color: var(--invert);
+  border: 1px solid var(--border-outline);
+  color: var(--border-outline);
+  cursor: default;
+}
+
+.create-note {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.note-title,
+.note-content {
+  display: flex;
+  gap: 10px;
 }
