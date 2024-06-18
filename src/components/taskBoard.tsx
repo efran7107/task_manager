@@ -4,6 +4,8 @@ import { functions } from "@/functions/functions";
 import { validations } from "@/functions/validation";
 import { useUser } from "./componentsProvider/UserProvider";
 import { TaskModalForm } from "./modalForm";
+import { useState } from "react";
+import { CreateNote } from "./apiComponents/addNote";
 
 const TaskModal = ({
   task,
@@ -27,6 +29,7 @@ const TaskModal = ({
   const taskNotes = allData.notes.filter(
     (note) => note.taskId === activeTask.id
   );
+  const [isAddingNote, setIsAddingNote] = useState(false);
   const isPastDue = validations.isPastDue(date, task.dueDate);
   const isTaskCreater = task.taskCreater === user.id;
 
@@ -95,6 +98,24 @@ const TaskModal = ({
               </div>
             ))}
           </div>
+          {isAddingNote && (
+            <CreateNote
+              userId={user.id}
+              taskId={activeTask.id}
+              setIsAddingNote={setIsAddingNote}
+            />
+          )}
+          {!isAddingNote && (
+            <button
+              type="button"
+              className="add-note-btn"
+              onClick={() => {
+                setIsAddingNote(true);
+              }}
+            >
+              Add Note
+            </button>
+          )}
         </div>
       )}
     </>

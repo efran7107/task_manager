@@ -7,9 +7,11 @@ import { useUser } from "../componentsProvider/UserProvider";
 export const CreateNote = ({
   userId,
   taskId,
+  setIsAddingNote,
 }: {
   userId: number;
   taskId: number;
+  setIsAddingNote: (value: boolean) => void;
 }) => {
   const [note, setNote] = useState(defaultData.getDefaultNote);
   const { updateNotes } = useUser();
@@ -51,8 +53,19 @@ export const CreateNote = ({
             taskId: taskId,
           });
           setNote(defaultData.getDefaultNote);
+          setIsAddingNote(false);
         }}
       />
+      <button
+        type="button"
+        className="add-note-btn"
+        onClick={() => {
+          setNote(defaultData.getDefaultNote);
+          setIsAddingNote(false);
+        }}
+      >
+        Cancle
+      </button>
     </div>
   );
 };

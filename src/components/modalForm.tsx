@@ -11,7 +11,6 @@ import { DateInputs } from "./taskModalComponentForm/dateInput";
 import { StatusInputs } from "./taskModalComponentForm/StatusInput";
 import { ImportantInput } from "./taskModalComponentForm/InportantInput";
 import { TagList } from "./apiComponents/tagList";
-import { CreateNote } from "./apiComponents/addNote";
 
 export const TaskModalForm = ({
   task,
@@ -20,14 +19,8 @@ export const TaskModalForm = ({
   task: Task;
   pastDue: boolean;
 }) => {
-  const {
-    closeActiveTask,
-    allData,
-    user,
-    setIsEditTask,
-    deleteTask,
-    editTask,
-  } = useUser();
+  const { closeActiveTask, allData, setIsEditTask, deleteTask, editTask } =
+    useUser();
   const { tags, taskTags } = allData;
   const [userTask, setUserTask] = useState<Task>(task);
   const [tagInput, setTagInput] = useState("");
@@ -144,7 +137,6 @@ export const TaskModalForm = ({
           <p key={tag.id}>{tag.tagName}</p>
         ))}
       </div>
-      <CreateNote userId={user.id} taskId={userTask.id} />
     </form>
   );
 };
