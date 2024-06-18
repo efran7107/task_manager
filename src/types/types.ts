@@ -4,6 +4,7 @@ export type LogInStatus = "logged in" | "not logged in" | 'create task' | "undef
 export type Team = {
   id: number;
   teamName: string;
+  teamLeaderId: number
 };
 
 export type TeamMember = {

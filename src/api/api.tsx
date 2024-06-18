@@ -9,7 +9,6 @@ import {
   TeamMemberAuth,
   TeamMemberTeamsLink,
 } from "@/types/types";
-import toast from "react-hot-toast";
 
 const baseUrl = "http://localhost:3000";
 

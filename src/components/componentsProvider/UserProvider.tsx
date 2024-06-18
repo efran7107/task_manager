@@ -24,6 +24,7 @@ import toast from "react-hot-toast";
 type TUserProvider = {
   user: TeamMember;
   isLoggedIn: LogInStatus;
+  setIsLoggedIn: (status: LogInStatus) => void;
   allData: AllData;
   isLoading: boolean;
   createUser: (user: Omit<TeamMember, "id">, password: string) => void;
@@ -173,6 +174,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       value={{
         user,
         isLoggedIn,
+        setIsLoggedIn,
         allData,
         isLoading,
         createUser,
