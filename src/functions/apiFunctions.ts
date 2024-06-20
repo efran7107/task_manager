@@ -21,10 +21,10 @@ const createUser = (
       })
       toast.success('user created')
       setUser(user)
-      setIsLoggedIn('logged in')
+      setIsLoggedIn('dashboard')
       localStorage.setItem("user", user.username)
       functions.getHeaderContainer();
-      fetchallData('logged in');
+      fetchallData('dashboard');
     }).catch(() => {
       setAllData(allData)
       fetchallData('not logged in')
@@ -50,7 +50,7 @@ const authUser = (
     }
     toast.success('Login successfull')
     setUser(allData.users.filter((user => user.username === username))[0])
-    setIsLoggedIn('logged in')
+    setIsLoggedIn('dashboard')
     localStorage.setItem("user", username)
   })
   functions.getHeaderContainer();

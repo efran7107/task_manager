@@ -18,6 +18,8 @@ const TaskModal = ({
 }) => {
   const {
     user,
+    isLoggedIn,
+    fetchAllData,
     activeTask,
     isActiveTask,
     closeActiveTask,
@@ -92,9 +94,19 @@ const TaskModal = ({
           <div className="notes-section">
             <h5>notes:</h5>
             {taskNotes.map((note) => (
-              <div key={note.id} className="note">
-                <h6>{note.noteTitle}</h6>
-                <p>{note.content}</p>
+              <div className="note-container" key={note.id}>
+                {note.teamMemberId === user.id &&
+                <i
+                  className="fa-solid fa-trash"
+                  onClick={() => {
+                    functions.deleteNote(note.id)
+                    fetchAllData(isLoggedIn)
+                  }}
+                ></i> }
+                <div className="note">
+                  <h6>{note.noteTitle}</h6>
+                  <p>{note.content}</p>
+                </div>
               </div>
             ))}
           </div>

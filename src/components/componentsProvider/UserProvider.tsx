@@ -26,6 +26,7 @@ type TUserProvider = {
   isLoggedIn: LogInStatus;
   setIsLoggedIn: (status: LogInStatus) => void;
   allData: AllData;
+  fetchAllData: (logInState: LogInStatus) => void
   isLoading: boolean;
   createUser: (user: Omit<TeamMember, "id">, password: string) => void;
   userAuth: (username: string, password: string) => void;
@@ -63,7 +64,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   );
   const [isEditTask, setIsEditTask] = useState(false);
 
-  const fetchallData = (logInState: LogInStatus) => {
+  const fetchAllData = (logInState: LogInStatus) => {
     setIsLoading(true);
     setIsLoggedIn("undefined");
     functions
@@ -87,7 +88,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const createUser = (teamMember: Omit<TeamMember, "id">, password: string) => {
-    apiFunctions.createUser(teamMember, password, setUser, setIsLoggedIn, allData, setAllData, fetchallData)
+    apiFunctions.createUser(teamMember, password, setUser, setIsLoggedIn, allData, setAllData, fetchAllData)
   };
 
   const editTask = (task: Task, taskId: number) => {
@@ -163,9 +164,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setUser(user);
         functions.getHeaderContainer();
       });
-      fetchallData("logged in");
+      fetchAllData("dashboard");
     } else {
-      fetchallData("not logged in");
+      fetchAllData("not logged in");
     }
   }, []);
 
@@ -176,6 +177,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         isLoggedIn,
         setIsLoggedIn,
         allData,
+        fetchAllData,
         isLoading,
         createUser,
         userAuth,

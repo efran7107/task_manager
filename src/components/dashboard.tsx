@@ -44,7 +44,7 @@ export const UserDashboard = () => {
           </a>
         )}
       </div>
-      {isLoggedIn === "logged in" && (
+      {isLoggedIn === "dashboard" && (
         <div className="user-dashboard">
           <UserTeams userTeams={userTeams} />
           <TaskBoard tasks={userTasks} tags={tags} taskTags={taskTags} />

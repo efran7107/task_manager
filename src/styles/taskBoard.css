@@ -111,6 +111,23 @@
   bottom: 10px;
   left: 10px;
 }
+
+.note-container{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.note-container .fa-solid.fa-trash {
+  position: initial;
+  display: none;
+}
+
+.note-container:hover .fa-solid.fa-trash {
+  display: initial;
+}
+
 .statuses,
 .tags {
   display: flex;
@@ -133,7 +150,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  align-items: center;
 }
 
 .note {
