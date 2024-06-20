@@ -6,6 +6,7 @@ import { useUser } from "./componentsProvider/UserProvider";
 import { TaskModalForm } from "./modalForm";
 import { useState } from "react";
 import { CreateNote } from "./apiComponents/addNote";
+import toast from "react-hot-toast";
 
 const TaskModal = ({
   task,
@@ -18,12 +19,11 @@ const TaskModal = ({
 }) => {
   const {
     user,
-    isLoggedIn,
-    fetchAllData,
     activeTask,
     isActiveTask,
     closeActiveTask,
     allData,
+    setAllData,
     isEditTask,
     setIsEditTask,
     deleteTask,
@@ -95,14 +95,29 @@ const TaskModal = ({
             <h5>notes:</h5>
             {taskNotes.map((note) => (
               <div className="note-container" key={note.id}>
-                {note.teamMemberId === user.id &&
-                <i
-                  className="fa-solid fa-trash"
-                  onClick={() => {
-                    functions.deleteNote(note.id)
-                    fetchAllData(isLoggedIn)
-                  }}
-                ></i> }
+                {note.teamMemberId === user.id && (
+                  <i
+                    className="fa-solid fa-trash"
+                    onClick={() => {
+                      setAllData({
+                        ...allData,
+                        notes: allData.notes.filter(
+                          (notes) => notes.id !== note.id
+                        ),
+                      });
+                      functions.deleteNote(note.id);
+                      functions
+                        .getAllData()
+                        .then((data) => {
+                          setAllData(data);
+                          toast.success("Added note sucessfully");
+                        })
+                        .catch(() => {
+                          setAllData(allData);
+                        });
+                    }}
+                  ></i>
+                )}
                 <div className="note">
                   <h6>{note.noteTitle}</h6>
                   <p>{note.content}</p>

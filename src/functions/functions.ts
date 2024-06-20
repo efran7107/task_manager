@@ -185,19 +185,19 @@ const isOnlyOneLink = (
 
 const deleteTag = async (tagId: number) => {
   await DeleteRequests.deleteTag(tagId).catch(() =>
-    toast.error("Oops something went wrong deleting task")
+    toast.error("Oops something went wrong deleting tag")
   );
 };
 
 const deleteTaskTag = async (taskTagId: number) => {
   await DeleteRequests.deleteTaskTagLink(taskTagId).catch(() =>
-    toast.error("Oops something went wrong deleting task")
+    toast.error("Oops something went wrong deleting tag")
   );
 };
 
 const deleteNote = async (noteId: number) => {
   await DeleteRequests.deleteNote(noteId).catch(() =>
-    toast.error("Oops something went wrong deleting task")
+    toast.error("Oops something went wrong deleting note")
   );
 };
 

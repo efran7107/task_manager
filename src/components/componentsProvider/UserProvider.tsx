@@ -26,7 +26,7 @@ type TUserProvider = {
   isLoggedIn: LogInStatus;
   setIsLoggedIn: (status: LogInStatus) => void;
   allData: AllData;
-  fetchAllData: (logInState: LogInStatus) => void
+  setAllData: (allData: AllData) => void;
   isLoading: boolean;
   createUser: (user: Omit<TeamMember, "id">, password: string) => void;
   userAuth: (username: string, password: string) => void;
@@ -80,7 +80,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const userAuth = (username: string, password: string) => {
     switch (validations.isUserExist(username, password, allData)) {
       case true:
-        apiFunctions.authUser(username, password, setUser, setIsLoggedIn, allData)
+        apiFunctions.authUser(
+          username,
+          password,
+          setUser,
+          setIsLoggedIn,
+          allData
+        );
         break;
       default:
         return;
@@ -88,10 +94,27 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const createUser = (teamMember: Omit<TeamMember, "id">, password: string) => {
-    apiFunctions.createUser(teamMember, password, setUser, setIsLoggedIn, allData, setAllData, fetchAllData)
+    allData.users.push({
+      ...teamMember,
+      id: allData.users[allData.users.length - 1].id + 1,
+    });
+    apiFunctions.createUser(
+      teamMember,
+      password,
+      setUser,
+      setIsLoggedIn,
+      allData,
+      setAllData,
+      fetchAllData
+    );
   };
 
   const editTask = (task: Task, taskId: number) => {
+    const taskIndex = allData.tasks.indexOf(
+      allData.tasks.find((tasks) => tasks.id === taskId)!
+    );
+    allData.tasks[taskIndex] = task;
+
     PutRequest.updateTask(task).then((res) => {
       if (!res.ok) {
         toast.error("Error updating task");
@@ -119,7 +142,14 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const taskTagLinks = allData.taskTags.filter(
       (link) => link.taskId === activeTask.id
     );
-    apiFunctions.deleteTask(taskAssinments, taskNotes, taskTagLinks, allData, setAllData, activeTask)
+    apiFunctions.deleteTask(
+      taskAssinments,
+      taskNotes,
+      taskTagLinks,
+      allData,
+      setAllData,
+      activeTask
+    );
     setIsLoading(false);
   };
 
@@ -177,7 +207,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         isLoggedIn,
         setIsLoggedIn,
         allData,
-        fetchAllData,
+        setAllData,
         isLoading,
         createUser,
         userAuth,
