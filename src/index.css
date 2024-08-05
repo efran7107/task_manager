@@ -13,6 +13,7 @@
 body {
   background-color: var(--background-color);
   color: var(--text-color);
+  box-sizing: border-box;
   transition: all 0.7s ease-in-out;
 }
 
@@ -26,4 +27,8 @@ body {
   border: 2px solid var(--border-color);
   cursor: pointer;
   user-select: none;
+}
+
+p {
+  margin: 0;
 }
