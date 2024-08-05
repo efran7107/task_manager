@@ -12,3 +12,8 @@ export const defaultAllData = (): AllData => {
     notes: [],
   };
 };
+
+export const defaultLogIn = {
+  username: "",
+  password: "",
+};

@@ -1,0 +1,41 @@
+.entry-forms {
+  display: flex;
+  justify-content: center;
+}
+
+.log-in,
+.sign-up {
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  animation-name: entry;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+}
+
+.sign-up {
+  animation-delay: 0.5s;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+@keyframes entry {
+  0% {
+    transform: scale(0.7) translateY(100vw);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0vw);
+    opacity: 1;
+  }
+}

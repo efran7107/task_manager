@@ -1,4 +1,5 @@
 import { LogInForm } from "../forms/logInForm";
+import "../../styles/entryPage.css";
 
 export const LogInSignUp = () => {
   return (

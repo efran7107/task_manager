@@ -17,6 +17,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setAllData(res);
         if (!isUserLogged) {
           setPage("login/signup");
+          return;
         }
         setPage("dashboard");
       })
