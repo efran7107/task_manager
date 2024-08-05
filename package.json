@@ -7,11 +7,16 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "seed": "node ./reseed.js",
+    "server": "npx json-server ./config/TMDB.json --host 127.0.0.1 --port 3000",
+    "server-delay": "npx json-server --delay 1000 --watch ./config/TMDB.json"
   },
   "dependencies": {
+    "json-server": "^0.17.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.4.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
