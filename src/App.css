@@ -23,4 +23,12 @@
   border: 1px solid var(--border-color);
   border-radius: 20px;
   padding: 5px 10px;
+  transition: all 0.7s ease-in-out;
+}
+
+.success-note,
+.error-note {
+  color: var(--background-color);
+  background-color: var(--text-color);
+  transition: all 0.7s ease-in-out;
 }

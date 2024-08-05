@@ -25,6 +25,16 @@ const getAllData = async (): Promise<AllData> => {
   };
 };
 
+const validateUser = async (
+  userId: number,
+  password: string
+): Promise<boolean> => {
+  const userAuth = await GetRequests.getUserAuth(userId);
+  if (userAuth[0].password === password) return true;
+  else return false;
+};
+
 export const apiFunctions = {
   getAllData,
+  validateUser,
 };

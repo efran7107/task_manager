@@ -16,3 +16,11 @@ export const UserInput = ({
     </div>
   );
 };
+
+export const ErrorPopUp = ({ message }: { message: string }) => {
+  return (
+    <div className="error-pop-up">
+      <p>{message}</p>
+    </div>
+  );
+};

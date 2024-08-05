@@ -7,6 +7,11 @@ export const GetRequests = {
   getUsers: () => {
     return fetch(`${baseUrl}/users`).then((res) => res.json());
   },
+  getUserAuth: (userId: number) => {
+    return fetch(`${baseUrl}/userAuths?userId=${userId}`).then((res) =>
+      res.json()
+    );
+  },
   getTeamMemberLinks: () => {
     return fetch(`${baseUrl}/teamMemberLinks`).then((res) => res.json());
   },
