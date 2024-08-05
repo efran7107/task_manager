@@ -21,14 +21,14 @@ const db = {
       firstName: "John",
       lastName: "Doe",
       email: "johnDoe@email.co",
-      userName: "johnDoe",
+      username: "johnDoe",
     },
     {
       id: 1,
       firstName: "Jane",
       lastName: "Doe",
       email: "janeDoe@email.co",
-      userName: "janeDoe",
+      username: "janeDoe",
     },
   ],
   userAuths: [
