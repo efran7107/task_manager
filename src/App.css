@@ -1,1 +1,9 @@
+.site-title {
+  text-align: center;
+  margin-top: 5%;
+}
 
+.container {
+  width: 80vw;
+  margin: 0 auto;
+}

@@ -2,7 +2,7 @@
   --background-color: #ededed;
   --text-color: #1e1e1e;
   --border-color: #33cc33;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 .dark {
@@ -13,6 +13,7 @@
 body {
   background-color: var(--background-color);
   color: var(--text-color);
+  box-sizing: border-box;
   transition: all 0.7s ease-in-out;
 }
 
@@ -26,4 +27,8 @@ body {
   border: 2px solid var(--border-color);
   cursor: pointer;
   user-select: none;
+}
+
+p {
+  margin: 0;
 }
