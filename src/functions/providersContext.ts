@@ -1,5 +1,9 @@
 import { createContext, useContext } from "react";
-import { ThemeProviderState } from "../types/themeTypes";
+import {
+  ThemeProviderState,
+  TLogInProvider,
+  TUserProvider,
+} from "../types/themeTypes";
 
 const initialState: ThemeProviderState = {
   theme: "system",
@@ -16,3 +20,15 @@ export const useTheme = () => {
 
   return context;
 };
+
+export const UserProviderContext = createContext<TUserProvider>(
+  {} as TUserProvider
+);
+
+export const useUser = () => useContext(UserProviderContext);
+
+export const LogInProviderContext = createContext<TLogInProvider>(
+  {} as TLogInProvider
+);
+
+export const useLogIn = () => useContext(LogInProviderContext);

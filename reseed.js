@@ -54,6 +54,16 @@ const db = {
       userId: 1,
       teamId: 1,
     },
+    {
+      id: 2,
+      userId: 0,
+      teamId: 1,
+    },
+    {
+      id: 3,
+      userId: 1,
+      teamId: 0,
+    },
   ],
   tasks: [
     {
@@ -94,6 +104,7 @@ const db = {
       desc: "note 1",
       dateCreated: "8/4/24",
       taskId: 0,
+      authId: 1,
     },
   ],
 };
