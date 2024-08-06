@@ -1,6 +1,7 @@
 .entry-forms {
   display: flex;
   justify-content: center;
+  gap: 50px;
 }
 
 .log-in,
@@ -18,10 +19,6 @@
   animation-iteration-count: 1;
 }
 
-.sign-up {
-  animation-delay: 0.5s;
-}
-
 .inputs {
   display: flex;
   flex-direction: column;
@@ -29,13 +26,29 @@
   gap: 5px;
 }
 
+.inputs .user-input {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.join-create {
+  display: flex;
+  flex-direction: column;
+}
+.join-create h3,
+.join-create h4 {
+  margin: 10px 0px;
+}
+
 @keyframes entry {
   0% {
-    transform: scale(0.7) translateY(100vw);
+    transform: scale(0);
     opacity: 0;
   }
   100% {
-    transform: scale(1) translateY(0vw);
+    transform: scale(1);
     opacity: 1;
   }
 }

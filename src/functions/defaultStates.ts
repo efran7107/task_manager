@@ -18,6 +18,20 @@ export const defaultLogIn = {
   password: "",
 };
 
+export const defaultSignUp = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  newUsername: "",
+  newPassword: "",
+  confirm: "",
+};
+
+export const defaultCreateTeam = {
+  teamName: "",
+  teamCode: "",
+};
+
 export const defaultUser: User = {
   id: -1,
   firstName: "",

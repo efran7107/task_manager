@@ -6,9 +6,10 @@ import {
 import toast from "react-hot-toast";
 import { apiFunctions } from "../../functions/apiFunctions";
 import { invalidUsernamePassword } from "../../functions/defaultStates";
+import { functions } from "../../functions/functions";
 
 export const LogInProvider = ({ children }: { children: ReactNode }) => {
-  const { allData, setAllData } = useUser();
+  const { allData, setAllData, setUser, setPage } = useUser();
 
   const { users } = allData;
 
@@ -24,7 +25,18 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
       toast.error(invalidUsernamePassword);
       return false;
     }
-    return await apiFunctions.validateUser(validUsernames[0].id, password);
+    const isValidated = await apiFunctions.validateUser(
+      validUsernames[0].id,
+      password
+    );
+    if (!isValidated) {
+      return false;
+    } else {
+      functions.logInUser(setUser, undefined, undefined, validUsernames[0]);
+      localStorage.setItem("user", validUsernames[0].username);
+      setPage("dashboard");
+      return true;
+    }
   };
 
   return (
