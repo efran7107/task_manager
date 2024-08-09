@@ -104,7 +104,7 @@ export const SignUpForm = () => {
           userInputProps={{
             type: "password",
             placeholder: "Confirm your password",
-            value: firstName,
+            value: confirm,
             onChange: (e) => {
               if (e.currentTarget.value.trim() === confirm) {
                 setSignUp(signUp);
@@ -124,9 +124,9 @@ export const SignUpForm = () => {
               userInputProps={{
                 type: "text",
                 placeholder: "Enter a code here to join a team",
-                value: teamCode,
+                value: joinTeamCode,
                 onChange: (e) => {
-                  if (e.currentTarget.value.trim() === teamCode) {
+                  if (e.currentTarget.value.trim() === joinTeamCode) {
                     setJoinTeamCode(joinTeamCode);
                     return;
                   }
@@ -175,7 +175,7 @@ export const SignUpForm = () => {
               userInputProps={{
                 type: "text",
                 placeholder: "Enter a code for your new team",
-                value: teamName,
+                value: teamCode,
                 onChange: (e) => {
                   if (e.currentTarget.value.trim() === teamCode) {
                     setCreateTeam({ ...createTeam, teamCode: teamCode });
