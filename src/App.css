@@ -1,9 +1,49 @@
 .site-title {
   text-align: center;
   margin-top: 5%;
+  animation-name: titleIntro;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
 }
 
 .container {
   width: 80vw;
   margin: 0 auto;
+}
+
+.user-input input {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0 10px;
+  transition: all 0.7s ease-in-out;
+}
+
+.submit {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 5px 10px;
+  transition: all 0.7s ease-in-out;
+}
+
+.success-note,
+.error-note {
+  color: var(--background-color);
+  background-color: var(--text-color);
+  transition: all 0.7s ease-in-out;
+}
+
+@keyframes titleIntro {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

@@ -1,4 +1,4 @@
-import { AllData } from "../types/objectTypes";
+import { AllData, User } from "../types/objectTypes";
 
 export const defaultAllData = (): AllData => {
   return {
@@ -12,3 +12,35 @@ export const defaultAllData = (): AllData => {
     notes: [],
   };
 };
+
+export const defaultLogIn = {
+  username: "",
+  password: "",
+};
+
+export const defaultSignUp = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  newUsername: "",
+  newPassword: "",
+  confirm: "",
+};
+
+export const defaultCreateTeam = {
+  teamName: "",
+  teamCode: "",
+};
+
+export const defaultUser: User = {
+  id: -1,
+  firstName: "",
+  lastName: "",
+  email: "",
+  username: "",
+};
+
+export const logInError =
+  "please enter a username an password to sign in or create an account to join";
+
+export const invalidUsernamePassword = "incorrect username/password";

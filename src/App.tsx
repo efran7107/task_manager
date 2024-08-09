@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import "./App.css";
 import { ThemeButton } from "./components/inputs/themeBtn";
 import { ThemeProvider } from "./components/providers/themeProvider";
@@ -8,6 +9,16 @@ function App() {
   return (
     <>
       <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+        <Toaster
+          toastOptions={{
+            success: {
+              className: "success-note",
+            },
+            error: {
+              className: "error-note",
+            },
+          }}
+        />
         <ThemeButton />
         <h1 className="site-title">Task Manager</h1>
         <UserProvider>
