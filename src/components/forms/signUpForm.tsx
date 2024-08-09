@@ -4,12 +4,16 @@ import {
   defaultSignUp,
 } from "../../functions/defaultStates";
 import { UserInput } from "../inputs/formInputs";
+import { validations } from "../../functions/validations";
+import { useUser } from "../../functions/providersContext";
 
 export const SignUpForm = () => {
   const [signUp, setSignUp] = useState(defaultSignUp);
   const [createTeam, setCreateTeam] = useState(defaultCreateTeam);
   const [joinTeamCode, setJoinTeamCode] = useState("");
 
+  const { allData } = useUser();
+  const { users } = allData;
   const { firstName, lastName, email, newUsername, newPassword, confirm } =
     signUp;
   const { teamName, teamCode } = createTeam;
@@ -17,7 +21,13 @@ export const SignUpForm = () => {
   return (
     <div className="sign-up">
       <h2>Sign Up</h2>
-      <form className="inputs">
+      <form
+        className="inputs"
+        onSubmit={(e) => {
+          e.preventDefault();
+          validations.isValidSignUp(signUp, users);
+        }}
+      >
         <UserInput
           label="First Name"
           name="firstName"
