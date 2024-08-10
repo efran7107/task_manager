@@ -3,17 +3,20 @@ import {
   defaultCreateTeam,
   defaultSignUp,
 } from "../../functions/defaultStates";
-import { UserInput } from "../inputs/formInputs";
+import { ErrorPopUp, UserInput } from "../inputs/formInputs";
 import { validations } from "../../functions/validations";
 import { useUser } from "../../functions/providersContext";
+import { User } from "../../types/objectTypes";
+import { format } from "../../functions/formatting";
 
 export const SignUpForm = () => {
   const [signUp, setSignUp] = useState(defaultSignUp);
   const [createTeam, setCreateTeam] = useState(defaultCreateTeam);
   const [joinTeamCode, setJoinTeamCode] = useState("");
+  const [isFirstSignUp, setIsFirstSignUp] = useState(true);
 
   const { allData } = useUser();
-  const { users } = allData;
+  const { users, teams } = allData;
   const { firstName, lastName, email, newUsername, newPassword, confirm } =
     signUp;
   const { teamName, teamCode } = createTeam;
@@ -25,7 +28,16 @@ export const SignUpForm = () => {
         className="inputs"
         onSubmit={(e) => {
           e.preventDefault();
-          validations.isValidSignUp(signUp, users);
+
+          if (
+            !validations.isValidSignUp(signUp, users, createTeam, joinTeamCode)
+          ) {
+            setIsFirstSignUp(false);
+            return;
+          }
+          const newUser: Omit<User, "id"> = {
+            firstName: format.formatName(firstName),
+          };
         }}
       >
         <UserInput
@@ -44,6 +56,10 @@ export const SignUpForm = () => {
             },
           }}
         />
+        {!isFirstSignUp && firstName.trim().length < 2 && (
+          <ErrorPopUp message="Please enter at least two characters" />
+        )}
+
         <UserInput
           label="Last Name"
           name="lastName"
@@ -60,6 +76,9 @@ export const SignUpForm = () => {
             },
           }}
         />
+        {!isFirstSignUp && lastName.trim().length < 2 && (
+          <ErrorPopUp message="Please enter at least two characters" />
+        )}
         <UserInput
           label="Email"
           name="email"
@@ -76,6 +95,9 @@ export const SignUpForm = () => {
             },
           }}
         />
+        {!isFirstSignUp && !validations.isValidEmail(email) && (
+          <ErrorPopUp message="Please enter a valid email" />
+        )}
         <UserInput
           label="Username"
           name="newUsername"
@@ -92,6 +114,11 @@ export const SignUpForm = () => {
             },
           }}
         />
+        {!isFirstSignUp &&
+          !validations.isSameUsername(newUsername, users) &&
+          newUsername.trim().length < 6 && (
+            <ErrorPopUp message="Please enter a unique username that is at least 6 charaters long" />
+          )}
         <UserInput
           label="Password"
           name="newPassword"
@@ -108,6 +135,9 @@ export const SignUpForm = () => {
             },
           }}
         />
+        {!isFirstSignUp && newPassword !== confirm && (
+          <ErrorPopUp message="passwords do not match" />
+        )}
         <UserInput
           label="Confirm Password"
           name="confirm"
@@ -124,6 +154,9 @@ export const SignUpForm = () => {
             },
           }}
         />
+        {!isFirstSignUp && newPassword !== confirm && (
+          <ErrorPopUp message="passwords do not match" />
+        )}
         <div className="join-create">
           <h3>Join or create a team</h3>
           <div className="join-team">
@@ -149,6 +182,11 @@ export const SignUpForm = () => {
                 },
               }}
             />
+            {!isFirstSignUp &&
+              joinTeamCode.trim().length < 4 &&
+              (teamName.trim().length < 2 || teamCode.trim().length < 4) && (
+                <ErrorPopUp message="team code must be at least 4 characters" />
+              )}
           </div>
           <div className="create-team">
             <h4>Create Team</h4>
@@ -179,6 +217,10 @@ export const SignUpForm = () => {
                 },
               }}
             />
+            {(!isFirstSignUp && validations.isSameTeamName(teamName, teams)) ||
+              (teamName.trim().length < 2 && joinTeamCode.trim().length < 4 && (
+                <ErrorPopUp message="team name must be more than 2 characters, and must be a unique team name" />
+              ))}
             <UserInput
               label="New Team code"
               name="teamCode"
@@ -206,6 +248,11 @@ export const SignUpForm = () => {
                 },
               }}
             />
+            {!isFirstSignUp &&
+              teamCode.trim().length < 4 &&
+              joinTeamCode.trim().length < 4 && (
+                <ErrorPopUp message="team code must be at least 4 characters" />
+              )}
           </div>
         </div>
         <input className="submit" type="submit" value="Sign Up" />

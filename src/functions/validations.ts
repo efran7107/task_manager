@@ -1,5 +1,4 @@
-import { GetRequests } from "../api";
-import { User } from "../types/objectTypes";
+import { Team, User } from "../types/objectTypes";
 
 const isUserLoggedIn = (): boolean => {
   return localStorage.getItem("user") === null ? false : true;
@@ -21,7 +20,13 @@ const isValidEmail = (email: string) => {
   );
 };
 
-const isSameUsername = (username: string, allUsers: User[]) => {};
+const isSameUsername = (username: string, allUsers: User[]): boolean => {
+  return allUsers.some((user) => username === user.username);
+};
+
+const isSameTeamName = (teamName: string, allTeams: Team[]) => {
+  return allTeams.some((team) => teamName === team.teamName);
+};
 
 const isValidSignUp = (
   signUpForm: {
@@ -32,7 +37,12 @@ const isValidSignUp = (
     newPassword: string;
     confirm: string;
   },
-  allUsers: User[]
+  allUsers: User[],
+  createTeam: {
+    teamName: string;
+    teamCode: string;
+  },
+  joinTeamCode: string
 ) => {
   const { firstName, lastName, email, newUsername, newPassword, confirm } =
     signUpForm;
@@ -40,9 +50,19 @@ const isValidSignUp = (
   if (
     firstName.trim().length > 2 &&
     lastName.trim().length > 2 &&
-    isValidEmail(email)
+    isValidEmail(email) &&
+    !isSameUsername(newUsername, allUsers) &&
+    newPassword === confirm
   ) {
-    return true;
+    if (
+      joinTeamCode.trim().length > 2 ||
+      (createTeam.teamName.trim().length > 2 &&
+        createTeam.teamCode.trim().length > 2)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
   return false;
 };
@@ -51,4 +71,7 @@ export const validations = {
   isUserLoggedIn,
   isValidLogIn,
   isValidSignUp,
+  isValidEmail,
+  isSameUsername,
+  isSameTeamName,
 };
