@@ -8,6 +8,7 @@ import { apiFunctions } from "../../functions/apiFunctions";
 import { invalidUsernamePassword } from "../../functions/defaultStates";
 import { functions } from "../../functions/functions";
 import { User } from "../../types/objectTypes";
+import { PostRequests } from "../../api";
 
 export const LogInProvider = ({ children }: { children: ReactNode }) => {
   const { allData, setAllData, setUser, setPage } = useUser();
@@ -44,7 +45,10 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
     newUser: Omit<User, "id">,
     createTeam: { teamName: string; teamCode: string },
     joinTeam: string
-  ): Promise<boolean> => {};
+  ) => {
+    const updatedUser = await PostRequests.createUser(newUser);
+    console.log(updatedUser);
+  };
 
   return (
     <LogInProviderContext.Provider
