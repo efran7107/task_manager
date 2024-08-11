@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { apiFunctions } from "../../functions/apiFunctions";
 import { invalidUsernamePassword } from "../../functions/defaultStates";
 import { functions } from "../../functions/functions";
+import { User } from "../../types/objectTypes";
 
 export const LogInProvider = ({ children }: { children: ReactNode }) => {
   const { allData, setAllData, setUser, setPage } = useUser();
@@ -39,10 +40,17 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const signUpUser = async (
+    newUser: Omit<User, "id">,
+    createTeam: { teamName: string; teamCode: string },
+    joinTeam: string
+  ): Promise<boolean> => {};
+
   return (
     <LogInProviderContext.Provider
       value={{
         logInUser,
+        signUpUser,
       }}
     >
       {children}

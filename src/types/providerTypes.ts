@@ -17,4 +17,9 @@ export type TLogInProvider = {
     username: string;
     password: string;
   }) => Promise<boolean>;
+  signUpUser: (
+    newUser: Omit<User, "id">,
+    createTeam: { teamName: string; teamCode: string },
+    joinTeam: string
+  ) => Promise<boolean>;
 };

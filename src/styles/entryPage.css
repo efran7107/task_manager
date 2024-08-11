@@ -19,6 +19,10 @@
   align-items: center;
 }
 
+.join-team {
+  width: 100%;
+}
+
 .log-in,
 .sign-up {
   animation-name: entry;

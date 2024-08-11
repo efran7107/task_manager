@@ -1,3 +1,5 @@
+import { User } from "./types/objectTypes";
+
 const baseUrl = "http://localhost:3000";
 
 export const GetRequests = {
@@ -34,5 +36,13 @@ export const GetRequests = {
   },
   getNotes: () => {
     return fetch(`${baseUrl}/notes`).then((res) => res.json());
+  },
+};
+
+export const PutRequests = {
+  createUser: (newUser: Omit<User, "id">) => {
+    return fetch(`${baseUrl}/users`, {
+      method: "Put",
+    });
   },
 };

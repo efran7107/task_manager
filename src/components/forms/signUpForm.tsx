@@ -6,8 +6,6 @@ import {
 import { ErrorPopUp, UserInput } from "../inputs/formInputs";
 import { validations } from "../../functions/validations";
 import { useUser } from "../../functions/providersContext";
-import { User } from "../../types/objectTypes";
-import { format } from "../../functions/formatting";
 
 export const SignUpForm = () => {
   const [signUp, setSignUp] = useState(defaultSignUp);
@@ -35,9 +33,7 @@ export const SignUpForm = () => {
             setIsFirstSignUp(false);
             return;
           }
-          const newUser: Omit<User, "id"> = {
-            firstName: format.formatName(firstName),
-          };
+          //function(newUser: Omit<User,'id'>, createTeam: {teamName: string, teamCode: string}, joinTeamCode: string)
         }}
       >
         <UserInput
