@@ -2,6 +2,9 @@ import { User } from "./types/objectTypes";
 
 const baseUrl = "http://localhost:3000";
 
+const headers = new Headers();
+headers.append("Content-Type", "application/json");
+
 export const GetRequests = {
   getTeams: () => {
     return fetch(`${baseUrl}/teams`).then((res) => res.json());
@@ -39,10 +42,16 @@ export const GetRequests = {
   },
 };
 
+const putRequestsOptions = {
+  method: "PUT",
+  headers: headers,
+};
+
 export const PutRequests = {
   createUser: (newUser: Omit<User, "id">) => {
     return fetch(`${baseUrl}/users`, {
-      method: "Put",
-    });
+      ...putRequestsOptions,
+      body: JSON.stringify(newUser),
+    }).then((res) => res.json);
   },
 };
