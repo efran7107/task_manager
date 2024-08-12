@@ -224,10 +224,12 @@ export const SignUpForm = () => {
                 },
               }}
             />
-            {(!isFirstSignUp && validations.isSameTeamName(teamName, teams)) ||
-              (teamName.trim().length < 2 && joinTeamCode.trim().length < 4 && (
+            {!isFirstSignUp &&
+              validations.isSameTeamName(teamName, teams) &&
+              teamName.trim().length < 2 &&
+              joinTeamCode.trim().length < 4 && (
                 <ErrorPopUp message="team name must be more than 2 characters, and must be a unique team name" />
-              ))}
+              )}
             <UserInput
               label="New Team code"
               name="teamCode"

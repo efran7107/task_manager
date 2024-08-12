@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { apiFunctions } from "../../functions/apiFunctions";
 import { invalidUsernamePassword } from "../../functions/defaultStates";
 import { functions } from "../../functions/functions";
-import { User } from "../../types/objectTypes";
+import { User, UserAuth } from "../../types/objectTypes";
 import { PostRequests } from "../../api";
 
 export const LogInProvider = ({ children }: { children: ReactNode }) => {
@@ -48,7 +48,11 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
     joinTeam: string
   ) => {
     const updatedUser = await PostRequests.createUser(newUser);
-    // const newUserAuth =
+    const newUserAuth: Omit<UserAuth, "id"> = {
+      userId: updatedUser.id,
+      password: password,
+    };
+    await PostRequests.createUserAuth(newUserAuth);
   };
 
   return (

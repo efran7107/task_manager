@@ -1,17 +1,7 @@
 {
   "teams": [
-    {
-      "id": 0,
-      "teamName": "Team 1",
-      "teamLeadId": 0,
-      "teamCode": "1234"
-    },
-    {
-      "id": 1,
-      "teamName": "Team 2",
-      "teamLeadId": 1,
-      "teamCode": "5678"
-    }
+    { "id": 0, "teamName": "Team 1", "teamLeadId": 0, "teamCode": "1234" },
+    { "id": 1, "teamName": "Team 2", "teamLeadId": 1, "teamCode": "5678" }
   ],
   "users": [
     {
@@ -27,48 +17,17 @@
       "lastName": "Doe",
       "email": "janeDoe@email.co",
       "username": "janeDoe"
-    },
-    {
-      "firstName": "Ernie",
-      "lastName": "Franssen",
-      "email": "e@g.co",
-      "username": "rummile10",
-      "id": 2
     }
   ],
   "userAuths": [
-    {
-      "id": 0,
-      "userId": 0,
-      "password": "1234"
-    },
-    {
-      "id": 1,
-      "userId": 1,
-      "password": "5678"
-    }
+    { "id": 0, "userId": 0, "password": "1234" },
+    { "id": 1, "userId": 1, "password": "5678" }
   ],
   "teamMemberLinks": [
-    {
-      "id": 0,
-      "userId": 0,
-      "teamId": 0
-    },
-    {
-      "id": 1,
-      "userId": 1,
-      "teamId": 1
-    },
-    {
-      "id": 2,
-      "userId": 0,
-      "teamId": 1
-    },
-    {
-      "id": 3,
-      "userId": 1,
-      "teamId": 0
-    }
+    { "id": 0, "userId": 0, "teamId": 0 },
+    { "id": 1, "userId": 1, "teamId": 1 },
+    { "id": 2, "userId": 0, "teamId": 1 },
+    { "id": 3, "userId": 1, "teamId": 0 }
   ],
   "tasks": [
     {
@@ -82,26 +41,9 @@
       "ucId": 0
     }
   ],
-  "usersTasks": [
-    {
-      "id": 0,
-      "userId": 0,
-      "taskId": 0
-    }
-  ],
-  "tags": [
-    {
-      "id": 0,
-      "tag": "#tag"
-    }
-  ],
-  "taggedTasks": [
-    {
-      "id": 0,
-      "taskId": 0,
-      "tagId": 0
-    }
-  ],
+  "usersTasks": [{ "id": 0, "userId": 0, "taskId": 0 }],
+  "tags": [{ "id": 0, "tag": "#tag" }],
+  "taggedTasks": [{ "id": 0, "taskId": 0, "tagId": 0 }],
   "notes": [
     {
       "id": 0,

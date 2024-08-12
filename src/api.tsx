@@ -45,7 +45,7 @@ const postRequestsOptions = {
 };
 
 export const PostRequests = {
-  createUser: (newUser: Omit<User, "id">) => {
+  createUser: (newUser: Omit<User, "id">): Promise<User> => {
     return fetch(`${baseUrl}/users`, {
       ...postRequestsOptions,
       body: JSON.stringify(newUser),
