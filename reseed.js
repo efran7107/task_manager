@@ -4,13 +4,13 @@ const db = {
   teams: [
     {
       id: 0,
-      teamName: "Team 1",
+      teamName: "Team_1",
       teamLeadId: 0,
       teamCode: "1234",
     },
     {
       id: 1,
-      teamName: "Team 2",
+      teamName: "Team_2",
       teamLeadId: 1,
       teamCode: "5678",
     },

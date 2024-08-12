@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   defaultCreateTeam,
+  defaultJoinTeam,
   defaultSignUp,
 } from "../../functions/defaultStates";
 import { ErrorPopUp, UserInput } from "../inputs/formInputs";
@@ -12,7 +13,7 @@ import { format } from "../../functions/formatting";
 export const SignUpForm = () => {
   const [signUp, setSignUp] = useState(defaultSignUp);
   const [createTeam, setCreateTeam] = useState(defaultCreateTeam);
-  const [joinTeamCode, setJoinTeamCode] = useState("");
+  const [joinTeam, setJoinTeam] = useState(defaultJoinTeam);
   const [isFirstSignUp, setIsFirstSignUp] = useState(true);
 
   const { allData } = useUser();
@@ -20,6 +21,7 @@ export const SignUpForm = () => {
   const { users, teams } = allData;
   const { firstName, lastName, email, newUsername, newPassword, confirm } =
     signUp;
+  const { joinTeamName, joinTeamCode } = joinTeam;
   const { teamName, teamCode } = createTeam;
 
   return (
@@ -169,6 +171,30 @@ export const SignUpForm = () => {
           <div className="join-team">
             <h4>Join Team</h4>
             <UserInput
+              label="Team Name"
+              name="joinTeamName"
+              userInputProps={{
+                type: "text",
+                placeholder: "Enter team name",
+                value: joinTeamName,
+                onChange: (e) => {
+                  if (e.currentTarget.value.trim() === joinTeamName) {
+                    setJoinTeam({ ...joinTeam, joinTeamName: joinTeamName });
+                    return;
+                  }
+                  if (teamName.trim() !== "" || teamCode.trim() !== "") {
+                    setCreateTeam(defaultCreateTeam);
+                    setJoinTeam({ ...joinTeam, joinTeamName: joinTeamName });
+                    return;
+                  }
+                  setJoinTeam({
+                    ...joinTeam,
+                    joinTeamName: e.currentTarget.value,
+                  });
+                },
+              }}
+            />
+            <UserInput
               label="Team Code"
               name="joinTeamCode"
               userInputProps={{
@@ -177,15 +203,21 @@ export const SignUpForm = () => {
                 value: joinTeamCode,
                 onChange: (e) => {
                   if (e.currentTarget.value.trim() === joinTeamCode) {
-                    setJoinTeamCode(joinTeamCode);
+                    setJoinTeam({ ...joinTeam, joinTeamCode: joinTeamCode });
                     return;
                   }
-                  if (teamName !== "") {
+                  if (teamName.trim() !== "" || teamCode.trim() !== "") {
                     setCreateTeam(defaultCreateTeam);
-                    setJoinTeamCode(e.currentTarget.value);
+                    setJoinTeam({
+                      ...joinTeam,
+                      joinTeamCode: e.currentTarget.value,
+                    });
                     return;
                   }
-                  setJoinTeamCode(e.currentTarget.value);
+                  setJoinTeam({
+                    ...joinTeam,
+                    joinTeamCode: e.currentTarget.value,
+                  });
                 },
               }}
             />
@@ -210,7 +242,7 @@ export const SignUpForm = () => {
                     return;
                   }
                   if (joinTeamCode !== "") {
-                    setJoinTeamCode("");
+                    setJoinTeam(defaultJoinTeam);
                     setCreateTeam({
                       ...createTeam,
                       teamName: e.currentTarget.value,
@@ -243,7 +275,7 @@ export const SignUpForm = () => {
                     return;
                   }
                   if (joinTeamCode !== "") {
-                    setJoinTeamCode("");
+                    setJoinTeam(defaultJoinTeam);
                     setCreateTeam({
                       ...createTeam,
                       teamCode: e.currentTarget.value,

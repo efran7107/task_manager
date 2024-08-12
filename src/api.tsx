@@ -1,4 +1,4 @@
-import { User, UserAuth } from "./types/objectTypes";
+import { Team, TeamMemberLink, User, UserAuth } from "./types/objectTypes";
 
 const baseUrl = "http://localhost:3000";
 
@@ -45,10 +45,24 @@ const postRequestsOptions = {
 };
 
 export const PostRequests = {
+  createTeam: (newTeam: Omit<Team, "id">): Promise<Team> => {
+    return fetch(`${baseUrl}/teams`, {
+      ...postRequestsOptions,
+      body: JSON.stringify(newTeam),
+    }).then((res) => res.json());
+  },
   createUser: (newUser: Omit<User, "id">): Promise<User> => {
     return fetch(`${baseUrl}/users`, {
       ...postRequestsOptions,
       body: JSON.stringify(newUser),
+    }).then((res) => res.json());
+  },
+  createTeamMemberLink: (
+    newTeamMemberLink: Omit<TeamMemberLink, "id">
+  ): Promise<TeamMemberLink> => {
+    return fetch(`${baseUrl}/teamMemberLinks`, {
+      ...postRequestsOptions,
+      body: JSON.stringify(newTeamMemberLink),
     }).then((res) => res.json());
   },
   createUserAuth: (newAuth: Omit<UserAuth, "id">) => {

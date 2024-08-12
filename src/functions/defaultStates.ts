@@ -27,6 +27,11 @@ export const defaultSignUp = {
   confirm: "",
 };
 
+export const defaultJoinTeam = {
+  joinTeamName: "",
+  joinTeamCode: "",
+};
+
 export const defaultCreateTeam = {
   teamName: "",
   teamCode: "",
