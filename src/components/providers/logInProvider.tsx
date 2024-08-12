@@ -44,10 +44,11 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
   const signUpUser = async (
     newUser: Omit<User, "id">,
     createTeam: { teamName: string; teamCode: string },
+    password: string,
     joinTeam: string
   ) => {
     const updatedUser = await PostRequests.createUser(newUser);
-    console.log(updatedUser);
+    // const newUserAuth =
   };
 
   return (

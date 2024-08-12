@@ -44,7 +44,7 @@ export const SignUpForm = () => {
             username: newUsername,
           };
 
-          signUpUser(newUser, createTeam, joinTeamCode);
+          signUpUser(newUser, createTeam, newPassword, joinTeamCode);
         }}
       >
         <UserInput

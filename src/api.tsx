@@ -1,4 +1,4 @@
-import { User } from "./types/objectTypes";
+import { User, UserAuth } from "./types/objectTypes";
 
 const baseUrl = "http://localhost:3000";
 
@@ -50,5 +50,11 @@ export const PostRequests = {
       ...postRequestsOptions,
       body: JSON.stringify(newUser),
     }).then((res) => res.json());
+  },
+  createUserAuth: (newAuth: Omit<UserAuth, "id">) => {
+    return fetch(`${baseUrl}/userAuths`, {
+      ...postRequestsOptions,
+      body: JSON.stringify(newAuth),
+    });
   },
 };

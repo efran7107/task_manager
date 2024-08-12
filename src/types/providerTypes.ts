@@ -20,6 +20,7 @@ export type TLogInProvider = {
   signUpUser: (
     newUser: Omit<User, "id">,
     createTeam: { teamName: string; teamCode: string },
+    password: string,
     joinTeam: string
   ) => void;
 };
