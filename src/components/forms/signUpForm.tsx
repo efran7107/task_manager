@@ -194,6 +194,11 @@ export const SignUpForm = () => {
                 },
               }}
             />
+            {!isFirstSignUp &&
+              joinTeamName.trim().length < 1 &&
+              (teamName.trim().length < 2 || teamCode.trim().length < 4) && (
+                <ErrorPopUp message="team please enter an team name" />
+              )}
             <UserInput
               label="Team Code"
               name="joinTeamCode"
