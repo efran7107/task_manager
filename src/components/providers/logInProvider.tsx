@@ -7,14 +7,12 @@ import toast from "react-hot-toast";
 import { apiFunctions } from "../../functions/apiFunctions";
 import { invalidUsernamePassword } from "../../functions/defaultStates";
 import { functions } from "../../functions/functions";
-import { Team, TeamMemberLink, User, UserAuth } from "../../types/objectTypes";
-import { PostRequests } from "../../api";
-import { validations } from "../../functions/validations";
+import { User } from "../../types/objectTypes";
 
 export const LogInProvider = ({ children }: { children: ReactNode }) => {
   const { allData, setAllData, setUser, setPage } = useUser();
 
-  const { users, teams, teamMemberLinks } = allData;
+  const { users, teams } = allData;
 
   const logInUser = async ({
     username,
