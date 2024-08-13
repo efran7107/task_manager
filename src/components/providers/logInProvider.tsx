@@ -23,6 +23,7 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
     username: string;
     password: string;
   }): Promise<boolean> => {
+    setPage("loading");
     const validUsernames = users.filter((user) => user.username === username);
     if (validUsernames.length < 1) {
       toast.error(invalidUsernamePassword);
@@ -54,10 +55,31 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
     createTeam: { teamName: string; teamCode: string },
     joinTeam: { joinTeamName: string; joinTeamCode: string }
   ) => {
-    const { firstName, lastName, email, newUsername, newPassword, confirm } =
-      signUp;
-    const { teamName, teamCode } = createTeam;
-    const { joinTeamName, joinTeamCode } = joinTeam;
+    setPage("loading");
+    try {
+      const { firstName, lastName, email, newUsername, newPassword } = signUp;
+      const newUserInfo: Omit<User, "id"> = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        username: newUsername,
+      };
+
+      await apiFunctions.signUpUser(
+        newUserInfo,
+        newPassword,
+        createTeam,
+        joinTeam,
+        teams
+      );
+      const newData = await apiFunctions.getAllData();
+      setAllData(newData);
+      localStorage.setItem("user", newUsername);
+      setPage("dashboard");
+    } catch {
+      toast.error("error please try again later");
+      setPage("error");
+    }
   };
 
   return (

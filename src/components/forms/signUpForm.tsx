@@ -7,8 +7,6 @@ import {
 import { ErrorPopUp, UserInput } from "../inputs/formInputs";
 import { validations } from "../../functions/validations";
 import { useLogIn, useUser } from "../../functions/providersContext";
-import { User } from "../../types/objectTypes";
-import { format } from "../../functions/formatting";
 
 export const SignUpForm = () => {
   const [signUp, setSignUp] = useState(defaultSignUp);
@@ -33,13 +31,22 @@ export const SignUpForm = () => {
           e.preventDefault();
 
           if (
-            !validations.isValidSignUp(signUp, users, createTeam, joinTeamCode)
+            !validations.isValidSignUp(
+              signUp,
+              users,
+              createTeam,
+              joinTeam,
+              teams
+            )
           ) {
             setIsFirstSignUp(false);
             return;
           }
-
           signUpUser(signUp, createTeam, joinTeam);
+          setIsFirstSignUp(true);
+          setSignUp(defaultSignUp);
+          setCreateTeam(defaultCreateTeam);
+          setJoinTeam(defaultJoinTeam);
         }}
       >
         <UserInput
@@ -190,9 +197,10 @@ export const SignUpForm = () => {
               }}
             />
             {!isFirstSignUp &&
-              joinTeamName.trim().length < 1 &&
-              (teamName.trim().length < 2 || teamCode.trim().length < 4) && (
-                <ErrorPopUp message="team please enter an team name" />
+              joinTeamName.length < 2 &&
+              teamName.trim() === "" &&
+              teamCode.trim() === "" && (
+                <ErrorPopUp message="Please enter team name" />
               )}
             <UserInput
               label="Team Code"
@@ -222,9 +230,10 @@ export const SignUpForm = () => {
               }}
             />
             {!isFirstSignUp &&
-              joinTeamCode.trim().length < 4 &&
-              (teamName.trim().length < 2 || teamCode.trim().length < 4) && (
-                <ErrorPopUp message="team code must be at least 4 characters" />
+              joinTeamCode.length < 4 &&
+              teamName.trim() === "" &&
+              teamCode.trim() === "" && (
+                <ErrorPopUp message="Please enter team code" />
               )}
           </div>
           <div className="create-team">
@@ -241,7 +250,10 @@ export const SignUpForm = () => {
                     setCreateTeam({ ...createTeam, teamName: teamName });
                     return;
                   }
-                  if (joinTeamCode !== "") {
+                  if (
+                    joinTeamName.trim() !== "" ||
+                    joinTeamCode.trim() !== ""
+                  ) {
                     setJoinTeam(defaultJoinTeam);
                     setCreateTeam({
                       ...createTeam,
@@ -257,10 +269,10 @@ export const SignUpForm = () => {
               }}
             />
             {!isFirstSignUp &&
-              validations.isSameTeamName(teamName, teams) &&
-              teamName.trim().length < 2 &&
-              joinTeamCode.trim().length < 4 && (
-                <ErrorPopUp message="team name must be more than 2 characters, and must be a unique team name" />
+              teamName.length < 2 &&
+              joinTeamName.trim() === "" &&
+              joinTeamCode.trim() === "" && (
+                <ErrorPopUp message="Please enter new team name" />
               )}
             <UserInput
               label="New Team code"
@@ -274,7 +286,10 @@ export const SignUpForm = () => {
                     setCreateTeam({ ...createTeam, teamCode: teamCode });
                     return;
                   }
-                  if (joinTeamCode !== "") {
+                  if (
+                    joinTeamName.trim() !== "" ||
+                    joinTeamCode.trim() !== ""
+                  ) {
                     setJoinTeam(defaultJoinTeam);
                     setCreateTeam({
                       ...createTeam,
@@ -290,9 +305,10 @@ export const SignUpForm = () => {
               }}
             />
             {!isFirstSignUp &&
-              teamCode.trim().length < 4 &&
-              joinTeamCode.trim().length < 4 && (
-                <ErrorPopUp message="team code must be at least 4 characters" />
+              teamCode.length < 4 &&
+              joinTeamName.trim() === "" &&
+              joinTeamCode.trim() === "" && (
+                <ErrorPopUp message="Please enter new team code" />
               )}
           </div>
         </div>

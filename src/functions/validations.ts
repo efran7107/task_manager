@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { Team, User } from "../types/objectTypes";
 
 const isValidName = (inputStr: string) => {
@@ -46,10 +47,14 @@ const isValidSignUp = (
     teamName: string;
     teamCode: string;
   },
-  joinTeamCode: string
-) => {
+  joinTeam: { joinTeamName: string; joinTeamCode: string },
+  teams: Team[]
+): boolean => {
   const { firstName, lastName, email, newUsername, newPassword, confirm } =
     signUpForm;
+
+  const { teamName, teamCode } = createTeam;
+  const { joinTeamName, joinTeamCode } = joinTeam;
 
   if (
     firstName.trim().length > 2 &&
@@ -59,13 +64,30 @@ const isValidSignUp = (
     newPassword === confirm
   ) {
     if (
-      joinTeamCode.trim().length > 2 ||
-      (createTeam.teamName.trim().length > 2 &&
-        createTeam.teamCode.trim().length > 2)
+      (joinTeamName.trim().length > 2 && joinTeamCode.trim().length > 2) ||
+      (teamName.trim().length > 2 && teamCode.trim().length > 2)
     ) {
-      return true;
-    } else {
-      return false;
+      if (joinTeamName.trim().length > 2 && joinTeamCode.trim().length > 2) {
+        if (!isSameTeamName(joinTeamName, teams)) {
+          toast.error("please enter a valid team name");
+          return false;
+        } else {
+          const team = teams.find((team) => team.teamName === joinTeamName)!;
+          if (team.teamCode !== joinTeamCode) {
+            toast.error("please enter a right passcode for the team");
+            return false;
+          } else {
+            return true;
+          }
+        }
+      } else {
+        if (isSameTeamName(teamName, teams)) {
+          toast.error("please enter a different team name");
+          return false;
+        } else {
+          return true;
+        }
+      }
     }
   }
   return false;

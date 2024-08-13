@@ -31,4 +31,5 @@ const createUser = (newUserInfo: {
 
 export const functions = {
   logInUser,
+  createUser,
 };
