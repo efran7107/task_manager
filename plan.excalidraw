@@ -111189,6 +111189,100 @@
         40.27783203125,
         0
       ]
+    },
+    {
+      "id": "4RIgonP4GJvYWQTxwKu_T",
+      "type": "freedraw",
+      "x": 272.8608398437507,
+      "y": 2250.018424987792,
+      "width": 54.166748046875,
+      "height": 15.27777099609375,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 683115880,
+      "version": 4,
+      "versionNonce": 2061991704,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1723592992196,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          54.166748046875,
+          15.27777099609375
+        ],
+        [
+          54.166748046875,
+          15.27777099609375
+        ]
+      ],
+      "pressures": [
+        0,
+        0,
+        0
+      ],
+      "simulatePressure": false,
+      "lastCommittedPoint": [
+        54.166748046875,
+        15.27777099609375
+      ]
+    },
+    {
+      "id": "ANzPNLcbnChxdVwHCNy5R",
+      "type": "freedraw",
+      "x": -1531.1320800781239,
+      "y": 2172.153839111327,
+      "width": 0.0001,
+      "height": 0.0001,
+      "angle": 0,
+      "strokeColor": "#343a40",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 1,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 2146547224,
+      "version": 3,
+      "versionNonce": 1775184488,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1723593006174,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0.0001,
+          0.0001
+        ]
+      ],
+      "pressures": [],
+      "simulatePressure": true,
+      "lastCommittedPoint": [
+        0.0001,
+        0.0001
+      ]
     }
   ],
   "appState": {
