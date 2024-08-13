@@ -7,11 +7,12 @@ import toast from "react-hot-toast";
 import { apiFunctions } from "../../functions/apiFunctions";
 import { invalidUsernamePassword } from "../../functions/defaultStates";
 import { functions } from "../../functions/functions";
+import { User } from "../../types/objectTypes";
 
 export const LogInProvider = ({ children }: { children: ReactNode }) => {
   const { allData, setAllData, setUser, setPage } = useUser();
 
-  const { users } = allData;
+  const { users, teams } = allData;
 
   const logInUser = async ({
     username,
@@ -20,6 +21,7 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
     username: string;
     password: string;
   }): Promise<boolean> => {
+    setPage("loading");
     const validUsernames = users.filter((user) => user.username === username);
     if (validUsernames.length < 1) {
       toast.error(invalidUsernamePassword);
@@ -39,10 +41,50 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const signUpUser = async (
+    signUp: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      newUsername: string;
+      newPassword: string;
+      confirm: string;
+    },
+    createTeam: { teamName: string; teamCode: string },
+    joinTeam: { joinTeamName: string; joinTeamCode: string }
+  ) => {
+    setPage("loading");
+    try {
+      const { firstName, lastName, email, newUsername, newPassword } = signUp;
+      const newUserInfo: Omit<User, "id"> = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        username: newUsername,
+      };
+
+      await apiFunctions.signUpUser(
+        newUserInfo,
+        newPassword,
+        createTeam,
+        joinTeam,
+        teams
+      );
+      const newData = await apiFunctions.getAllData();
+      setAllData(newData);
+      localStorage.setItem("user", newUsername);
+      setPage("dashboard");
+    } catch {
+      toast.error("error please try again later");
+      setPage("error");
+    }
+  };
+
   return (
     <LogInProviderContext.Provider
       value={{
         logInUser,
+        signUpUser,
       }}
     >
       {children}

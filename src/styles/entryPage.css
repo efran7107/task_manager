@@ -14,8 +14,13 @@
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+  max-width: 360px;
   gap: 10px;
   align-items: center;
+}
+
+.join-team {
+  width: 100%;
 }
 
 .log-in,

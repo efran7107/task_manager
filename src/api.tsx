@@ -1,3 +1,5 @@
+import { Team, TeamMemberLink, User, UserAuth } from "./types/objectTypes";
+
 const baseUrl = "http://localhost:3000";
 
 export const GetRequests = {
@@ -6,6 +8,11 @@ export const GetRequests = {
   },
   getUsers: () => {
     return fetch(`${baseUrl}/users`).then((res) => res.json());
+  },
+  getUsersByUsername: (username: string) => {
+    return fetch(`${baseUrl}/users?username=${username}`).then((res) =>
+      res.json()
+    );
   },
   getUserAuth: (userId: number) => {
     return fetch(`${baseUrl}/userAuths?userId=${userId}`).then((res) =>
@@ -29,5 +36,39 @@ export const GetRequests = {
   },
   getNotes: () => {
     return fetch(`${baseUrl}/notes`).then((res) => res.json());
+  },
+};
+
+const postRequestsOptions = {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+};
+
+export const PostRequests = {
+  createTeam: (newTeam: Omit<Team, "id">): Promise<Team> => {
+    return fetch(`${baseUrl}/teams`, {
+      ...postRequestsOptions,
+      body: JSON.stringify(newTeam),
+    }).then((res) => res.json());
+  },
+  createUser: (newUser: Omit<User, "id">): Promise<User> => {
+    return fetch(`${baseUrl}/users`, {
+      ...postRequestsOptions,
+      body: JSON.stringify(newUser),
+    }).then((res) => res.json());
+  },
+  createTeamMemberLink: (
+    newTeamMemberLink: Omit<TeamMemberLink, "id">
+  ): Promise<TeamMemberLink> => {
+    return fetch(`${baseUrl}/teamMemberLinks`, {
+      ...postRequestsOptions,
+      body: JSON.stringify(newTeamMemberLink),
+    }).then((res) => res.json());
+  },
+  createUserAuth: (newAuth: Omit<UserAuth, "id">) => {
+    return fetch(`${baseUrl}/userAuths`, {
+      ...postRequestsOptions,
+      body: JSON.stringify(newAuth),
+    });
   },
 };

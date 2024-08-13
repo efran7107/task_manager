@@ -1,23 +1,54 @@
 import { useState } from "react";
 import {
   defaultCreateTeam,
+  defaultJoinTeam,
   defaultSignUp,
 } from "../../functions/defaultStates";
-import { UserInput } from "../inputs/formInputs";
+import { ErrorPopUp, UserInput } from "../inputs/formInputs";
+import { validations } from "../../functions/validations";
+import { useLogIn, useUser } from "../../functions/providersContext";
 
 export const SignUpForm = () => {
   const [signUp, setSignUp] = useState(defaultSignUp);
   const [createTeam, setCreateTeam] = useState(defaultCreateTeam);
-  const [joinTeamCode, setJoinTeamCode] = useState("");
+  const [joinTeam, setJoinTeam] = useState(defaultJoinTeam);
+  const [isFirstSignUp, setIsFirstSignUp] = useState(true);
 
+  const { allData } = useUser();
+  const { signUpUser } = useLogIn();
+  const { users, teams } = allData;
   const { firstName, lastName, email, newUsername, newPassword, confirm } =
     signUp;
+  const { joinTeamName, joinTeamCode } = joinTeam;
   const { teamName, teamCode } = createTeam;
 
   return (
     <div className="sign-up">
       <h2>Sign Up</h2>
-      <form className="inputs">
+      <form
+        className="inputs"
+        onSubmit={(e) => {
+          e.preventDefault();
+
+          if (
+            !validations.isValidSignUp(
+              signUp,
+              users,
+              createTeam,
+              joinTeam,
+              teams
+            )
+          ) {
+            setIsFirstSignUp(false);
+            return;
+          }
+          signUpUser(signUp, createTeam, joinTeam);
+          setIsFirstSignUp(true);
+          setSignUp(defaultSignUp);
+          setCreateTeam(defaultCreateTeam);
+          setJoinTeam(defaultJoinTeam);
+        }}
+      >
         <UserInput
           label="First Name"
           name="firstName"
@@ -26,6 +57,7 @@ export const SignUpForm = () => {
             placeholder: "Enter your first name",
             value: firstName,
             onChange: (e) => {
+              if (!validations.isValidName(e.currentTarget.value)) return;
               if (e.currentTarget.value.trim() === firstName) {
                 setSignUp(signUp);
                 return;
@@ -34,6 +66,10 @@ export const SignUpForm = () => {
             },
           }}
         />
+        {!isFirstSignUp && firstName.trim().length < 2 && (
+          <ErrorPopUp message="Please enter at least two characters" />
+        )}
+
         <UserInput
           label="Last Name"
           name="lastName"
@@ -42,6 +78,7 @@ export const SignUpForm = () => {
             placeholder: "Enter your last name",
             value: lastName,
             onChange: (e) => {
+              if (!validations.isValidName(e.currentTarget.value)) return;
               if (e.currentTarget.value.trim() === lastName) {
                 setSignUp(signUp);
                 return;
@@ -50,6 +87,9 @@ export const SignUpForm = () => {
             },
           }}
         />
+        {!isFirstSignUp && lastName.trim().length < 2 && (
+          <ErrorPopUp message="Please enter at least two characters" />
+        )}
         <UserInput
           label="Email"
           name="email"
@@ -66,6 +106,9 @@ export const SignUpForm = () => {
             },
           }}
         />
+        {!isFirstSignUp && !validations.isValidEmail(email) && (
+          <ErrorPopUp message="Please enter a valid email" />
+        )}
         <UserInput
           label="Username"
           name="newUsername"
@@ -82,6 +125,11 @@ export const SignUpForm = () => {
             },
           }}
         />
+        {!isFirstSignUp &&
+          !validations.isSameUsername(newUsername, users) &&
+          newUsername.trim().length < 6 && (
+            <ErrorPopUp message="Please enter a unique username that is at least 6 charaters long" />
+          )}
         <UserInput
           label="Password"
           name="newPassword"
@@ -98,6 +146,9 @@ export const SignUpForm = () => {
             },
           }}
         />
+        {!isFirstSignUp && newPassword !== confirm && (
+          <ErrorPopUp message="passwords do not match" />
+        )}
         <UserInput
           label="Confirm Password"
           name="confirm"
@@ -114,10 +165,43 @@ export const SignUpForm = () => {
             },
           }}
         />
+        {!isFirstSignUp && newPassword !== confirm && (
+          <ErrorPopUp message="passwords do not match" />
+        )}
         <div className="join-create">
           <h3>Join or create a team</h3>
           <div className="join-team">
             <h4>Join Team</h4>
+            <UserInput
+              label="Team Name"
+              name="joinTeamName"
+              userInputProps={{
+                type: "text",
+                placeholder: "Enter team name",
+                value: joinTeamName,
+                onChange: (e) => {
+                  if (e.currentTarget.value.trim() === joinTeamName) {
+                    setJoinTeam({ ...joinTeam, joinTeamName: joinTeamName });
+                    return;
+                  }
+                  if (teamName.trim() !== "" || teamCode.trim() !== "") {
+                    setCreateTeam(defaultCreateTeam);
+                    setJoinTeam({ ...joinTeam, joinTeamName: joinTeamName });
+                    return;
+                  }
+                  setJoinTeam({
+                    ...joinTeam,
+                    joinTeamName: e.currentTarget.value,
+                  });
+                },
+              }}
+            />
+            {!isFirstSignUp &&
+              joinTeamName.length < 2 &&
+              teamName.trim() === "" &&
+              teamCode.trim() === "" && (
+                <ErrorPopUp message="Please enter team name" />
+              )}
             <UserInput
               label="Team Code"
               name="joinTeamCode"
@@ -127,18 +211,30 @@ export const SignUpForm = () => {
                 value: joinTeamCode,
                 onChange: (e) => {
                   if (e.currentTarget.value.trim() === joinTeamCode) {
-                    setJoinTeamCode(joinTeamCode);
+                    setJoinTeam({ ...joinTeam, joinTeamCode: joinTeamCode });
                     return;
                   }
-                  if (teamName !== "") {
+                  if (teamName.trim() !== "" || teamCode.trim() !== "") {
                     setCreateTeam(defaultCreateTeam);
-                    setJoinTeamCode(e.currentTarget.value);
+                    setJoinTeam({
+                      ...joinTeam,
+                      joinTeamCode: e.currentTarget.value,
+                    });
                     return;
                   }
-                  setJoinTeamCode(e.currentTarget.value);
+                  setJoinTeam({
+                    ...joinTeam,
+                    joinTeamCode: e.currentTarget.value,
+                  });
                 },
               }}
             />
+            {!isFirstSignUp &&
+              joinTeamCode.length < 4 &&
+              teamName.trim() === "" &&
+              teamCode.trim() === "" && (
+                <ErrorPopUp message="Please enter team code" />
+              )}
           </div>
           <div className="create-team">
             <h4>Create Team</h4>
@@ -154,8 +250,11 @@ export const SignUpForm = () => {
                     setCreateTeam({ ...createTeam, teamName: teamName });
                     return;
                   }
-                  if (joinTeamCode !== "") {
-                    setJoinTeamCode("");
+                  if (
+                    joinTeamName.trim() !== "" ||
+                    joinTeamCode.trim() !== ""
+                  ) {
+                    setJoinTeam(defaultJoinTeam);
                     setCreateTeam({
                       ...createTeam,
                       teamName: e.currentTarget.value,
@@ -169,6 +268,12 @@ export const SignUpForm = () => {
                 },
               }}
             />
+            {!isFirstSignUp &&
+              teamName.length < 2 &&
+              joinTeamName.trim() === "" &&
+              joinTeamCode.trim() === "" && (
+                <ErrorPopUp message="Please enter new team name" />
+              )}
             <UserInput
               label="New Team code"
               name="teamCode"
@@ -181,8 +286,11 @@ export const SignUpForm = () => {
                     setCreateTeam({ ...createTeam, teamCode: teamCode });
                     return;
                   }
-                  if (joinTeamCode !== "") {
-                    setJoinTeamCode("");
+                  if (
+                    joinTeamName.trim() !== "" ||
+                    joinTeamCode.trim() !== ""
+                  ) {
+                    setJoinTeam(defaultJoinTeam);
                     setCreateTeam({
                       ...createTeam,
                       teamCode: e.currentTarget.value,
@@ -196,6 +304,12 @@ export const SignUpForm = () => {
                 },
               }}
             />
+            {!isFirstSignUp &&
+              teamCode.length < 4 &&
+              joinTeamName.trim() === "" &&
+              joinTeamCode.trim() === "" && (
+                <ErrorPopUp message="Please enter new team code" />
+              )}
           </div>
         </div>
         <input className="submit" type="submit" value="Sign Up" />
