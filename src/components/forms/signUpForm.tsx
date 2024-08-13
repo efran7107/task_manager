@@ -39,14 +39,7 @@ export const SignUpForm = () => {
             return;
           }
 
-          const newUser: Omit<User, "id"> = {
-            firstName: format.formatName(firstName),
-            lastName: format.formatName(lastName),
-            email: email,
-            username: newUsername,
-          };
-
-          signUpUser(newUser, createTeam, newPassword, joinTeamCode);
+          signUpUser(signUp, createTeam, joinTeam);
         }}
       >
         <UserInput
@@ -57,6 +50,7 @@ export const SignUpForm = () => {
             placeholder: "Enter your first name",
             value: firstName,
             onChange: (e) => {
+              if (!validations.isValidName(e.currentTarget.value)) return;
               if (e.currentTarget.value.trim() === firstName) {
                 setSignUp(signUp);
                 return;
@@ -77,6 +71,7 @@ export const SignUpForm = () => {
             placeholder: "Enter your last name",
             value: lastName,
             onChange: (e) => {
+              if (!validations.isValidName(e.currentTarget.value)) return;
               if (e.currentTarget.value.trim() === lastName) {
                 setSignUp(signUp);
                 return;

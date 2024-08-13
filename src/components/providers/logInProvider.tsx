@@ -43,48 +43,21 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signUpUser = async (
-    newUser: Omit<User, "id">,
+    signUp: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      newUsername: string;
+      newPassword: string;
+      confirm: string;
+    },
     createTeam: { teamName: string; teamCode: string },
-    password: string,
-    joinTeam: string
+    joinTeam: { joinTeamName: string; joinTeamCode: string }
   ) => {
-    if (validations.isSameTeamName(createTeam.teamName, teams)) {
-      return false;
-    }
-    const updatedUser = await PostRequests.createUser(newUser);
-    const newUserAuth: Omit<UserAuth, "id"> = {
-      userId: updatedUser.id,
-      password: password,
-    };
-    await PostRequests.createUserAuth(newUserAuth);
-    if (joinTeam === "") {
-      const newTeam: Omit<Team, "id"> = {
-        teamName: createTeam.teamName,
-        teamCode: createTeam.teamCode.toLocaleUpperCase(),
-        teamLeadId: updatedUser.id,
-      };
-      const updatedTeam = await PostRequests.createTeam(newTeam);
-      const newTeamMemberLink: Omit<TeamMemberLink, "id"> = {
-        teamId: updatedTeam.id,
-        userId: updatedUser.id,
-      };
-      const updatedTeamMemberLink = await PostRequests.createTeamMemberLink(
-        newTeamMemberLink
-      );
-      setAllData({
-        ...allData,
-        teams: [...teams, updatedTeam],
-        users: [...users, updatedUser],
-        teamMemberLinks: [...teamMemberLinks, updatedTeamMemberLink],
-      });
-      return true;
-    }
-    if (
-      teams.filter((team) => team.teamName === joinTeam.toUpperCase()).length <
-      1
-    ) {
-      return false;
-    }
+    const { firstName, lastName, email, newUsername, newPassword, confirm } =
+      signUp;
+    const { teamName, teamCode } = createTeam;
+    const { joinTeamName, joinTeamCode } = joinTeam;
   };
 
   return (

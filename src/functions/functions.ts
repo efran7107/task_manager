@@ -14,6 +14,21 @@ const logInUser = (
   setUser(validUser!);
 };
 
+const createUser = (newUserInfo: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+}): Omit<User, "id"> => {
+  const { firstName, lastName, email, username } = newUserInfo;
+  return {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    username: username,
+  };
+};
+
 export const functions = {
   logInUser,
 };

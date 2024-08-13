@@ -1,5 +1,9 @@
 import { Team, User } from "../types/objectTypes";
 
+const isValidName = (inputStr: string) => {
+  return /([a-zA-Z]|-)+$/.test(inputStr) || inputStr.trim() === "";
+};
+
 const isUserLoggedIn = (): boolean => {
   return localStorage.getItem("user") === null ? false : true;
 };
@@ -74,4 +78,5 @@ export const validations = {
   isValidEmail,
   isSameUsername,
   isSameTeamName,
+  isValidName,
 };

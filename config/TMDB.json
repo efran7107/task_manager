@@ -1,1 +1,57 @@
-{"teams":[{"id":0,"teamName":"Team_1","teamLeadId":0,"teamCode":"1234"},{"id":1,"teamName":"Team_2","teamLeadId":1,"teamCode":"5678"}],"users":[{"id":0,"firstName":"John","lastName":"Doe","email":"johnDoe@email.co","username":"johnDoe"},{"id":1,"firstName":"Jane","lastName":"Doe","email":"janeDoe@email.co","username":"janeDoe"}],"userAuths":[{"id":0,"userId":0,"password":"1234"},{"id":1,"userId":1,"password":"5678"}],"teamMemberLinks":[{"id":0,"userId":0,"teamId":0},{"id":1,"userId":1,"teamId":1},{"id":2,"userId":0,"teamId":1},{"id":3,"userId":1,"teamId":0}],"tasks":[{"id":0,"title":"task 1","desc":"task 1","status":"to-do","dueDate":"1/1/25","dateCreated":"8/4/24","isUrgent":false,"ucId":0}],"usersTasks":[{"id":0,"userId":0,"taskId":0}],"tags":[{"id":0,"tag":"#tag"}],"taggedTasks":[{"id":0,"taskId":0,"tagId":0}],"notes":[{"id":0,"title":"note 1","desc":"note 1","dateCreated":"8/4/24","taskId":0,"authId":1}]}
+{
+  "teams": [
+    { "id": 0, "teamName": "Team_1", "teamLeadId": 0, "teamCode": "1234" },
+    { "id": 1, "teamName": "Team_2", "teamLeadId": 1, "teamCode": "5678" }
+  ],
+  "users": [
+    {
+      "id": 0,
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "johnDoe@email.co",
+      "username": "johnDoe"
+    },
+    {
+      "id": 1,
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "email": "janeDoe@email.co",
+      "username": "janeDoe"
+    }
+  ],
+  "userAuths": [
+    { "id": 0, "userId": 0, "password": "1234" },
+    { "id": 1, "userId": 1, "password": "5678" }
+  ],
+  "teamMemberLinks": [
+    { "id": 0, "userId": 0, "teamId": 0 },
+    { "id": 1, "userId": 1, "teamId": 1 },
+    { "id": 2, "userId": 0, "teamId": 1 },
+    { "id": 3, "userId": 1, "teamId": 0 }
+  ],
+  "tasks": [
+    {
+      "id": 0,
+      "title": "task 1",
+      "desc": "task 1",
+      "status": "to-do",
+      "dueDate": "1/1/25",
+      "dateCreated": "8/4/24",
+      "isUrgent": false,
+      "ucId": 0
+    }
+  ],
+  "usersTasks": [{ "id": 0, "userId": 0, "taskId": 0 }],
+  "tags": [{ "id": 0, "tag": "#tag" }],
+  "taggedTasks": [{ "id": 0, "taskId": 0, "tagId": 0 }],
+  "notes": [
+    {
+      "id": 0,
+      "title": "note 1",
+      "desc": "note 1",
+      "dateCreated": "8/4/24",
+      "taskId": 0,
+      "authId": 1
+    }
+  ]
+}

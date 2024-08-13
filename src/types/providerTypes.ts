@@ -18,9 +18,15 @@ export type TLogInProvider = {
     password: string;
   }) => Promise<boolean>;
   signUpUser: (
-    newUser: Omit<User, "id">,
+    signUp: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      newUsername: string;
+      newPassword: string;
+      confirm: string;
+    },
     createTeam: { teamName: string; teamCode: string },
-    password: string,
-    joinTeam: string
+    joinTeam: { joinTeamName: string; joinTeamCode: string }
   ) => void;
 };
