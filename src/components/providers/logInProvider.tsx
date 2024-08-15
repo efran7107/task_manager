@@ -8,6 +8,7 @@ import { apiFunctions } from "../../functions/apiFunctions";
 import { invalidUsernamePassword } from "../../functions/defaultStates";
 import { functions } from "../../functions/functions";
 import { User } from "../../types/objectTypes";
+import { format } from "../../functions/formatting";
 
 export const LogInProvider = ({ children }: { children: ReactNode }) => {
   const { allData, setAllData, setUser, setPage } = useUser();
@@ -57,8 +58,8 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { firstName, lastName, email, newUsername, newPassword } = signUp;
       const newUserInfo: Omit<User, "id"> = {
-        firstName: firstName,
-        lastName: lastName,
+        firstName: format.formatName(firstName),
+        lastName: format.formatName(lastName),
         email: email,
         username: newUsername,
       };
@@ -68,7 +69,8 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
         newPassword,
         createTeam,
         joinTeam,
-        teams
+        teams,
+        setUser
       );
       const newData = await apiFunctions.getAllData();
       setAllData(newData);

@@ -45,7 +45,8 @@ const signUpUser = async (
   password: string,
   createTeam: { teamName: string; teamCode: string },
   joinTeam: { joinTeamName: string; joinTeamCode: string },
-  teams: Team[]
+  teams: Team[],
+  setUser: (user: User) => void
 ): Promise<boolean> => {
   const { teamName, teamCode } = createTeam;
   const { joinTeamName } = joinTeam;
@@ -75,6 +76,7 @@ const signUpUser = async (
       teamId: updatedTeam.id,
     };
     await PostRequests.createTeamMemberLink(teamMemberLink);
+    setUser(user);
     return true;
   }
 };
