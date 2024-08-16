@@ -22,7 +22,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           return;
         }
         const username = localStorage.getItem("user");
-        functions.logInUser(setUser, username!, allData.users);
+        functions.logInUser(setUser, username!, res.users);
         setPage("dashboard");
       })
       .catch(() => {

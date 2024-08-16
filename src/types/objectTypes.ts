@@ -5,7 +5,8 @@ export type Page =
   | "loading"
   | "dashboard"
   | "add-task"
-  | "error";
+  | "error"
+  | "join/create-team";
 
 export type Team = {
   id: number;

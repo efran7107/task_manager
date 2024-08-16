@@ -1,4 +1,4 @@
-import { User } from "../types/objectTypes";
+import { Team, TeamMemberLink, User } from "../types/objectTypes";
 
 const logInUser = (
   setUser: (user: User) => void,
@@ -29,7 +29,38 @@ const createUser = (newUserInfo: {
   };
 };
 
+const getTeamMemberInfo = (
+  user: User,
+  teams: Team[],
+  teamMemberLinks: TeamMemberLink[],
+  users: User[]
+) => {
+  const userTeamLinks = teamMemberLinks.filter(
+    (link) => link.userId === user.id
+  );
+  const userTeams: Team[] = [];
+  userTeamLinks.forEach((link) => {
+    const team = teams.find((team) => team.id === link.teamId)!;
+    userTeams.push(team);
+  });
+
+  const userTeamMembersLinks = [];
+
+  userTeams.forEach((team) => {
+    const teamTeamMembers = teamMemberLinks.filter(
+      (link) => link.teamId === team.id
+    );
+  });
+
+  const userInfo = {
+    user: user,
+    usersTeams: userTeams,
+  };
+  console.log(userInfo);
+};
+
 export const functions = {
   logInUser,
   createUser,
+  getTeamMemberInfo,
 };

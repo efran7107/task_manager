@@ -4,6 +4,7 @@ import { LogInSignUp } from "./pages/logIn_signUp";
 import { LogInProvider } from "./providers/logInProvider";
 import "../App.css";
 import { ErrorPage } from "./pages/errorPage";
+import { Dashboard } from "./pages/dashboard";
 
 export const TaskManager = () => {
   const { page } = useUser();
@@ -16,6 +17,7 @@ export const TaskManager = () => {
           <LogInSignUp />
         </LogInProvider>
       )}
+      {page === "dashboard" && <Dashboard />}
     </div>
   );
 };
