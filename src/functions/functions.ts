@@ -48,21 +48,25 @@ const getTeamMemberInfo = (
     const userTeamMembersLinks = teamMemberLinks.filter(
       (link) => link.teamId === team.id
     );
-    const teamMembers = [];
+    const teamMembers: User[] = [];
     userTeamMembersLinks.forEach((link) => {
       const linkedUser = users.find(
-        (teamMember) =>
-          teamMember.id === link.userId && teamMember.username !== user.username
+        (teamMember) => teamMember.id === link.userId
       )!;
+      if (linkedUser === undefined) {
+        return;
+      }
       teamMembers.push(linkedUser);
     });
+
+    console.log(teamMembers);
+    return {
+      team: team,
+      teamMembers: teamMembers,
+    };
   });
 
-  const userInfo = {
-    user: user,
-    usersTeams: userTeams,
-  };
-  console.log(userInfo);
+  return userTeamProfiles;
 };
 
 export const functions = {
