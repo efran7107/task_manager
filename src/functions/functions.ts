@@ -44,12 +44,18 @@ const getTeamMemberInfo = (
     userTeams.push(team);
   });
 
-  const userTeamMembersLinks = [];
-
-  userTeams.forEach((team) => {
-    const teamTeamMembers = teamMemberLinks.filter(
+  const userTeamProfiles = userTeams.map((team) => {
+    const userTeamMembersLinks = teamMemberLinks.filter(
       (link) => link.teamId === team.id
     );
+    const teamMembers = [];
+    userTeamMembersLinks.forEach((link) => {
+      const linkedUser = users.find(
+        (teamMember) =>
+          teamMember.id === link.userId && teamMember.username !== user.username
+      )!;
+      teamMembers.push(linkedUser);
+    });
   });
 
   const userInfo = {
