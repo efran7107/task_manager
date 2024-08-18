@@ -83,3 +83,8 @@ export type AllData = {
 };
 
 export type UserInputProp = ComponentProps<"input">;
+
+export type TeamProfile = {
+  team: Team;
+  teamMembers: User[];
+};

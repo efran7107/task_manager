@@ -82,6 +82,7 @@ const db = {
       id: 0,
       userId: 0,
       taskId: 0,
+      teamId: 0,
     },
   ],
   tags: [

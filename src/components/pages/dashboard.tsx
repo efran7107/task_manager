@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { functions } from "../../functions/functions";
 import { useUser } from "../../functions/providersContext";
+import { TeamList } from "../dashboard-components/teamList";
+import "../../styles/dashboard.css";
 
 export const Dashboard = () => {
   const { user, allData } = useUser();
@@ -10,6 +13,9 @@ export const Dashboard = () => {
     teamMemberLinks,
     users
   );
+
+  const [activeTeam, setActiveTeam] = useState(userTeamProfiles[0]);
+
   return (
     <div className="dashboard-container">
       <div className="action-container">
@@ -22,6 +28,11 @@ export const Dashboard = () => {
       </div>
       <hr />
       <div className="team-task-dashboard">
+        <TeamList
+          teamProfiles={userTeamProfiles}
+          activeTeam={activeTeam}
+          setActiveTeam={setActiveTeam}
+        />
         {/* create component for user teams */}
         {/* <div className="team-container">
           <h3 className="team-name"></h3>

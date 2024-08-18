@@ -1,4 +1,4 @@
-import { Team, TeamMemberLink, User } from "../types/objectTypes";
+import { Team, TeamMemberLink, TeamProfile, User } from "../types/objectTypes";
 
 const logInUser = (
   setUser: (user: User) => void,
@@ -34,7 +34,7 @@ const getTeamMemberInfo = (
   teams: Team[],
   teamMemberLinks: TeamMemberLink[],
   users: User[]
-) => {
+): Array<TeamProfile> => {
   const userTeamLinks = teamMemberLinks.filter(
     (link) => link.userId === user.id
   );
@@ -50,16 +50,18 @@ const getTeamMemberInfo = (
     );
     const teamMembers: User[] = [];
     userTeamMembersLinks.forEach((link) => {
-      const linkedUser = users.find(
+      const linkedUser = users.filter(
         (teamMember) => teamMember.id === link.userId
-      )!;
-      if (linkedUser === undefined) {
-        return;
-      }
+      )[0];
+      teamMembers.sort((curUser, nxtUser) => {
+        return curUser.id === team.teamLeadId
+          ? -1
+          : nxtUser.id === team.teamLeadId
+          ? 1
+          : 0;
+      });
       teamMembers.push(linkedUser);
     });
-
-    console.log(teamMembers);
     return {
       team: team,
       teamMembers: teamMembers,
