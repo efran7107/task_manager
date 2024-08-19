@@ -2,7 +2,6 @@
   --background-color: #ededed;
   --text-color: #1e1e1e;
   --border-color: #33cc33;
-  font-family: "Roboto Condensed", sans-serif;
 }
 
 .dark {
@@ -15,6 +14,7 @@ body {
   color: var(--text-color);
   box-sizing: border-box;
   transition: all 0.7s ease-in-out;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 .theme-button {
