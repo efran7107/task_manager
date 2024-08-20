@@ -29,12 +29,27 @@ body {
   user-select: none;
 }
 
+h1,
 h2,
 h3,
-h4 {
+h4,
+span {
   margin: 0;
+  cursor: default;
 }
 
 p {
   margin: 0;
+  cursor: default;
+}
+
+a {
+  cursor: pointer;
+}
+
+input,
+button {
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
 }

@@ -3,7 +3,6 @@ import { functions } from "../../functions/functions";
 import { useUser } from "../../functions/providersContext";
 import { TeamList } from "../dashboard-components/teamList";
 import "../../styles/dashboard.css";
-import "../../index.css";
 
 export const Dashboard = () => {
   const { user, allData } = useUser();
