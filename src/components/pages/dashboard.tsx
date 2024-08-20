@@ -33,12 +33,7 @@ export const Dashboard = () => {
           activeTeam={activeTeam}
           setActiveTeam={setActiveTeam}
         />
-        {/* create component for user teams */}
-        {/* <div className="team-container">
-          <h3 className="team-name"></h3>
-          <div className="team-member-container"></div>
-        </div> */}
-        <div className="spacer"></div>
+        <hr />
         <div className="task-container">
           {/* create component for task board */}
         </div>

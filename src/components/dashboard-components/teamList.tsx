@@ -13,10 +13,12 @@ export const TeamList = ({
     (profile) => profile.team.id !== activeTeam.team.id
   );
 
+  const { team, teamMembers } = activeTeam;
+
   return (
     <div className="team-container">
       <div className="team-selection">
-        <button className="team-select">{activeTeam.team.teamName}</button>
+        <button className="team-select">{team.teamName}</button>
         <div className="non-active-teams">
           {nonActiveTeams.map((profile) => (
             <a
@@ -30,6 +32,26 @@ export const TeamList = ({
               {profile.team.teamName}
             </a>
           ))}
+        </div>
+      </div>
+      <div className="team-users">
+        <h3>Team Members</h3>
+        <div className="users">
+          {teamMembers.map((user) => {
+            if (user.id === team.teamLeadId) {
+              return (
+                <p key={user.id}>
+                  <i className="fa-solid fa-crown"></i> {user.firstName}{" "}
+                  {user.lastName}
+                </p>
+              );
+            }
+            return (
+              <p key={user.id}>
+                {user.firstName} {user.lastName}
+              </p>
+            );
+          })}
         </div>
       </div>
     </div>

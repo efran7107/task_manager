@@ -29,8 +29,26 @@
   margin: 8px 0;
 }
 
-.team-selection {
+.team-task-dashboard {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.team-container {
+  display: flex;
+  flex-direction: column;
   max-width: fit-content;
+  gap: 30px;
+  align-items: stretch;
+}
+
+.team-task-dashboard hr {
+  margin: 0 8px;
+}
+
+.team-selection {
+  position: relative;
 }
 
 .non-active-teams a {
@@ -47,9 +65,11 @@
   border: 1px solid var(--border-color);
   border-radius: 3px;
   padding: 10px;
+  width: 100%;
 }
 
 .team-selection:hover .non-active-teams {
+  background-color: var(--background-color);
   border: 1px solid var(--border-color);
   border-radius: 3px;
   padding: 5px 0;
@@ -58,10 +78,34 @@
   align-items: center;
   gap: 5px;
   animation: team-dropdown 0.2s ease-in-out 0s 1;
+  width: 100%;
 }
 
 .non-active-teams {
   display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.team-users {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 3px solid var(--border-color);
+  border-radius: 10px;
+  gap: 10px;
+  align-items: center;
+}
+
+.users {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
+
+.users .fa-crown {
+  color: gold;
 }
 
 @keyframes team-dropdown {

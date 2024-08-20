@@ -63,6 +63,7 @@ const signUpUser = async (
       teamId: team.id,
     };
     await PostRequests.createTeamMemberLink(teamMemberLink);
+    setUser(user);
     return true;
   } else {
     const newTeam: Omit<Team, "id"> = {
