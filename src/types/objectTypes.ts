@@ -8,6 +8,8 @@ export type Page =
   | "error"
   | "join/create-team";
 
+export type Status = "to-do" | "doing" | "done";
+
 export type Team = {
   id: number;
   teamName: string;
@@ -39,7 +41,7 @@ export type Task = {
   id: number;
   title: string;
   desc: string;
-  status: Page;
+  status: Status;
   dueDate: string;
   dateCreated: string;
   isUrgent: boolean;
@@ -50,6 +52,7 @@ export type UserTask = {
   id: number;
   userId: number;
   taskId: number;
+  teamId: number;
 };
 
 export type Tag = {

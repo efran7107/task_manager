@@ -1,4 +1,11 @@
-import { Team, TeamMemberLink, TeamProfile, User } from "../types/objectTypes";
+import {
+  Task,
+  Team,
+  TeamMemberLink,
+  TeamProfile,
+  User,
+  UserTask,
+} from "../types/objectTypes";
 
 const logInUser = (
   setUser: (user: User) => void,
@@ -71,8 +78,27 @@ const getTeamMemberInfo = (
   return userTeamProfiles;
 };
 
+const getUserTasks = (
+  userId: number,
+  teamId: number,
+  tasks: Task[],
+  userTasks: UserTask[]
+) => {
+  const activeTaskLinks = userTasks.filter(
+    (link) => link.teamId === teamId && link.userId === userId
+  );
+  const activeTasks = [];
+  for (const link of activeTaskLinks) {
+    const task = tasks.find((task) => task.id === link.taskId)!;
+    activeTasks.push(task);
+  }
+
+  return activeTasks;
+};
+
 export const functions = {
   logInUser,
   createUser,
   getTeamMemberInfo,
+  getUserTasks,
 };

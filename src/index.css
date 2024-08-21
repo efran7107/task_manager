@@ -54,6 +54,7 @@ button {
   font-family: "Roboto Condensed", sans-serif;
   font-size: 16px;
   cursor: pointer;
+  transition: all 0.7s ease-in-out;
 }
 
 input[type="text"],

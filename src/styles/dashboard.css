@@ -33,6 +33,7 @@
   display: flex;
   align-items: stretch;
   gap: 10px;
+  margin-top: 25px;
 }
 
 .team-container {
@@ -106,6 +107,50 @@
 
 .users .fa-crown {
   color: gold;
+}
+
+.task-container {
+  display: flex;
+  width: 100%;
+}
+
+.task-row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.task {
+  position: relative;
+  border: 3px solid var(--border-color);
+  padding: 10px;
+  width: 60%;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task .fa-exclamation {
+  position: absolute;
+  right: 10px;
+}
+
+.task h4,
+.task .task-details {
+  margin-left: 10px;
+}
+
+.task-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.task-details p:nth-child(1) {
+  overflow: hidden;
 }
 
 @keyframes team-dropdown {
