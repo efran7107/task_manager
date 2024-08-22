@@ -23,6 +23,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         }
         const username = localStorage.getItem("user");
         functions.logInUser(setUser, username!, res.users);
+        document.querySelectorAll(".site-title")[0].classList.add("logged-in");
         setPage("dashboard");
       })
       .catch(() => {

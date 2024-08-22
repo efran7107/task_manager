@@ -37,6 +37,7 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
     } else {
       functions.logInUser(setUser, undefined, undefined, validUsernames[0]);
       localStorage.setItem("user", validUsernames[0].username);
+      document.querySelectorAll(".site-title")[0].classList.add("logged-in");
       setPage("dashboard");
       return true;
     }
@@ -75,6 +76,7 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
       const newData = await apiFunctions.getAllData();
       setAllData(newData);
       localStorage.setItem("user", newUsername);
+      document.querySelectorAll(".site-title")[0].classList.add("logged-in");
       setPage("dashboard");
     } catch {
       toast.error("error please try again later");

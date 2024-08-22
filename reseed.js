@@ -73,7 +73,7 @@ const db = {
       status: "to-do",
       dueDate: "1/1/25",
       dateCreated: "8/4/24",
-      isUrgent: false,
+      isUrgent: true,
       ucId: 0,
     },
   ],
@@ -82,6 +82,7 @@ const db = {
       id: 0,
       userId: 0,
       taskId: 0,
+      teamId: 0,
     },
   ],
   tags: [

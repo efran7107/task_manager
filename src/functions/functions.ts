@@ -1,4 +1,11 @@
-import { Team, TeamMemberLink, User } from "../types/objectTypes";
+import {
+  Task,
+  Team,
+  TeamMemberLink,
+  TeamProfile,
+  User,
+  UserTask,
+} from "../types/objectTypes";
 
 const logInUser = (
   setUser: (user: User) => void,
@@ -34,7 +41,7 @@ const getTeamMemberInfo = (
   teams: Team[],
   teamMemberLinks: TeamMemberLink[],
   users: User[]
-) => {
+): Array<TeamProfile> => {
   const userTeamLinks = teamMemberLinks.filter(
     (link) => link.userId === user.id
   );
@@ -48,25 +55,50 @@ const getTeamMemberInfo = (
     const userTeamMembersLinks = teamMemberLinks.filter(
       (link) => link.teamId === team.id
     );
-    const teamMembers = [];
+    const teamMembers: User[] = [];
     userTeamMembersLinks.forEach((link) => {
-      const linkedUser = users.find(
-        (teamMember) =>
-          teamMember.id === link.userId && teamMember.username !== user.username
-      )!;
+      const linkedUser = users.filter(
+        (teamMember) => teamMember.id === link.userId
+      )[0];
+      teamMembers.sort((curUser, nxtUser) => {
+        return curUser.id === team.teamLeadId
+          ? -1
+          : nxtUser.id === team.teamLeadId
+          ? 1
+          : 0;
+      });
       teamMembers.push(linkedUser);
     });
+    return {
+      team: team,
+      teamMembers: teamMembers,
+    };
   });
 
-  const userInfo = {
-    user: user,
-    usersTeams: userTeams,
-  };
-  console.log(userInfo);
+  return userTeamProfiles;
+};
+
+const getUserTasks = (
+  userId: number,
+  teamId: number,
+  tasks: Task[],
+  userTasks: UserTask[]
+) => {
+  const activeTaskLinks = userTasks.filter(
+    (link) => link.teamId === teamId && link.userId === userId
+  );
+  const activeTasks = [];
+  for (const link of activeTaskLinks) {
+    const task = tasks.find((task) => task.id === link.taskId)!;
+    activeTasks.push(task);
+  }
+
+  return activeTasks;
 };
 
 export const functions = {
   logInUser,
   createUser,
   getTeamMemberInfo,
+  getUserTasks,
 };
