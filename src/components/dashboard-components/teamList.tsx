@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { TeamProfile } from "../../types/objectTypes";
+import "../../styles/dashboard.css";
 
 export const TeamList = ({
   teamProfiles,
@@ -12,14 +14,23 @@ export const TeamList = ({
   const nonActiveTeams = teamProfiles.filter(
     (profile) => profile.team.id !== activeTeam.team.id
   );
+  const [isHover, setIsHover] = useState(false);
 
   const { team, teamMembers } = activeTeam;
 
   return (
     <div className="team-container">
-      <div className="team-selection">
+      <div
+        className="team-selection"
+        onMouseEnter={() => {
+          setIsHover(true);
+        }}
+        onMouseLeave={() => {
+          setIsHover(false);
+        }}
+      >
         <button className="team-select">{team.teamName}</button>
-        <div className="non-active-teams">
+        <div className={`non-active-teams ${isHover ? "visual" : ""}`}>
           {nonActiveTeams.map((profile) => (
             <a
               key={profile.team.id}

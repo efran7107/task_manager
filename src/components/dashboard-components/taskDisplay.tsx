@@ -1,104 +1,74 @@
-import { Component } from "react";
-import { Tag, TaggedTask, Task, User } from "../../types/objectTypes";
+import { Task } from "../../types/objectTypes";
 import { useUser } from "../../functions/providersContext";
 
 export const TaskDisplay = ({
   toDo,
   doing,
   done,
-  users,
 }: {
   toDo: Task[];
   doing: Task[];
   done: Task[];
-  users: User[];
 }) => {
-  const { allData } = useUser();
-  const { taggedTasks, tags } = allData;
   return (
     <>
-      <div className="task-row to-do">
+      <div className="task-row">
         <h3>to-do</h3>
         {toDo.map((task) => {
-          return (
-            <TaskCard
-              key={task.id}
-              task={task}
-              users={users}
-              taggedTasks={taggedTasks}
-              tags={tags}
-            />
-          );
+          return <TaskCard key={task.id} task={task} />;
         })}
       </div>
       <hr />
-      <div className="task-row doing">
+      <div className="task-row">
         <h3>doing</h3>
         {doing.map((task) => {
-          return (
-            <TaskCard
-              key={task.id}
-              task={task}
-              users={users}
-              taggedTasks={taggedTasks}
-              tags={tags}
-            />
-          );
+          return <TaskCard key={task.id} task={task} />;
         })}
       </div>
       <hr />
-      <div className="task-row done">
+      <div className="task-row">
         <h3>done</h3>
         {done.map((task) => {
-          return (
-            <TaskCard
-              key={task.id}
-              task={task}
-              users={users}
-              taggedTasks={taggedTasks}
-              tags={tags}
-            />
-          );
+          return <TaskCard key={task.id} task={task} />;
         })}
       </div>
     </>
   );
 };
 
-class TaskCard extends Component<{
-  task: Task;
-  users: User[];
-  taggedTasks: TaggedTask[];
-  tags: Tag[];
-}> {
-  render() {
-    const { task, users, taggedTasks, tags } = this.props;
-    const { title, desc, status, dueDate, isUrgent, ucId } = task;
-    const taskCreater = users.find((user) => user.id === ucId)!;
-    const taggedTask = taggedTasks.filter((link) => link.taskId === task.id);
-    const taskTags = taggedTask.map((link) => {
-      const tag = tags.find((tag) => tag.id === link.tagId);
-      return tag;
-    });
+const TaskCard = ({ task }: { task: Task }) => {
+  const { allData } = useUser();
+  const { users, tags, taggedTasks, notes } = allData;
+  const { title, desc, status, dueDate, isUrgent, ucId } = task;
+  const taskCreater = users.find((user) => user.id === ucId)!;
+  const taggedTask = taggedTasks.filter((link) => link.taskId === task.id);
+  const taskTags = taggedTask.map((link) => {
+    const tag = tags.find((tag) => tag.id === link.tagId);
+    return tag;
+  });
+  const taskNotesNumber = notes.filter(
+    (note) => note.taskId === task.id
+  ).length;
 
-    console.log(taskTags);
+  return (
+    <div className="task">
+      {isUrgent && <i className="fa-solid fa-exclamation"></i>}
+      <h4>{title}</h4>
 
-    return (
-      <div className="task">
-        {isUrgent && <i className="fa-solid fa-exclamation"></i>}
-        <h4>{title}</h4>
-        <div className="task-details">
-          <p>{desc}</p>
-          <p>{status}</p>
-          <p>{dueDate}</p>
-          <p>{taskCreater.username}</p>
-          <div className="tags">
-            {taskTags.map((tag) => (
-              <p key={tag?.id}>{tag?.tag}</p>
-            ))}
-          </div>
+      <div className="task-details">
+        <span>
+          <i className="fa-regular fa-note-sticky"></i> : {taskNotesNumber}
+        </span>
+        <p>{desc}</p>
+        <p>{status}</p>
+        <p>due: {dueDate}</p>
+        <p>creater: {taskCreater.username}</p>
+        <div className="tags">
+          {taskTags.map((tag) => (
+            <p key={tag?.id}>{tag?.tag}</p>
+          ))}
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};

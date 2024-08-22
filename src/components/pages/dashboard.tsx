@@ -45,7 +45,7 @@ export const Dashboard = () => {
         />
         <hr />
         <div className="task-container">
-          <TaskDisplay toDo={toDo} doing={doing} done={done} users={users} />
+          <TaskDisplay toDo={toDo} doing={doing} done={done} />
         </div>
       </div>
     </div>
