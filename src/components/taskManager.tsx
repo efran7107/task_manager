@@ -5,6 +5,7 @@ import { LogInProvider } from "./providers/logInProvider";
 import "../App.css";
 import { ErrorPage } from "./pages/errorPage";
 import { Dashboard } from "./pages/dashboard";
+import { AddTask } from "./pages/addTask";
 
 export const TaskManager = () => {
   const { page } = useUser();
@@ -18,6 +19,7 @@ export const TaskManager = () => {
         </LogInProvider>
       )}
       {page === "dashboard" && <Dashboard />}
+      {page === "add-task" && <AddTask />}
     </div>
   );
 };
