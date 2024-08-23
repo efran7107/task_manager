@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { UserInput, UserTextareaInput } from "../inputs/formInputs";
+import {
+  UserInput,
+  UserStatusInput,
+  UserTextareaInput,
+} from "../inputs/formInputs";
 import { defaultNewTask } from "../../functions/defaultStates";
 import { useUser } from "../../functions/providersContext";
 import { functions } from "../../functions/functions";
@@ -54,6 +58,7 @@ export const AddTask = () => {
             placeholder: "enter the task description here",
           }}
         />
+        <UserStatusInput newTask={newTask} setNewTask={setNewTask} />
       </form>
     </div>
   );
