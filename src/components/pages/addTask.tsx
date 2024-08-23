@@ -25,7 +25,9 @@ export const AddTask = () => {
         <button className="team-select">{team.teamName}</button>
         <div className="options">
           {userTeamProfiles.map((set) => (
-            <a href="">{set.team.teamName}</a>
+            <a key={set.team.id} href="">
+              {set.team.teamName}
+            </a>
           ))}
         </div>
       </div>
@@ -49,6 +51,7 @@ export const AddTask = () => {
             onChange: (e) => {
               setNewTask({ ...newTask, desc: e.currentTarget.value });
             },
+            placeholder: "enter the task description here",
           }}
         />
       </form>
