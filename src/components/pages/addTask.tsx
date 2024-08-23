@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  UserDateInput,
   UserInput,
   UserStatusInput,
   UserTextareaInput,
@@ -9,10 +10,15 @@ import { useUser } from "../../functions/providersContext";
 import { functions } from "../../functions/functions";
 
 export const AddTask = () => {
+  const todaysDate = new Date();
   const { user, allData, setPage } = useUser();
   const { users, teams, teamMemberLinks } = allData;
-  const [newTask, setNewTask] = useState({ ...defaultNewTask, ucId: user.id });
-  const { title, desc, status, dueDate, dateCreated, isUrgent } = newTask;
+  const [newTask, setNewTask] = useState({
+    ...defaultNewTask,
+    ucId: user.id,
+    dateCreated: todaysDate.toLocaleDateString(),
+  });
+  const { title, desc, status, dueDate, isUrgent } = newTask;
   const userTeamProfiles = functions.getTeamMemberInfo(
     user,
     teams,
@@ -58,7 +64,24 @@ export const AddTask = () => {
             placeholder: "enter the task description here",
           }}
         />
-        <UserStatusInput newTask={newTask} setNewTask={setNewTask} />
+        <UserStatusInput
+          propInputs={{ newTask: newTask, setNewTask: setNewTask }}
+        />
+        <UserDateInput
+          propInputs={{ newTask: newTask, setNewTask: setNewTask }}
+        />
+        <div className="urgent-cont">
+          <label className="urgent-label">Urgent:</label>
+          <input
+            type="checkbox"
+            name="isUrgent"
+            id="isUrgent"
+            defaultChecked={isUrgent}
+            onClick={() =>
+              setNewTask({ ...newTask, isUrgent: isUrgent ? false : true })
+            }
+          />
+        </div>
       </form>
     </div>
   );

@@ -3,9 +3,9 @@ import { Status, Task } from "../../types/objectTypes";
 
 type UserInputProp = ComponentProps<"input">;
 type UserTextareaProp = ComponentProps<"textarea">;
-type propInputs = {
+type PropInputs = {
   newTask: Omit<Task, "id">;
-  setNoteTask: (newtask: Omit<Task, "id">) => void;
+  setNewTask: (newtask: Omit<Task, "id">) => void;
 };
 
 export const UserInput = ({
@@ -51,11 +51,10 @@ export class UserTextareaInput extends Component<{
 }
 
 export class UserStatusInput extends Component<{
-  newTask: Omit<Task, "id">;
-  setNewTask: (task: Omit<Task, "id">) => void;
+  propInputs: PropInputs;
 }> {
   render() {
-    const { newTask, setNewTask } = this.props;
+    const { newTask, setNewTask } = this.props.propInputs;
     const { status } = newTask;
     return (
       <div className="user-status-input">
@@ -100,8 +99,27 @@ export class UserStatusInput extends Component<{
   }
 }
 
-export class userDateInput extends Component {
+export class UserDateInput extends Component<{
+  propInputs: PropInputs;
+}> {
   render() {
-    return <></>;
+    const { newTask, setNewTask } = this.props.propInputs;
+    const todaysDate = new Date();
+
+    return (
+      <div className="due-date-input">
+        <label htmlFor="due-date">Due Date: </label>
+        <input
+          type="date"
+          name="dueDate"
+          id="dueDate"
+          onChange={(e) => {
+            const newDate = new Date(e.currentTarget.valueAsNumber);
+            setNewTask({ ...newTask, dueDate: newDate.toLocaleDateString() });
+          }}
+          min={todaysDate.toJSON().split("T")[0]}
+        />
+      </div>
+    );
   }
 }
