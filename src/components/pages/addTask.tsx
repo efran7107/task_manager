@@ -8,23 +8,26 @@ import {
 import { defaultNewTask } from "../../functions/defaultStates";
 import { useUser } from "../../functions/providersContext";
 import { functions } from "../../functions/functions";
+import { Tag } from "../../types/objectTypes";
 
 export const AddTask = () => {
   const todaysDate = new Date();
   const { user, allData, setPage } = useUser();
-  const { users, teams, teamMemberLinks } = allData;
+  const { users, teams, teamMemberLinks, tags } = allData;
   const [newTask, setNewTask] = useState({
     ...defaultNewTask,
     ucId: user.id,
     dateCreated: todaysDate.toLocaleDateString(),
   });
-  const { title, desc, status, dueDate, isUrgent } = newTask;
+  const { title, desc, isUrgent } = newTask;
   const userTeamProfiles = functions.getTeamMemberInfo(
     user,
     teams,
     teamMemberLinks,
     users
   );
+
+  const [newTagSet, setNewTagSet] = useState<Omit<Tag, "id">[]>([]);
 
   const [activeTeam, setActiveTeam] = useState(userTeamProfiles[0]);
   const { team, teamMembers } = activeTeam;
