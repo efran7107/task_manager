@@ -1,4 +1,7 @@
-import { UserInputProp } from "../../types/objectTypes";
+import { Component, ComponentProps } from "react";
+
+type UserInputProp = ComponentProps<"input">;
+type UserTextareaProp = ComponentProps<"textarea">;
 
 export const UserInput = ({
   label,
@@ -24,3 +27,20 @@ export const ErrorPopUp = ({ message }: { message: string }) => {
     </div>
   );
 };
+
+export class UserTextareaInput extends Component<{
+  label: string;
+  name: string;
+  userTextareaInput: UserTextareaProp;
+}> {
+  render() {
+    const { label, name, userTextareaInput } = this.props;
+
+    return (
+      <div className="textarea-input">
+        <label htmlFor={name}>{label}</label>
+        <textarea name={name} id={name} {...userTextareaInput}></textarea>
+      </div>
+    );
+  }
+}

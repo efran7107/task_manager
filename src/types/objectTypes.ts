@@ -1,5 +1,3 @@
-import { ComponentProps } from "react";
-
 export type Page =
   | "login/signup"
   | "loading"
@@ -84,8 +82,6 @@ export type AllData = {
   taggedTasks: TaggedTask[];
   notes: Note[];
 };
-
-export type UserInputProp = ComponentProps<"input">;
 
 export type TeamProfile = {
   team: Team;

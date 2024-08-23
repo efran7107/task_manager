@@ -1,5 +1,5 @@
-import { Profiler, useState } from "react";
-import { UserInput } from "../inputs/formInputs";
+import { useState } from "react";
+import { UserInput, UserTextareaInput } from "../inputs/formInputs";
 import { defaultNewTask } from "../../functions/defaultStates";
 import { useUser } from "../../functions/providersContext";
 import { functions } from "../../functions/functions";
@@ -30,7 +30,27 @@ export const AddTask = () => {
         </div>
       </div>
       <form className="add-task-form">
-        <UserInput label="Task Name" name="taskName" userInputProps={{}} />
+        <UserInput
+          label="Task Name"
+          name="taskName"
+          userInputProps={{
+            type: "text",
+            value: `${title}`,
+            onChange: (e) => {
+              setNewTask({ ...newTask, title: e.currentTarget.value });
+            },
+          }}
+        />
+        <UserTextareaInput
+          label="Description"
+          name="desc"
+          userTextareaInput={{
+            value: `${desc}`,
+            onChange: (e) => {
+              setNewTask({ ...newTask, desc: e.currentTarget.value });
+            },
+          }}
+        />
       </form>
     </div>
   );
