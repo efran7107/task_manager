@@ -1,5 +1,5 @@
 import { Component, ComponentProps, ReactNode } from "react";
-import { Status, Task } from "../../types/objectTypes";
+import { Status, Tag, Task } from "../../types/objectTypes";
 
 type UserInputProp = ComponentProps<"input">;
 type UserTextareaProp = ComponentProps<"textarea">;
@@ -119,6 +119,24 @@ export class UserDateInput extends Component<{
           }}
           min={todaysDate.toJSON().split("T")[0]}
         />
+      </div>
+    );
+  }
+}
+
+export class ExistingTagInput extends Component<{
+  newTagSet: Omit<Tag, "id">[];
+  setNewTagSet: (newTagSet: Omit<Tag, "id">[]) => void;
+}> {
+  state = {
+    newTagInput: { tag: "" },
+  };
+
+  render() {
+    return (
+      <div className="task-tag-entry">
+        <div className="existing-tag-list"></div>
+        <div className="add-new-tag"></div>
       </div>
     );
   }
