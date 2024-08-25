@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  ExistingTagInput,
   UserDateInput,
   UserInput,
   UserStatusInput,
@@ -85,6 +86,11 @@ export const AddTask = () => {
             }
           />
         </div>
+        <ExistingTagInput
+          newTagSet={newTagSet}
+          setNewTagSet={setNewTagSet}
+          tags={tags}
+        />
       </form>
     </div>
   );

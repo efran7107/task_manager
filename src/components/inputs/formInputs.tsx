@@ -127,12 +127,16 @@ export class UserDateInput extends Component<{
 export class ExistingTagInput extends Component<{
   newTagSet: Omit<Tag, "id">[];
   setNewTagSet: (newTagSet: Omit<Tag, "id">[]) => void;
+  tags: Tag[];
 }> {
   state = {
     newTagInput: { tag: "" },
   };
 
   render() {
+    const { newTagSet, setNewTagSet, tags } = this.props;
+    const existingTags = tags.map(({ id, ...rest }) => rest);
+
     return (
       <div className="task-tag-entry">
         <div className="existing-tag-list"></div>
