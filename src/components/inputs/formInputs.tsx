@@ -137,9 +137,32 @@ export class ExistingTagInput extends Component<{
     const { newTagSet, setNewTagSet, tags } = this.props;
     const existingTags = tags.map(({ id, ...rest }) => rest);
 
+    const existingTagsDisplayed = existingTags.filter(
+      (tag) =>
+        newTagSet.find((existTag) => existTag.tag === tag.tag) === undefined
+    );
+
     return (
       <div className="task-tag-entry">
-        <div className="existing-tag-list"></div>
+        <div className="tag-display">
+          {newTagSet.map((newTag) => (
+            <a
+              key={newTag.tag}
+              onClick={() =>
+                setNewTagSet(newTagSet.filter((tag) => tag.tag !== newTag.tag))
+              }
+            >
+              {newTag.tag}
+            </a>
+          ))}
+        </div>
+        <div className="existing-tag-list">
+          {existingTagsDisplayed.map((tag) => (
+            <a key={tag.tag} onClick={() => setNewTagSet([...newTagSet, tag])}>
+              {tag.tag}
+            </a>
+          ))}
+        </div>
         <div className="add-new-tag"></div>
       </div>
     );
