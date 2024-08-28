@@ -10,6 +10,7 @@ import { defaultNewTask } from "../../functions/defaultStates";
 import { useUser } from "../../functions/providersContext";
 import { functions } from "../../functions/functions";
 import { Tag } from "../../types/objectTypes";
+import "../../styles/add-tasks.css";
 
 export const AddTask = () => {
   const todaysDate = new Date();
@@ -28,21 +29,23 @@ export const AddTask = () => {
     users
   );
 
-  const [newTagSet, setNewTagSet] = useState<Omit<Tag, "id">[]>([]);
+  const [newTagSet, setNewTagSet] = useState<Array<Omit<Tag, "id"> | Tag>>([]);
 
   const [activeTeam, setActiveTeam] = useState(userTeamProfiles[0]);
   const { team, teamMembers } = activeTeam;
   return (
     <div className="add-task-cont">
       <h2 className="add-task">Add Task</h2>
-      <div className="team-selection">
+      <div className="task-team-selection">
         <button className="team-select">{team.teamName}</button>
         <div className="options">
-          {userTeamProfiles.map((set) => (
-            <a key={set.team.id} href="">
-              {set.team.teamName}
-            </a>
-          ))}
+          {userTeamProfiles
+            .filter((set) => set.team.id !== team.id)
+            .map((set) => (
+              <a key={set.team.id} onClick={() => setActiveTeam(set)}>
+                {set.team.teamName}
+              </a>
+            ))}
         </div>
       </div>
       <form className="add-task-form">

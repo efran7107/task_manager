@@ -1,5 +1,5 @@
-import { Component, ComponentProps, ReactNode } from "react";
-import { Status, Tag, Task } from "../../types/objectTypes";
+import { Component, ComponentProps } from "react";
+import { Tag, Task } from "../../types/objectTypes";
 
 type UserInputProp = ComponentProps<"input">;
 type UserTextareaProp = ComponentProps<"textarea">;
@@ -130,14 +130,13 @@ export class ExistingTagInput extends Component<{
   tags: Tag[];
 }> {
   state = {
-    newTagInput: { tag: "" },
+    newTagInput: { tag: "#" },
   };
 
   render() {
     const { newTagSet, setNewTagSet, tags } = this.props;
-    const existingTags = tags.map(({ id, ...rest }) => rest);
-
-    const existingTagsDisplayed = existingTags.filter(
+    const { newTagInput } = this.state;
+    const existingTagsDisplayed = tags.filter(
       (tag) =>
         newTagSet.find((existTag) => existTag.tag === tag.tag) === undefined
     );
@@ -145,25 +144,82 @@ export class ExistingTagInput extends Component<{
     return (
       <div className="task-tag-entry">
         <div className="tag-display">
-          {newTagSet.map((newTag) => (
-            <a
-              key={newTag.tag}
-              onClick={() =>
-                setNewTagSet(newTagSet.filter((tag) => tag.tag !== newTag.tag))
-              }
-            >
-              {newTag.tag}
-            </a>
-          ))}
+          <div className="tag-section">
+            <h3>Existing Tags:</h3>
+            <p>click to add an existing tag</p>
+          </div>
+          <div className="tags">
+            {existingTagsDisplayed.map((newTag) => (
+              <a
+                key={newTag.id}
+                onClick={() => setNewTagSet([...newTagSet, newTag])}
+              >
+                {newTag.tag}
+              </a>
+            ))}
+          </div>
         </div>
         <div className="existing-tag-list">
-          {existingTagsDisplayed.map((tag) => (
-            <a key={tag.tag} onClick={() => setNewTagSet([...newTagSet, tag])}>
-              {tag.tag}
-            </a>
-          ))}
+          <div className="tag-section">
+            <h3>Added Tags: </h3>
+            <p>click to delete an added tag</p>
+          </div>
+          <div className="tags">
+            {newTagSet.map((tag) => (
+              <a
+                key={tag.tag}
+                onClick={() =>
+                  setNewTagSet(newTagSet.filter((tag) => tag.tag !== tag.tag))
+                }
+              >
+                {tag.tag}
+              </a>
+            ))}
+          </div>
         </div>
-        <div className="add-new-tag"></div>
+        <div className="add-new-tag">
+          <input
+            type="text"
+            name="newTag"
+            id="newTag"
+            value={newTagInput.tag}
+            onChange={(e) => {
+              if (e.currentTarget.value[0] !== "#") return;
+              if (
+                e.currentTarget.value.trim() !== newTagInput.tag ||
+                e.currentTarget.value[0] === "#"
+              )
+                this.setState({
+                  newTagInput: { tag: e.currentTarget.value },
+                });
+
+              if (e.currentTarget.value === "#") return;
+            }}
+          />
+          <input
+            type="button"
+            value="Add Tag"
+            onClick={() => {
+              if (
+                tags.find((tag) => tag.tag === newTagInput.tag) !== undefined
+              ) {
+                setNewTagSet([
+                  ...newTagSet,
+                  tags.find((tag) => tag.tag === newTagInput.tag)!,
+                ]);
+                this.setState({
+                  newTagInput: { tag: "#" },
+                });
+              }
+              if (newTagInput.tag.trim() !== "#") {
+                setNewTagSet([...newTagSet, newTagInput]);
+                this.setState({
+                  newTagInput: { tag: "#" },
+                });
+              }
+            }}
+          />
+        </div>
       </div>
     );
   }
