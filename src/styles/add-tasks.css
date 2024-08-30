@@ -82,6 +82,12 @@
   gap: 10px;
 }
 
+.task-tag-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 @keyframes listDown {
   0% {
     opacity: 0;

@@ -148,7 +148,8 @@ export class ExistingTagInput extends Component<{
             <h3>Existing Tags:</h3>
             <p>click to add an existing tag</p>
           </div>
-          <div className="tags">
+          <div className="tag-search"></div>
+          <div className="existing-tags">
             {existingTagsDisplayed.map((newTag) => (
               <a
                 key={newTag.id}
