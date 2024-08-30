@@ -43,7 +43,7 @@ export class UserTextareaInput extends Component<{
 
     return (
       <div className="textarea-input">
-        <label htmlFor={name}>{label}</label>
+        <label htmlFor={name}>{label}: </label>
         <textarea name={name} id={name} {...userTextareaInput}></textarea>
       </div>
     );
