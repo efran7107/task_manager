@@ -130,7 +130,7 @@ export class ExistingTagInput extends Component<{
   tags: Tag[];
 }> {
   state = {
-    newTagInput: { tag: "#" },
+    newTagInput: { tag: "" },
   };
 
   render() {
@@ -148,7 +148,6 @@ export class ExistingTagInput extends Component<{
             <h3>Existing Tags:</h3>
             <p>click to add an existing tag</p>
           </div>
-          <div className="tag-search"></div>
           <div className="existing-tags">
             {existingTagsDisplayed.map((newTag) => (
               <a
