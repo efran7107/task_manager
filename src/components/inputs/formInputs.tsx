@@ -1,5 +1,6 @@
 import { Component, ComponentProps } from "react";
 import { Tag, Task } from "../../types/objectTypes";
+import { format } from "../../functions/formatting";
 
 type UserInputProp = ComponentProps<"input">;
 type UserTextareaProp = ComponentProps<"textarea">;
@@ -130,7 +131,7 @@ export class ExistingTagInput extends Component<{
   tags: Tag[];
 }> {
   state = {
-    newTagInput: { tag: "" },
+    newTagInput: { tag: "#" },
   };
 
   render() {
@@ -140,6 +141,8 @@ export class ExistingTagInput extends Component<{
       (tag) =>
         newTagSet.find((existTag) => existTag.tag === tag.tag) === undefined
     );
+
+    format.filterTags(existingTagsDisplayed, newTagInput.tag);
 
     return (
       <div className="task-tag-entry">
