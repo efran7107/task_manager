@@ -86,17 +86,14 @@ const db = {
     },
   ],
   tags: [
-    {
-      id: 0,
-      tag: "#tag",
-    },
+    { id: 0, tag: "#tag" },
+    { id: 1, tag: "#tag1" },
+    { id: 2, tag: "#tag2" },
   ],
   taggedTasks: [
-    {
-      id: 0,
-      taskId: 0,
-      tagId: 0,
-    },
+    { id: 0, taskId: 0, tagId: 0 },
+    { id: 1, taskId: 0, tagId: 1 },
+    { id: 2, taskId: 0, tagId: 2 },
   ],
   notes: [
     {
