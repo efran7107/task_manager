@@ -142,8 +142,6 @@ export class ExistingTagInput extends Component<{
         newTagSet.find((existTag) => existTag.tag === tag.tag) === undefined
     );
 
-    format.filterTags(existingTagsDisplayed, newTagInput.tag);
-
     return (
       <div className="task-tag-entry">
         <div className="tag-display">
@@ -152,14 +150,16 @@ export class ExistingTagInput extends Component<{
             <p>click to add an existing tag</p>
           </div>
           <div className="existing-tags">
-            {existingTagsDisplayed.map((newTag) => (
-              <a
-                key={newTag.id}
-                onClick={() => setNewTagSet([...newTagSet, newTag])}
-              >
-                {newTag.tag}
-              </a>
-            ))}
+            {format
+              .filterTags(existingTagsDisplayed, newTagInput.tag)
+              .map((newTag) => (
+                <a
+                  key={newTag.id}
+                  onClick={() => setNewTagSet([...newTagSet, newTag])}
+                >
+                  {newTag.tag}
+                </a>
+              ))}
           </div>
         </div>
         <div className="existing-tag-list">
