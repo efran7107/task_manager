@@ -88,6 +88,37 @@
   gap: 20px;
 }
 
+.tag-selections {
+  display: flex;
+  gap: 10px;
+}
+
+.tag-section {
+  margin-bottom: 10px;
+}
+
+.existing-tags,
+.existing-tag-list .tags {
+  border: 1px solid var(--border-color);
+  border-radius: 25px;
+  height: 50px;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.add-new-tag {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-new-tag input {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 25px;
+  padding: 0 10px;
+}
+
 @keyframes listDown {
   0% {
     opacity: 0;

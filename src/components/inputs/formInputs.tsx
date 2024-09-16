@@ -1,5 +1,5 @@
 import { Component, ComponentProps } from "react";
-import { Tag, Task } from "../../types/objectTypes";
+import { Tag, Task, User } from "../../types/objectTypes";
 import { format } from "../../functions/formatting";
 
 type UserInputProp = ComponentProps<"input">;
@@ -144,42 +144,45 @@ export class ExistingTagInput extends Component<{
 
     return (
       <div className="task-tag-entry">
-        <div className="tag-display">
-          <div className="tag-section">
-            <h3>Existing Tags:</h3>
-            <p>click to add an existing tag</p>
+        <div className="tag-selections">
+          <div className="tag-display">
+            <div className="tag-section">
+              <h3>Existing Tags:</h3>
+              <p>click to add an existing tag</p>
+            </div>
+            <div className="existing-tags">
+              {format
+                .filterTags(existingTagsDisplayed, newTagInput.tag)
+                .map((newTag) => (
+                  <a
+                    key={newTag.id}
+                    onClick={() => setNewTagSet([...newTagSet, newTag])}
+                  >
+                    {newTag.tag}
+                  </a>
+                ))}
+            </div>
           </div>
-          <div className="existing-tags">
-            {format
-              .filterTags(existingTagsDisplayed, newTagInput.tag)
-              .map((newTag) => (
+          <div className="existing-tag-list">
+            <div className="tag-section">
+              <h3>Added Tags: </h3>
+              <p>click to delete an added tag</p>
+            </div>
+            <div className="tags">
+              {newTagSet.map((tag) => (
                 <a
-                  key={newTag.id}
-                  onClick={() => setNewTagSet([...newTagSet, newTag])}
+                  key={tag.tag}
+                  onClick={() =>
+                    setNewTagSet(newTagSet.filter((tag) => tag.tag !== tag.tag))
+                  }
                 >
-                  {newTag.tag}
+                  {tag.tag}
                 </a>
               ))}
+            </div>
           </div>
         </div>
-        <div className="existing-tag-list">
-          <div className="tag-section">
-            <h3>Added Tags: </h3>
-            <p>click to delete an added tag</p>
-          </div>
-          <div className="tags">
-            {newTagSet.map((tag) => (
-              <a
-                key={tag.tag}
-                onClick={() =>
-                  setNewTagSet(newTagSet.filter((tag) => tag.tag !== tag.tag))
-                }
-              >
-                {tag.tag}
-              </a>
-            ))}
-          </div>
-        </div>
+
         <div className="add-new-tag">
           <input
             type="text"
@@ -227,3 +230,13 @@ export class ExistingTagInput extends Component<{
     );
   }
 }
+
+export const AddUsers = ({
+  user,
+  userId,
+}: {
+  users: User[];
+  userId: number;
+}) => {
+  return <div className="add-users"></div>;
+};
