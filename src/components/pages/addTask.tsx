@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  AddUsers,
   ExistingTagInput,
   UserDateInput,
   UserInput,
@@ -9,7 +10,7 @@ import {
 import { defaultNewTask } from "../../functions/defaultStates";
 import { useUser } from "../../functions/providersContext";
 import { functions } from "../../functions/functions";
-import { Tag } from "../../types/objectTypes";
+import { Tag, User } from "../../types/objectTypes";
 import "../../styles/add-tasks.css";
 
 export const AddTask = () => {
@@ -30,6 +31,7 @@ export const AddTask = () => {
   );
 
   const [newTagSet, setNewTagSet] = useState<Array<Omit<Tag, "id"> | Tag>>([]);
+  const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
 
   const [activeTeam, setActiveTeam] = useState(userTeamProfiles[0]);
   const { team, teamMembers } = activeTeam;
@@ -93,6 +95,13 @@ export const AddTask = () => {
           newTagSet={newTagSet}
           setNewTagSet={setNewTagSet}
           tags={tags}
+        />
+        <AddUsers
+          users={teamMembers}
+          userId={user.id}
+          team={team}
+          assignedUsers={assignedUsers}
+          setAssignedUsers={setAssignedUsers}
         />
       </form>
     </div>

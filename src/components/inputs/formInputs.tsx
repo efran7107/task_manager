@@ -1,5 +1,5 @@
 import { Component, ComponentProps } from "react";
-import { Tag, Task, User } from "../../types/objectTypes";
+import { Tag, Task, Team, User } from "../../types/objectTypes";
 import { format } from "../../functions/formatting";
 
 type UserInputProp = ComponentProps<"input">;
@@ -232,11 +232,61 @@ export class ExistingTagInput extends Component<{
 }
 
 export const AddUsers = ({
-  user,
+  users,
   userId,
+  team,
+  assignedUsers,
+  setAssignedUsers,
 }: {
   users: User[];
   userId: number;
+  team: Team;
+  assignedUsers: User[];
+  setAssignedUsers: (users: User[]) => void;
 }) => {
-  return <div className="add-users"></div>;
+  const nonAssignedUsers = users.filter(
+    (user) =>
+      assignedUsers.find((assigned) => assigned.id === user.id) === undefined &&
+      user.id !== userId &&
+      user.id !== team.teamLeadId
+  );
+
+  return (
+    <div className="add-users">
+      <div className="non-assigned-users">
+        <h3>Available Users</h3>
+        <p>click to add a user</p>
+        <div className="available-users">
+          {nonAssignedUsers.map((user) => (
+            <a
+              key={user.id}
+              className="user"
+              onClick={() => setAssignedUsers([...assignedUsers, user])}
+            >
+              {user.firstName} {user.lastName}
+            </a>
+          ))}
+        </div>
+      </div>
+      <div className="assigned-users">
+        <h3>Assigned Users</h3>
+        <p>click to remove a user</p>
+        <div className="available-users">
+          {assignedUsers.map((user) => (
+            <a
+              key={user.id}
+              className="user"
+              onClick={() =>
+                setAssignedUsers(
+                  assignedUsers.filter((assUser) => assUser.id !== user.id)
+                )
+              }
+            >
+              {user.firstName} {user.lastName}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
