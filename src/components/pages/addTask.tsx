@@ -103,6 +103,7 @@ export const AddTask = () => {
           assignedUsers={assignedUsers}
           setAssignedUsers={setAssignedUsers}
         />
+        <input type="submit" value="Submit Task" className="submit-task-btn" />
       </form>
     </div>
   );
