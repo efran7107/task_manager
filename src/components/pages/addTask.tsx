@@ -4,13 +4,14 @@ import {
   ExistingTagInput,
   UserDateInput,
   UserInput,
+  UserNoteInput,
   UserStatusInput,
   UserTextareaInput,
 } from "../inputs/formInputs";
 import { defaultNewTask } from "../../functions/defaultStates";
 import { useUser } from "../../functions/providersContext";
 import { functions } from "../../functions/functions";
-import { Tag, User } from "../../types/objectTypes";
+import { Note, Tag, User } from "../../types/objectTypes";
 import "../../styles/add-tasks.css";
 
 export const AddTask = () => {
@@ -29,7 +30,12 @@ export const AddTask = () => {
     teamMemberLinks,
     users
   );
-
+  const [newNote, setNewNote] = useState<Omit<Note, 'id'>>({
+    title: '',
+    desc: '',
+    dateCreated: todaysDate.toLocaleDateString(),
+    taskId: 0
+  })
   const [newTagSet, setNewTagSet] = useState<Array<Omit<Tag, "id"> | Tag>>([]);
   const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
 
@@ -91,6 +97,7 @@ export const AddTask = () => {
             }
           />
         </div>
+        <UserNoteInput note={newNote} setNote={setNewNote}/>
         <ExistingTagInput
           newTagSet={newTagSet}
           setNewTagSet={setNewTagSet}

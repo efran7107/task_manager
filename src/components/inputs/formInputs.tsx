@@ -1,5 +1,5 @@
 import { Component, ComponentProps } from "react";
-import { Tag, Task, Team, User } from "../../types/objectTypes";
+import { Note, Tag, Task, Team, User } from "../../types/objectTypes";
 import { format } from "../../functions/formatting";
 
 type UserInputProp = ComponentProps<"input">;
@@ -123,6 +123,23 @@ export class UserDateInput extends Component<{
       </div>
     );
   }
+}
+
+export const UserNoteInput = ({
+  note,
+  setNote
+}:{
+  note: Omit<Note, 'id'>;
+  setNote: (note: Omit<Note, 'id'>) => void
+}) => {
+  return(
+    <div className="newNoteCont">
+      <label htmlFor="title">Title: </label>
+      <input type="text" name="title" id="title" />
+      <label htmlFor="description">Description</label>
+      <textarea name="description" id="description"></textarea>
+    </div>
+  )
 }
 
 export class ExistingTagInput extends Component<{
