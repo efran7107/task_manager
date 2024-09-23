@@ -133,11 +133,26 @@ export const UserNoteInput = ({
   setNote: (note: Omit<Note, 'id'>) => void
 }) => {
   return(
-    <div className="newNoteCont">
-      <label htmlFor="title">Title: </label>
-      <input type="text" name="title" id="title" />
-      <label htmlFor="description">Description</label>
-      <textarea name="description" id="description"></textarea>
+    <div className="new-note-cont">
+      <div className="h6">Add Note: </div>
+      
+      <UserInput 
+        label="Title"
+        name="title"
+        userInputProps={{
+          value: note.title,
+          onChange: (e) => setNote({...note, title: e.currentTarget.value})
+        }}
+      />
+      <UserTextareaInput 
+        label="Description"
+        name="description"
+        userTextareaInput={{
+          value: note.desc,
+          onChange: (e) => setNote({...note, desc: e.currentTarget.value})
+        }}
+      />
+      
     </div>
   )
 }

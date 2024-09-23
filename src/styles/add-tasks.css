@@ -85,6 +85,19 @@
   gap: 10px;
 }
 
+.new-note-cont,
+.new-note-cont .user-input,
+.new-note-cont .textarea-input {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0px;
+}
+
+.new-note-cont {
+  gap: 5px;
+}
+
 .task-tag-entry {
   display: flex;
   flex-direction: column;
