@@ -93,6 +93,10 @@ const isValidSignUp = (
   return false;
 };
 
+const isValidTask = (newTask: Omit<Task, 'id'>) => {
+  const {} = newTask;
+}
+
 export const validations = {
   isUserLoggedIn,
   isValidLogIn,
@@ -101,4 +105,5 @@ export const validations = {
   isSameUsername,
   isSameTeamName,
   isValidName,
+  isValidTask,
 };

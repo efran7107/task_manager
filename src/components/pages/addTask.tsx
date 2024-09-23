@@ -54,9 +54,15 @@ export const AddTask = () => {
                 {set.team.teamName}
               </a>
             ))}
-        </div>
+        </div> 
       </div>
-      <form className="add-task-form">
+      <form
+        className="add-task-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+
+        }}
+      >
         <UserInput
           label="Task Name"
           name="taskName"
