@@ -4,6 +4,7 @@ import {
   TeamMemberLink,
   User,
   UserAuth,
+  UserTask,
 } from "./types/objectTypes";
 
 const baseUrl = "http://localhost:3000";
@@ -82,5 +83,11 @@ export const PostRequests = {
       ...postRequestsOptions,
       body: JSON.stringify(newTask),
     }).then((res) => res.json());
+  },
+  addUserTask: (newUserTask: Omit<UserTask, "id">) => {
+    return fetch(`${baseUrl}/usersTasks`, {
+      ...postRequestsOptions,
+      body: JSON.stringify(newUserTask),
+    });
   },
 };

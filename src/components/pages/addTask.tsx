@@ -40,7 +40,7 @@ export const AddTask = () => {
     taskId: 0,
   });
   const [newTagSet, setNewTagSet] = useState<Array<Omit<Tag, "id"> | Tag>>([]);
-  const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
+  const [assignedUsers, setAssignedUsers] = useState<User[]>([user]);
 
   const [activeTeam, setActiveTeam] = useState(userTeamProfiles[0]);
   const { team, teamMembers } = activeTeam;
@@ -69,7 +69,13 @@ export const AddTask = () => {
             );
             return;
           }
-          apiFunctions.addTask(newTask, team.id, newNote, newTagSet, assignedUsers)
+          apiFunctions.addTask(
+            newTask,
+            team.id,
+            newNote,
+            newTagSet,
+            assignedUsers
+          );
         }}
       >
         <UserInput

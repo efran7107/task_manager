@@ -123,7 +123,7 @@
       "desc": "test",
       "status": "to-do",
       "dueDate": "9/23/2024",
-      "dateCreated": "9/23/2024",
+      "dateCreated": "9/24/2024",
       "isUrgent": false,
       "ucId": 0,
       "id": 1
@@ -135,6 +135,24 @@
       "userId": 0,
       "taskId": 0,
       "teamId": 0
+    },
+    {
+      "userId": 0,
+      "taskId": 1,
+      "teamId": 0,
+      "id": 1
+    },
+    {
+      "userId": 3,
+      "taskId": 1,
+      "teamId": 0,
+      "id": 2
+    },
+    {
+      "userId": 2,
+      "taskId": 1,
+      "teamId": 0,
+      "id": 3
     }
   ],
   "tags": [

@@ -2,6 +2,7 @@ import { GetRequests, PostRequests } from "../api";
 import {
   AllData,
   Note,
+  Page,
   Tag,
   Task,
   Team,
@@ -88,22 +89,29 @@ const signUpUser = async (
 const addTask = async (
   newTask: Omit<Task, "id">,
   teamId: number,
-  newNote: Omit<Note, 'id'>,
-  newTagSet: Array<Omit<Tag, 'id'> | Tag>,
+  newNote: Omit<Note, "id">,
+  newTagSet: Array<Omit<Tag, "id"> | Tag>,
   assignedUsers: User[]
 ) => {
   try {
-    const addedTask = await PostRequests.addTask(newTask)
-    console.log(addedTask, teamId, newNote, newTagSet, assignedUsers);
-    
-  } catch {
-
-  }
-}
+    const addedTask = await PostRequests.addTask(newTask);
+    assignedUsers.forEach(async (user) => {
+      await PostRequests.addUserTask({
+        userId: user.id,
+        taskId: addedTask.id,
+        teamId: teamId,
+      });
+    });
+    newTagSet.forEach(async (tag) => {
+      if (!tag.hasOwnProperty("id")) {
+      }
+    });
+  } catch {}
+};
 
 export const apiFunctions = {
   getAllData,
   validateUser,
   signUpUser,
-  addTask
+  addTask,
 };
