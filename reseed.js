@@ -30,6 +30,20 @@ const db = {
       email: "janeDoe@email.co",
       username: "janeDoe",
     },
+    {
+      id: 2,
+      firstName: "Harry",
+      lastName: "Potter",
+      email: "harryPotter@email.co",
+      username: "harryPotter",
+    },
+    {
+      id: 3,
+      firstName: "Peyton",
+      lastName: "Manning",
+      email: "peytonManning@email.co",
+      username: "peytonManning",
+    },
   ],
   userAuths: [
     {
@@ -41,6 +55,15 @@ const db = {
       id: 1,
       userId: 1,
       password: "5678",
+    },{
+      id: 2,
+      userId: 2,
+      password: "voldimort",
+    },
+    {
+      id: 3,
+      userId: 3,
+      password: "2xChamp",
     },
   ],
   teamMemberLinks: [
@@ -62,6 +85,26 @@ const db = {
     {
       id: 3,
       userId: 1,
+      teamId: 0,
+    },
+    {
+      id: 4,
+      userId: 2,
+      teamId: 0,
+    },
+    {
+      id: 5,
+      userId: 2,
+      teamId: 1,
+    },
+    {
+      id: 6,
+      userId: 3,
+      teamId: 1,
+    },
+    {
+      id: 7,
+      userId: 3,
       teamId: 0,
     },
   ],

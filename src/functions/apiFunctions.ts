@@ -1,6 +1,9 @@
 import { GetRequests, PostRequests } from "../api";
 import {
   AllData,
+  Note,
+  Tag,
+  Task,
   Team,
   TeamMemberLink,
   User,
@@ -82,8 +85,25 @@ const signUpUser = async (
   }
 };
 
+const addTask = async (
+  newTask: Omit<Task, "id">,
+  teamId: number,
+  newNote: Omit<Note, 'id'>,
+  newTagSet: Array<Omit<Tag, 'id'> | Tag>,
+  assignedUsers: User[]
+) => {
+  try {
+    const addedTask = await PostRequests.addTask(newTask)
+    console.log(addedTask, teamId, newNote, newTagSet, assignedUsers);
+    
+  } catch {
+
+  }
+}
+
 export const apiFunctions = {
   getAllData,
   validateUser,
   signUpUser,
+  addTask
 };

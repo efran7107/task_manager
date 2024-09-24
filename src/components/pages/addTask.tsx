@@ -15,6 +15,7 @@ import { Note, Tag, User } from "../../types/objectTypes";
 import "../../styles/add-tasks.css";
 import { validations } from "../../functions/validations";
 import toast from "react-hot-toast";
+import { apiFunctions } from "../../functions/apiFunctions";
 
 export const AddTask = () => {
   const todaysDate = new Date();
@@ -68,6 +69,7 @@ export const AddTask = () => {
             );
             return;
           }
+          apiFunctions.addTask(newTask, team.id, newNote, newTagSet, assignedUsers)
         }}
       >
         <UserInput
