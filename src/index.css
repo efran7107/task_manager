@@ -58,6 +58,15 @@ textarea {
     transition: all 0.7s ease-in-out;
 }
 
+input[type="submit"],
+input[type="button"] 
+{
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    border-radius: 5px;
+}
+
 input[type="text"],
 input[type="password"] {
     cursor: text;

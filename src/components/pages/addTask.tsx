@@ -75,6 +75,7 @@ export const AddTask = () => {
             );
             return;
           }
+          setPage('loading')
           apiFunctions
             .addTask(
               newTask,
