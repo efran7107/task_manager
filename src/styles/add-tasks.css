@@ -53,6 +53,7 @@
   width: 100%;
   align-items: stretch;
   align-content: space-around;
+  justify-content: center;
 }
 
 .user-status-input,

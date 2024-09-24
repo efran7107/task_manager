@@ -52,8 +52,8 @@ export const TeamList = ({
             if (user.id === team.teamLeadId) {
               return (
                 <p key={user.id}>
-                  <i className="fa-solid fa-crown"></i> {user.firstName}{" "}
-                  {user.lastName}
+                  {user.firstName} {user.lastName}{" "}
+                  <i className="fa-solid fa-crown"></i>
                 </p>
               );
             }

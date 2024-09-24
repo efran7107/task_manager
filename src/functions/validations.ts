@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { Team, User } from "../types/objectTypes";
+import { Task, Team, User } from "../types/objectTypes";
 
 const isValidName = (inputStr: string) => {
   return /([a-zA-Z]|-)+$/.test(inputStr) || inputStr.trim() === "";
@@ -93,9 +93,10 @@ const isValidSignUp = (
   return false;
 };
 
-const isValidTask = (newTask: Omit<Task, 'id'>) => {
-  const {} = newTask;
-}
+const isValidTask = (newTask: Omit<Task, "id">) => {
+  const { title, desc, dueDate } = newTask;
+  return title.trim() !== "" && desc.trim() !== "" && dueDate.trim() !== "";
+};
 
 export const validations = {
   isUserLoggedIn,

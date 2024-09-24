@@ -13,6 +13,8 @@ import { useUser } from "../../functions/providersContext";
 import { functions } from "../../functions/functions";
 import { Note, Tag, User } from "../../types/objectTypes";
 import "../../styles/add-tasks.css";
+import { validations } from "../../functions/validations";
+import toast from "react-hot-toast";
 
 export const AddTask = () => {
   const todaysDate = new Date();
@@ -30,12 +32,12 @@ export const AddTask = () => {
     teamMemberLinks,
     users
   );
-  const [newNote, setNewNote] = useState<Omit<Note, 'id'>>({
-    title: '',
-    desc: '',
+  const [newNote, setNewNote] = useState<Omit<Note, "id">>({
+    title: "",
+    desc: "",
     dateCreated: todaysDate.toLocaleDateString(),
-    taskId: 0
-  })
+    taskId: 0,
+  });
   const [newTagSet, setNewTagSet] = useState<Array<Omit<Tag, "id"> | Tag>>([]);
   const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
 
@@ -54,13 +56,18 @@ export const AddTask = () => {
                 {set.team.teamName}
               </a>
             ))}
-        </div> 
+        </div>
       </div>
       <form
         className="add-task-form"
         onSubmit={(e) => {
           e.preventDefault();
-
+          if (!validations.isValidTask(newTask)) {
+            toast.error(
+              "Please fill out the task title, description, and due date"
+            );
+            return;
+          }
         }}
       >
         <UserInput
@@ -103,7 +110,7 @@ export const AddTask = () => {
             }
           />
         </div>
-        <UserNoteInput note={newNote} setNote={setNewNote}/>
+        <UserNoteInput note={newNote} setNote={setNewNote} />
         <ExistingTagInput
           newTagSet={newTagSet}
           setNewTagSet={setNewTagSet}

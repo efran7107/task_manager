@@ -1,4 +1,10 @@
-import { Team, TeamMemberLink, User, UserAuth } from "./types/objectTypes";
+import {
+  Task,
+  Team,
+  TeamMemberLink,
+  User,
+  UserAuth,
+} from "./types/objectTypes";
 
 const baseUrl = "http://localhost:3000";
 
@@ -70,5 +76,11 @@ export const PostRequests = {
       ...postRequestsOptions,
       body: JSON.stringify(newAuth),
     });
+  },
+  addTask: (newTask: Omit<Task, "id">): Promise<Task> => {
+    return fetch(`${baseUrl}/tasks`, {
+      ...postRequestsOptions,
+      body: JSON.stringify(newTask),
+    }).then((res) => res.json());
   },
 };
