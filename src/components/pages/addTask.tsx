@@ -47,7 +47,12 @@ export const AddTask = () => {
   const { team, teamMembers } = activeTeam;
   return (
     <div className="add-task-cont">
-      <h2 className="add-task">Add Task</h2>
+      <h2 className="add-task">
+        <i 
+          className="fa-solid fa-chevron-left"
+          onClick={() => setPage('dashboard')}
+        ></i> Add Task
+      </h2>
       <div className="task-team-selection">
         <button className="team-select">{team.teamName}</button>
         <div className="options">

@@ -44,7 +44,7 @@ p {
     user-select: none;
 }
 
-a {
+a, .fa-chevron-left {
     cursor: pointer;
     user-select: none;
 }
