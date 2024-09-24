@@ -6,7 +6,7 @@ import "../../styles/dashboard.css";
 import { TaskDisplay } from "../dashboard-components/taskDisplay";
 
 export const Dashboard = () => {
-  const { user, allData, setPage } = useUser();
+  const { user, allData, setPage, logOutUser } = useUser();
   const { teams, teamMemberLinks, users, tasks, usersTasks } = allData;
   const userTeamProfiles = functions.getTeamMemberInfo(
     user,
@@ -29,7 +29,10 @@ export const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <div className="action-container">
-        <span>{user.username}</span>
+        <div className="user-info">
+          <span>{user.username}</span>
+          <input className='logout-user-btn' type='button' value='Log Out' onClick={() => logOutUser() } />
+        </div>
         <div className="action-btns">
           <input
             type="button"
@@ -37,8 +40,12 @@ export const Dashboard = () => {
             className="action-btn"
             onClick={() => setPage("add-task")}
           />
-          <input type="button" value="Join Team" className="action-btn" />
-          <input type="button" value="Create Team" className="action-btn" />
+          <input 
+            type="button" 
+            value="Join Team / Create Team" 
+            className="action-btn" 
+            onClick={() => setPage('join-team/create-team')}
+          />
         </div>
       </div>
       <hr />

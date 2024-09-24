@@ -3,7 +3,8 @@ export type Page =
   | "loading"
   | "dashboard"
   | "add-task"
-  | "error";
+  | "error"
+  | "join-team/create-team";
 
 export type Status = "to-do" | "doing" | "done";
 

@@ -6,6 +6,7 @@ import "../App.css";
 import { ErrorPage } from "./pages/errorPage";
 import { Dashboard } from "./pages/dashboard";
 import { AddTask } from "./pages/addTask";
+import { UserJoinTeam } from "./pages/user-team-join";
 
 export const TaskManager = () => {
   const { page } = useUser();
@@ -20,6 +21,7 @@ export const TaskManager = () => {
       )}
       {page === "dashboard" && <Dashboard />}
       {page === "add-task" && <AddTask />}
+      {page === 'join-team/create-team' && <UserJoinTeam/>}
     </div>
   );
 };
