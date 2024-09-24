@@ -7,6 +7,7 @@ export type TUserProvider = {
   setAllData: (allData: AllData) => void;
   user: User;
   setUser: (user: User) => void;
+  reloadData: () => void;
 };
 
 export type TLogInProvider = {

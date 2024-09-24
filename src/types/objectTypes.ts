@@ -3,8 +3,7 @@ export type Page =
   | "loading"
   | "dashboard"
   | "add-task"
-  | "error"
-  | "join/create-team";
+  | "error";
 
 export type Status = "to-do" | "doing" | "done";
 
@@ -70,6 +69,7 @@ export type Note = {
   desc: string;
   dateCreated: string;
   taskId: number;
+  authId: number;
 };
 
 export type AllData = {

@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { GetRequests, PostRequests } from "../api";
 import {
   AllData,
@@ -91,7 +92,8 @@ const addTask = async (
   teamId: number,
   newNote: Omit<Note, "id">,
   newTagSet: Array<Omit<Tag, "id"> | Tag>,
-  assignedUsers: User[]
+  assignedUsers: User[],
+  setPage: (page: Page) => void
 ) => {
   try {
     const addedTask = await PostRequests.addTask(newTask);
@@ -102,11 +104,31 @@ const addTask = async (
         teamId: teamId,
       });
     });
-    newTagSet.forEach(async (tag) => {
-      if (!tag.hasOwnProperty("id")) {
-      }
-    });
-  } catch {}
+    if (newTagSet.length !== 0) {
+      newTagSet.forEach(async (tag) => {
+        if (!tag.hasOwnProperty("id")) {
+          const addedTag = await PostRequests.addTag(tag);
+          await PostRequests.addTaggedTask({
+            taskId: addedTask.id,
+            tagId: addedTag.id,
+          });
+        } else {
+          await PostRequests.addTaggedTask({
+            taskId: addedTask.id,
+            tagId: (tag as Tag).id,
+          });
+        }
+      });
+    }
+    if (newNote.title.trim().length !== 0 && newNote.desc.trim().length !== 0) {
+      await PostRequests.addNote({ ...newNote, taskId: addedTask.id });
+    }
+    toast.success("Task added successfully");
+    setPage("dashboard");
+  } catch {
+    toast.error("Failed to add task");
+    setPage("error");
+  }
 };
 
 export const apiFunctions = {

@@ -19,7 +19,7 @@ import { apiFunctions } from "../../functions/apiFunctions";
 
 export const AddTask = () => {
   const todaysDate = new Date();
-  const { user, allData, setPage } = useUser();
+  const { user, allData, setPage, reloadData } = useUser();
   const { users, teams, teamMemberLinks, tags } = allData;
   const [newTask, setNewTask] = useState({
     ...defaultNewTask,
@@ -38,6 +38,7 @@ export const AddTask = () => {
     desc: "",
     dateCreated: todaysDate.toLocaleDateString(),
     taskId: 0,
+    authId: user.id,
   });
   const [newTagSet, setNewTagSet] = useState<Array<Omit<Tag, "id"> | Tag>>([]);
   const [assignedUsers, setAssignedUsers] = useState<User[]>([user]);
@@ -69,13 +70,18 @@ export const AddTask = () => {
             );
             return;
           }
-          apiFunctions.addTask(
-            newTask,
-            team.id,
-            newNote,
-            newTagSet,
-            assignedUsers
-          );
+          apiFunctions
+            .addTask(
+              newTask,
+              team.id,
+              newNote,
+              newTagSet,
+              assignedUsers,
+              setPage
+            )
+            .then(() => {
+              reloadData();
+            });
         }}
       >
         <UserInput

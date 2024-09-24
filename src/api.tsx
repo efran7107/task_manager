@@ -1,4 +1,7 @@
 import {
+  Note,
+  Tag,
+  TaggedTask,
   Task,
   Team,
   TeamMemberLink,
@@ -89,5 +92,23 @@ export const PostRequests = {
       ...postRequestsOptions,
       body: JSON.stringify(newUserTask),
     });
+  },
+  addTag: (newTag: Omit<Tag, "id">): Promise<Tag> => {
+    return fetch(`${baseUrl}/tags`, {
+      ...postRequestsOptions,
+      body: JSON.stringify(newTag),
+    }).then((res) => res.json());
+  },
+  addTaggedTask: (newTaggedTask: Omit<TaggedTask, "id">) => {
+    return fetch(`${baseUrl}/taggedTasks`, {
+      ...postRequestsOptions,
+      body: JSON.stringify(newTaggedTask),
+    });
+  },
+  addNote: (newNote: Omit<Note, "id">): Promise<Note> => {
+    return fetch(`${baseUrl}/notes`, {
+      ...postRequestsOptions,
+      body: JSON.stringify(newNote),
+    }).then((res) => res.json());
   },
 };
