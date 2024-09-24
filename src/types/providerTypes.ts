@@ -8,6 +8,7 @@ export type TUserProvider = {
   user: User;
   setUser: (user: User) => void;
   reloadData: () => void;
+  logOutUser: () => void;
 };
 
 export type TLogInProvider = {

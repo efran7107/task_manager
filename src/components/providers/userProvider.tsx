@@ -22,6 +22,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       });
   };
 
+  const logOutUser = () => {
+    localStorage.removeItem("user");
+    document.querySelectorAll(".site-title")[0].classList.remove("logged-in");
+    setPage("login/signup")
+  } 
+
   useEffect(() => {
     const isUserLogged = validations.isUserLoggedIn();
     apiFunctions
@@ -52,6 +58,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         user,
         setUser,
         reloadData,
+        logOutUser,
       }}
     >
       {children}
