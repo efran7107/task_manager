@@ -1,4 +1,4 @@
-import { AllData, User } from "../types/objectTypes";
+import { AllData, Task, User } from "../types/objectTypes";
 
 export const defaultAllData = (): AllData => {
   return {
@@ -43,6 +43,16 @@ export const defaultUser: User = {
   lastName: "",
   email: "",
   username: "",
+};
+
+export const defaultNewTask: Omit<Task, "id"> = {
+  title: "",
+  desc: "",
+  status: "to-do",
+  dueDate: "",
+  dateCreated: "",
+  isUrgent: false,
+  ucId: 0,
 };
 
 export const logInError =

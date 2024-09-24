@@ -1,12 +1,9 @@
-import { ComponentProps } from "react";
-
 export type Page =
   | "login/signup"
   | "loading"
   | "dashboard"
   | "add-task"
-  | "error"
-  | "join/create-team";
+  | "error";
 
 export type Status = "to-do" | "doing" | "done";
 
@@ -72,6 +69,7 @@ export type Note = {
   desc: string;
   dateCreated: string;
   taskId: number;
+  authId: number;
 };
 
 export type AllData = {
@@ -84,8 +82,6 @@ export type AllData = {
   taggedTasks: TaggedTask[];
   notes: Note[];
 };
-
-export type UserInputProp = ComponentProps<"input">;
 
 export type TeamProfile = {
   team: Team;

@@ -1,0 +1,184 @@
+.add-task-cont {
+  margin-top: 100px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  border-radius: 25px;
+  gap: 20px;
+}
+
+.add-task-cont form {
+  width: 100%;
+}
+
+.task-team-selection {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.options {
+  display: none;
+}
+
+.task-team-selection:hover .options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  padding: 5px 0;
+  border-radius: 10px;
+  animation: listDown 0.2s ease-in-out 0s 1 forwards;
+}
+
+.options a {
+  cursor: pointer;
+  text-align: center;
+  color: var(--text-color);
+  text-decoration: none;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  width: 100%;
+}
+
+.add-task-form {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  align-items: stretch;
+  align-content: space-around;
+  justify-content: center;
+}
+
+.user-status-input,
+.status-update {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-status-input {
+  justify-content: space-between;
+}
+
+#dueDate {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+#dueDate::-webkit-calendar-picker-indicator {
+  background-color: var(--border-color);
+  border-radius: 10px;
+}
+
+.urgent-cont {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.new-note-cont,
+.new-note-cont .user-input,
+.new-note-cont .textarea-input {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0px;
+}
+
+.new-note-cont {
+  gap: 5px;
+}
+
+.task-tag-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tag-selections {
+  display: flex;
+  gap: 10px;
+}
+
+.tag-section {
+  margin-bottom: 10px;
+}
+
+.existing-tags,
+.existing-tag-list .tags,
+.available-users {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  border: 1px solid var(--border-color);
+  border-radius: 25px;
+  height: 50px;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.available-users {
+  flex-direction: column;
+  height: 100px;
+  max-width: 100%;
+}
+
+.add-new-tag {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-new-tag input {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 25px;
+  padding: 0 10px;
+}
+
+.add-users {
+  display: flex;
+  gap: 10px;
+}
+
+.assigned-users,
+.non-assigned-users {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5px;
+  width: 150px;
+}
+
+.submit-task-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 50%;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  padding: 5px;
+  border-radius: 10px;
+}
+
+@keyframes listDown {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}

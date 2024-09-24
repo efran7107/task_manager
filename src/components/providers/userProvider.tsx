@@ -11,6 +11,17 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [allData, setAllData] = useState<AllData>(defaultAllData());
   const [user, setUser] = useState<User>(defaultUser);
 
+  const reloadData = () => {
+    apiFunctions
+      .getAllData()
+      .then((res) => {
+        setAllData(res);
+      })
+      .catch(() => {
+        setPage("error");
+      });
+  };
+
   useEffect(() => {
     const isUserLogged = validations.isUserLoggedIn();
     apiFunctions
@@ -40,6 +51,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setAllData,
         user,
         setUser,
+        reloadData,
       }}
     >
       {children}

@@ -14,8 +14,16 @@
 }
 
 .container {
+  box-sizing: border-box;
   width: 80vw;
   margin: 0 auto;
+}
+
+.user-input,
+.due-date-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .user-input input {
@@ -25,6 +33,59 @@
   border-radius: 10px;
   padding: 0 10px;
   transition: all 0.7s ease-in-out;
+  max-width: 50%;
+}
+
+.textarea-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.textarea-input textarea {
+  resize: none;
+  width: 75%;
+  height: 75px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: "ROBOTO CONDENSED";
+  border: 1px solid var(--border-color);
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.textarea-input textarea::placeholder {
+  transition: all 0.7s ease-in-out;
+}
+
+input[type="radio"] {
+  appearance: none;
+  background-color: var(--background-color);
+  width: 1.15em;
+  height: 1.15em;
+  border: 1px solid var(--border-color);
+  border-radius: 50px;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--border-color);
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  background-color: var(--background-color);
+  width: 1.15em;
+  height: 1.15em;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+}
+
+input[type="radio"]:checked {
+  background-color: var(--border-color);
+}
+
+.textarea-input textarea::placeholder {
+  color: var(--text-color);
 }
 
 .submit {
