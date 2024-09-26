@@ -1,0 +1,24 @@
+.join-team_create-team-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: fit-content;
+    margin: 0 auto;
+    height: 500px;
+    justify-content: space-evenly;
+}
+
+.join-team_create-team-cont .join-team {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    border-radius: 20px;
+    width: fit-content;
+}
+
+.join-team_create-team-cont .join-team form,
+.join-team_create-team-cont .create-team form{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+

@@ -9,6 +9,8 @@ export type TUserProvider = {
   setUser: (user: User) => void;
   reloadData: () => void;
   logOutUser: () => void;
+  joinTeam: (teamName: string) => void;
+  createTeam: (newteamInput: {newTeamName: string, newTeamCode: string}) => void
 };
 
 export type TLogInProvider = {
