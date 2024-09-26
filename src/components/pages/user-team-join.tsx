@@ -2,10 +2,13 @@ import {useState} from "react"
 import { UserInput } from "../inputs/formInputs"
 import '../../styles/join-team-or-create-team.css'
 import { useUser } from "../../functions/providersContext"
+import toast from "react-hot-toast"
+import { validations } from "../../functions/validations"
 
 
 export const UserJoinTeam = () => {
-  const {setPage} = useUser()
+  const {allData, setPage, joinTeam, createTeam} = useUser()
+  const {teams} = allData
   const [joinTeamInput, setJoinTeamInput] = useState({
     teamName: '',
     teamCode: '',
@@ -20,7 +23,21 @@ export const UserJoinTeam = () => {
     <div className='join-team_create-team-cont'>
       <div className="join-team">
         <h2>Join Team: </h2>
-        <form className='join-existing-team'>
+        <form 
+          className='join-existing-team'
+          onSubmit={ e => {
+            e.preventDefault();
+            if(teamName.trim().length === 0 || teamCode.trim().length === 0){
+              toast.error('please enter a team name and team code to join a team')
+            }else if(!validations.isSameTeamName(teamName, teams)){
+              toast.error('please enter a valid team name to join a team')
+            }else if(teams.find(team => team.teamName === teamName)!.teamCode !== teamCode){
+              toast.error('please enter a valid team code to join a team')
+            }else {
+              joinTeam(teamName)
+            }
+          }}
+        >
           <UserInput 
             label='Join existing team'
             name='join'
@@ -43,7 +60,16 @@ export const UserJoinTeam = () => {
       <h2>...OR</h2>
       <div className="create-team">
         <h2>Create Team: </h2>
-        <form className='create-new-team'>
+        <form className='create-new-team' onSubmit={(e) => {
+          e.preventDefault()
+          if(newTeamName.trim().length === 0 || newTeamCode.trim().length === 0){
+            toast.error('please enter a team name and team code to join a team')
+          }else if(validations.isSameTeamName(newTeamName, teams)){
+            toast.error('please enter a new team name to join a team')
+          }else {
+            createTeam(createTeamInput)
+          }
+        }}>
           <UserInput 
               label='Create new team'
               name='create'
