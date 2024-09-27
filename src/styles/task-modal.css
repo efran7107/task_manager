@@ -1,0 +1,13 @@
+.task-modal {
+    z-index: 1;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 20px;
+}
