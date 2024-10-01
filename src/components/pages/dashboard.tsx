@@ -4,6 +4,8 @@ import { useUser } from "../../functions/providersContext";
 import { TeamList } from "../dashboard-components/teamList";
 import "../../styles/dashboard.css";
 import { TaskDisplay } from "../dashboard-components/taskDisplay";
+import { TaskModal } from "../dashboard-components/taskModal";
+import { defaultNewTask } from "../../functions/defaultStates";
 
 export const Dashboard = () => {
   const { user, allData, setPage, logOutUser } = useUser();
@@ -14,6 +16,9 @@ export const Dashboard = () => {
     teamMemberLinks,
     users
   );
+
+  const [hasActiveTask, setHasActiveTask] = useState(false)
+  const [activeTask, setActiveTask] = useState({...defaultNewTask, id: 0})
 
   const [activeTeam, setActiveTeam] = useState(userTeamProfiles[0]);
   const userAssignedTasks = functions.getUserTasks(
@@ -57,9 +62,10 @@ export const Dashboard = () => {
         />
         <hr />
         <div className="task-container">
-          <TaskDisplay toDo={toDo} doing={doing} done={done} />
+          <TaskDisplay toDo={toDo} doing={doing} done={done} setHasActiveTask={setHasActiveTask} setActiveTask={setActiveTask}/>
         </div>
       </div>
+      {hasActiveTask && <TaskModal  task={activeTask} setHasActiveTask={setHasActiveTask} setActiveTask={setActiveTask}/>}
     </div>
   );
 };
