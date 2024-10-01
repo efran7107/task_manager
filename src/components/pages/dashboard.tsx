@@ -65,7 +65,7 @@ export const Dashboard = () => {
           <TaskDisplay toDo={toDo} doing={doing} done={done} setHasActiveTask={setHasActiveTask} setActiveTask={setActiveTask}/>
         </div>
       </div>
-      {hasActiveTask && <TaskModal  task={activeTask}/>}
+      {hasActiveTask && <TaskModal  task={activeTask} setHasActiveTask={setHasActiveTask} setActiveTask={setActiveTask}/>}
     </div>
   );
 };
