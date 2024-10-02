@@ -4,8 +4,7 @@ export type Page =
   | "dashboard"
   | "add-task"
   | "error"
-  | "join-team/create-team"
-  | 'edit-task';
+  | "join-team/create-team";
 
 export type Status = "to-do" | "doing" | "done";
 

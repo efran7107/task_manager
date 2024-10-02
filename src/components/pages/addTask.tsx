@@ -10,7 +10,6 @@ import {
 } from "../inputs/formInputs";
 import { defaultNewTask } from "../../functions/defaultStates";
 import { useUser } from "../../functions/providersContext";
-import { functions } from "../../functions/functions";
 import { Note, Tag, User } from "../../types/objectTypes";
 import "../../styles/add-tasks.css";
 import { validations } from "../../functions/validations";
@@ -19,20 +18,15 @@ import { apiFunctions } from "../../functions/apiFunctions";
 
 export const AddTask = () => {
   const todaysDate = new Date();
-  const { user, allData, setPage, reloadData } = useUser();
-  const { users, teams, teamMemberLinks, tags } = allData;
+  const { user, allData, setPage, reloadData, userTeamProfiles, activeTeam, setActiveTeam } = useUser();
+  const { tags } = allData;
   const [newTask, setNewTask] = useState({
     ...defaultNewTask,
     ucId: user.id,
     dateCreated: todaysDate.toLocaleDateString(),
   });
   const { title, desc, isUrgent } = newTask;
-  const userTeamProfiles = functions.getTeamMemberInfo(
-    user,
-    teams,
-    teamMemberLinks,
-    users
-  );
+  
   const [newNote, setNewNote] = useState<Omit<Note, "id">>({
     title: "",
     desc: "",
@@ -42,8 +36,6 @@ export const AddTask = () => {
   });
   const [newTagSet, setNewTagSet] = useState<Array<Omit<Tag, "id"> | Tag>>([]);
   const [assignedUsers, setAssignedUsers] = useState<User[]>([user]);
-
-  const [activeTeam, setActiveTeam] = useState(userTeamProfiles[0]);
   const { team, teamMembers } = activeTeam;
   return (
     <div className="add-task-cont">

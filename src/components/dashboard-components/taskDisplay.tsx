@@ -5,35 +5,33 @@ export const TaskDisplay = ({
   toDo,
   doing,
   done,
-  setHasActiveTask,
-  setActiveTask
+  setHasActiveTask
 }: {
   toDo: Task[];
   doing: Task[];
   done: Task[];
   setHasActiveTask: (hasActiveTask: boolean) => void
-  setActiveTask: (activeTask: Task) => void
 }) => {
   return (
     <>
       <div className="task-row">
         <h3>to-do</h3>
         {toDo.map((task) => {
-          return <TaskCard key={task.id} task={task} setHasActiveTask={setHasActiveTask} setActiveTask={setActiveTask}/>;
+          return <TaskCard key={task.id} task={task} setHasActiveTask={setHasActiveTask}/>;
         })}
       </div>
       <hr />
       <div className="task-row">
         <h3>doing</h3>
         {doing.map((task) => {
-          return <TaskCard key={task.id} task={task} setHasActiveTask={setHasActiveTask} setActiveTask={setActiveTask}/>;
+          return <TaskCard key={task.id} task={task} setHasActiveTask={setHasActiveTask}/>;
         })}
       </div>
       <hr />
       <div className="task-row">
         <h3>done</h3>
         {done.map((task) => {
-          return <TaskCard key={task.id} task={task} setHasActiveTask={setHasActiveTask} setActiveTask={setActiveTask}/>;
+          return <TaskCard key={task.id} task={task} setHasActiveTask={setHasActiveTask}/>;
         })}
       </div>
     </>
@@ -43,13 +41,11 @@ export const TaskDisplay = ({
 const TaskCard = ({ 
   task, 
   setHasActiveTask,
-  setActiveTask
 }: { 
   task: Task, 
   setHasActiveTask: (hasActiveTask: boolean) => void,
-  setActiveTask: (avtiveTask: Task) => void
 }) => {
-  const { allData } = useUser();
+  const { allData, setActiveTask } = useUser();
   const { users, tags, taggedTasks, notes } = allData;
   const { title, desc, status, dueDate, isUrgent, ucId } = task;
   const taskCreater = users.find((user) => user.id === ucId)!;

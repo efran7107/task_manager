@@ -1,21 +1,16 @@
 import { useUser } from "../../functions/providersContext"
-import { Task } from "../../types/objectTypes"
 import '../../styles/task-modal.css'
 import { defaultNewTask } from "../../functions/defaultStates";
 
 
 export const TaskModal = ({ 
-    task, 
     setHasActiveTask, 
-    setActiveTask 
 }: { 
-    task: Task;
     setHasActiveTask: (hasActiveTask: boolean) => void;
-    setActiveTask: (activeTask: Task) => void 
 }) => {
-    const {allData, setPage} = useUser();
+    const {allData, setPage, activeTask, setActiveTask} = useUser();
     const {users} = allData
-    const {id, title, desc, status, dueDate, dateCreated, isUrgent, ucId} = task
+    const {id, title, desc, status, dueDate, dateCreated, isUrgent, ucId} = activeTask
     const userCreaterId = users.find(user => user.id === ucId)!
     return (
         <div id={id.toString()} className="task-modal">
@@ -30,7 +25,7 @@ export const TaskModal = ({
             <p>Due: {dueDate}</p>
             <p>Date Created: {dateCreated}</p>
             <p>Author: {userCreaterId.firstName} {userCreaterId.lastName}</p>
-            <input type="button" value={'\uf044'} onClick={() => setPage('edit-task')}/>
+            <input type="button" value={'\uf044'} onClick={() => {}}/>
         </div>
     )
 }

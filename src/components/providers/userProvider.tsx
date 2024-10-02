@@ -1,8 +1,8 @@
 import { ReactNode, useEffect, useState } from "react";
 import { UserProviderContext } from "../../functions/providersContext";
-import { AllData, Page, User } from "../../types/objectTypes";
+import { AllData, Page, Task, User } from "../../types/objectTypes";
 import { validations } from "../../functions/validations";
-import { defaultAllData, defaultUser } from "../../functions/defaultStates";
+import { defaultAllData, defaultNewTask, defaultUser } from "../../functions/defaultStates";
 import { apiFunctions } from "../../functions/apiFunctions";
 import { functions } from "../../functions/functions";
 import { PostRequests } from "../../api";
@@ -12,8 +12,16 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [page, setPage] = useState<Page>("loading");
   const [allData, setAllData] = useState<AllData>(defaultAllData());
   const [user, setUser] = useState<User>(defaultUser);
-  const {teams, teamMemberLinks} = allData
-
+  const {users, teams, teamMemberLinks} = allData
+  const [activeTask, setActiveTask] = useState<Task>({...defaultNewTask, id: 0})
+  const [userTeamProfiles, setUserTeamProfiles] = useState(functions.getTeamMemberInfo(
+    user,
+    teams,
+    teamMemberLinks,
+    users
+  )) 
+  const [activeTeam, setActiveTeam] = useState(userTeamProfiles[0]);
+  
   const reloadData = () => {
     apiFunctions
       .getAllData()
@@ -83,8 +91,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           setPage("login/signup");
           return;
         }
-        const username = localStorage.getItem("user");
-        functions.logInUser(setUser, username!, res.users);
+        const user: User = JSON.parse(localStorage.getItem("user")!);
+        functions.logInUser(setUser, user.username, res.users);
+        setUserTeamProfiles(functions.getTeamMemberInfo(user, res.teams, res.teamMemberLinks, res.users))
+        setActiveTeam(functions.getTeamMemberInfo(user, res.teams, res.teamMemberLinks, res.users)[0])
         document.querySelectorAll(".site-title")[0].classList.add("logged-in");
         setPage("dashboard");
       })
@@ -105,7 +115,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         reloadData,
         logOutUser,
         joinTeam,
-        createTeam
+        createTeam,
+        activeTask,
+        setActiveTask,
+        userTeamProfiles,
+        setUserTeamProfiles,
+        activeTeam,
+        setActiveTeam
       }}
     >
       {children}
