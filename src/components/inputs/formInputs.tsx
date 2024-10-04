@@ -6,8 +6,12 @@ type UserInputProp = ComponentProps<"input">;
 type UserTextareaProp = ComponentProps<"textarea">;
 type PropInputs = {
   newTask: Omit<Task, "id">;
-  setNewTask: (newtask: Omit<Task, "id">) => void;
+  setNewTask: (newtask: Omit<Task, "id">) => void ;
 };
+type PropInputNoOmit = {
+  newTask: Task,
+  setNewTask: (task:Task) => void
+}
 
 export const UserInput = ({
   label,
