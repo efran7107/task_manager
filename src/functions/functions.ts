@@ -1,4 +1,8 @@
 import {
+  AllData,
+  Note,
+  Page,
+  Tag,
   Task,
   Team,
   TeamMemberLink,
@@ -96,9 +100,27 @@ const getUserTasks = (
   return activeTasks;
 };
 
+const editTask = (
+  activeTeam: TeamProfile,
+  task: Task,
+  currentAssignedUsers: User[],
+  assignedUsers: User[],
+  newTagSet: Array<Omit<Tag, "id"> | Tag>,
+  newNote: Omit<Note, "id">,
+  allData: AllData,
+  setAllData: (allData: AllData) => void,
+  setPage: (page: Page) => void,
+  reloadData: () => void
+) => {
+  const { tasks, usersTasks, tags, taggedTasks, notes } = allData;
+  const { id, ...taskNoId } = task;
+  const newTasks = tasks.map((curTask) => (curTask.id === id ? task : curTask));
+};
+
 export const functions = {
   logInUser,
   createUser,
   getTeamMemberInfo,
   getUserTasks,
+  editTask,
 };

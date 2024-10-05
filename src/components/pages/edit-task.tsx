@@ -13,10 +13,18 @@ import {
 import { Note, Tag, User } from "../../types/objectTypes";
 import { validations } from "../../functions/validations";
 import toast from "react-hot-toast";
+import { functions } from "../../functions/functions";
 
 export const EditTask = () => {
-  const { user, activeTask, setPage, activeTeam, allData, reloadData } =
-    useUser();
+  const {
+    user,
+    activeTask,
+    setPage,
+    activeTeam,
+    allData,
+    setAllData,
+    reloadData,
+  } = useUser();
   const { tags, usersTasks, taggedTasks } = allData;
   const { id, ...taskNoId } = activeTask;
   const { team, teamMembers } = activeTeam;
@@ -41,7 +49,6 @@ export const EditTask = () => {
     taskId: 0,
     authId: user.id,
   });
-
   const [assignedUsers, setAssignedUsers] =
     useState<User[]>(currentAssignedUsers);
 
@@ -64,8 +71,19 @@ export const EditTask = () => {
             );
             return;
           }
-
           setPage("loading");
+          functions.editTask(
+            activeTeam,
+            { ...task, id: id },
+            currentAssignedUsers,
+            assignedUsers,
+            newTagSet,
+            newNote,
+            allData,
+            setAllData,
+            setPage,
+            reloadData
+          );
         }}
       >
         <UserInput
