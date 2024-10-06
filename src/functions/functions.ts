@@ -115,6 +115,8 @@ const editTask = (
   const { tasks, usersTasks, tags, taggedTasks, notes } = allData;
   const { id, ...taskNoId } = task;
   const newTasks = tasks.map((curTask) => (curTask.id === id ? task : curTask));
+  const newUsers = assignedUsers.filter(user => currentAssignedUsers.find(extUser => extUser.id === user.id) === undefined)
+  
 };
 
 export const functions = {
