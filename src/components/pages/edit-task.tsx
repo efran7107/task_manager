@@ -73,10 +73,10 @@ export const EditTask = () => {
           }
           setPage("loading");
           functions.editTask(
-            activeTeam,
             { ...task, id: id },
             currentAssignedUsers,
             assignedUsers,
+            existingTags,
             newTagSet,
             newNote,
             allData,

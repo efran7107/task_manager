@@ -10,6 +10,7 @@ import {
   User,
   UserTask,
 } from "../types/objectTypes";
+import { useUser } from "./providersContext";
 
 const logInUser = (
   setUser: (user: User) => void,
@@ -101,10 +102,10 @@ const getUserTasks = (
 };
 
 const editTask = (
-  activeTeam: TeamProfile,
   task: Task,
   currentAssignedUsers: User[],
   assignedUsers: User[],
+  existingTags: Tag[],
   newTagSet: Array<Omit<Tag, "id"> | Tag>,
   newNote: Omit<Note, "id">,
   allData: AllData,
@@ -115,8 +116,16 @@ const editTask = (
   const { tasks, usersTasks, tags, taggedTasks, notes } = allData;
   const { id, ...taskNoId } = task;
   const newTasks = tasks.map((curTask) => (curTask.id === id ? task : curTask));
-  const newUsers = assignedUsers.filter(user => currentAssignedUsers.find(extUser => extUser.id === user.id) === undefined)
-  
+  const newUsers = assignedUsers.filter(
+    (user) =>
+      currentAssignedUsers.find((extUser) => extUser.id === user.id) ===
+      undefined
+  );
+  const removedUsers = currentAssignedUsers.filter(
+    (extUser) =>
+      assignedUsers.find((user) => user.id === extUser.id) === undefined
+  );
+  console.log(existingTags, newTagSet);
 };
 
 export const functions = {
