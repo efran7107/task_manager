@@ -13,6 +13,7 @@ import {
   Task,
   Team,
   TeamMemberLink,
+  TeamProfile,
   User,
   UserAuth,
   UserTask,
@@ -205,10 +206,22 @@ const editTask = async (
   }
 };
 
+const deleteTask = (
+  task: Task,
+  allData: AllData,
+  setAllData: (allData: AllData) => void,
+  setPage: (page: Page) => void,
+  reloadData: () => void,
+  activeTeam: TeamProfile
+) => {
+  const {} = allData;
+};
+
 export const apiFunctions = {
   getAllData,
   validateUser,
   signUpUser,
   addTask,
   editTask,
+  deleteTask,
 };

@@ -44,7 +44,7 @@ export const TaskModal = ({
               />
               <input
                 type="button"
-                value={"\uf1f8"}
+                value={"\uf2ed"}
                 onClick={() => {
                   return;
                 }}
