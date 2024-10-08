@@ -31,16 +31,25 @@ export const TaskModal = ({
         <p>
           Author: {userCreaterId.firstName} {userCreaterId.lastName}
         </p>
-        {ucId === user.id && (
+        <div className="btn-container">
+          {ucId === user.id && (
+            <input
+              type="button"
+              value={"\uf044"}
+              onClick={() => {
+                setPage("edit task");
+                return;
+              }}
+            />
+          )}
           <input
             type="button"
-            value={"\uf044"}
+            value={"\uf249"}
             onClick={() => {
-              setPage("edit task");
-              return;
+              setPage("task-notes");
             }}
           />
-        )}
+        </div>
       </div>
     </div>
   );

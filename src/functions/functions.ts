@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import {
   AllData,
   Note,
@@ -139,19 +140,28 @@ const editTask = (
     (tag) => newTagSet.find((newTag) => newTag.tag === tag.tag) === undefined
   );
 
-  apiFunctions.editTask(
-    teamId,
-    task,
-    newTasks,
-    newUsers,
-    removedUsers,
-    usersTasks,
-    newTags,
-    removedTags,
-    newNote,
-    allData,
-    setAllData
-  );
+  apiFunctions
+    .editTask(
+      teamId,
+      task,
+      newTasks,
+      newUsers,
+      removedUsers,
+      usersTasks,
+      newTags,
+      removedTags,
+      newNote,
+      allData,
+      setAllData
+    )
+    .then(() => {
+      reloadData();
+      setPage("dashboard");
+    })
+    .catch(() => {
+      toast.error("error editing task");
+      setPage("error");
+    });
 };
 
 export const functions = {

@@ -8,6 +8,7 @@ import { Dashboard } from "./pages/dashboard";
 import { AddTask } from "./pages/addTask";
 import { UserJoinTeam } from "./pages/user-team-join";
 import { EditTask } from "./pages/edit-task";
+import { TaskNotePage } from "./pages/task-note-page";
 
 export const TaskManager = () => {
   const { page } = useUser();
@@ -22,8 +23,9 @@ export const TaskManager = () => {
       )}
       {page === "dashboard" && <Dashboard />}
       {page === "add-task" && <AddTask />}
-      {page === 'join-team/create-team' && <UserJoinTeam/>}
-      {page === 'edit task' && <EditTask/>}
+      {page === "join-team/create-team" && <UserJoinTeam />}
+      {page === "edit task" && <EditTask />}
+      {page === "task-notes" && <TaskNotePage />}
     </div>
   );
 };

@@ -17,7 +17,6 @@ import {
   UserAuth,
   UserTask,
 } from "../types/objectTypes";
-import { validations } from "./validations";
 
 const getAllData = async (): Promise<AllData> => {
   const {
