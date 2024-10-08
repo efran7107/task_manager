@@ -10,7 +10,7 @@
   align-items: center;
 }
 
-.task-notes-cont .task input[type="button"] {
+.task-notes-cont input[type="button"] {
   font-family: "Font Awesome 6 free";
   padding: 5px;
 }

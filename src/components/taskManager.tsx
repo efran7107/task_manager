@@ -9,6 +9,7 @@ import { AddTask } from "./pages/addTask";
 import { UserJoinTeam } from "./pages/user-team-join";
 import { EditTask } from "./pages/edit-task";
 import { TaskNotePage } from "./pages/task-note-page";
+import { AddNote } from "./dashboard-components/note-display";
 
 export const TaskManager = () => {
   const { page } = useUser();
@@ -26,6 +27,7 @@ export const TaskManager = () => {
       {page === "join-team/create-team" && <UserJoinTeam />}
       {page === "edit task" && <EditTask />}
       {page === "task-notes" && <TaskNotePage />}
+      {page === "add-note" && <AddNote />}
     </div>
   );
 };
