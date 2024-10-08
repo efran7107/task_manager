@@ -119,6 +119,8 @@ export class UserDateInput extends Component<{
             setNewTask({ ...newTask, dueDate: newDate.toLocaleDateString() });
           }}
           min={todaysDate.toJSON().split("T")[0]}
+          value={newTask.dueDate}
+          placeholder={`${newTask.dueDate}`}
         />
       </div>
     );

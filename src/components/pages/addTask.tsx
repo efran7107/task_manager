@@ -18,7 +18,15 @@ import { apiFunctions } from "../../functions/apiFunctions";
 
 export const AddTask = () => {
   const todaysDate = new Date();
-  const { user, allData, setPage, reloadData, userTeamProfiles, activeTeam, setActiveTeam } = useUser();
+  const {
+    user,
+    allData,
+    setPage,
+    reloadData,
+    userTeamProfiles,
+    activeTeam,
+    setActiveTeam,
+  } = useUser();
   const { tags } = allData;
   const [newTask, setNewTask] = useState({
     ...defaultNewTask,
@@ -26,7 +34,7 @@ export const AddTask = () => {
     dateCreated: todaysDate.toLocaleDateString(),
   });
   const { title, desc, isUrgent } = newTask;
-  
+
   const [newNote, setNewNote] = useState<Omit<Note, "id">>({
     title: "",
     desc: "",
@@ -35,15 +43,16 @@ export const AddTask = () => {
     authId: user.id,
   });
   const [newTagSet, setNewTagSet] = useState<Array<Omit<Tag, "id"> | Tag>>([]);
-  const [assignedUsers, setAssignedUsers] = useState<User[]>([user]);
+  const [assignedUsers, setAssignedUsers] = useState<User[]>([]);
   const { team, teamMembers } = activeTeam;
   return (
     <div className="add-task-cont">
       <h2 className="add-task">
-        <i 
+        <i
           className="fa-solid fa-chevron-left"
-          onClick={() => setPage('dashboard')}
-        ></i> Add Task
+          onClick={() => setPage("dashboard")}
+        ></i>{" "}
+        Add Task
       </h2>
       <div className="task-team-selection">
         <button className="team-select">{team.teamName}</button>
@@ -67,9 +76,10 @@ export const AddTask = () => {
             );
             return;
           }
-          setPage('loading')
+          setPage("loading");
           apiFunctions
             .addTask(
+              user.id,
               newTask,
               team.id,
               newNote,

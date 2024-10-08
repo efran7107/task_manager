@@ -10,7 +10,7 @@ import {
   User,
   UserTask,
 } from "../types/objectTypes";
-import { useUser } from "./providersContext";
+import { apiFunctions } from "./apiFunctions";
 
 const logInUser = (
   setUser: (user: User) => void,
@@ -102,6 +102,7 @@ const getUserTasks = (
 };
 
 const editTask = (
+  teamId: number,
   task: Task,
   currentAssignedUsers: User[],
   assignedUsers: User[],
@@ -113,9 +114,10 @@ const editTask = (
   setPage: (page: Page) => void,
   reloadData: () => void
 ) => {
-  const { tasks, usersTasks, tags, taggedTasks, notes } = allData;
-  const { id, ...taskNoId } = task;
-  const newTasks = tasks.map((curTask) => (curTask.id === id ? task : curTask));
+  const { tasks, usersTasks } = allData;
+  const newTasks = tasks.map((curTask) =>
+    curTask.id === task.id ? task : curTask
+  );
   const newUsers = assignedUsers.filter(
     (user) =>
       currentAssignedUsers.find((extUser) => extUser.id === user.id) ===
@@ -123,9 +125,33 @@ const editTask = (
   );
   const removedUsers = currentAssignedUsers.filter(
     (extUser) =>
-      assignedUsers.find((user) => user.id === extUser.id) === undefined
+      assignedUsers.find((user) => user.id === extUser.id) === undefined &&
+      extUser.id !== task.ucId
   );
-  console.log(existingTags, newTagSet);
+
+  const newTags = newTagSet.filter(
+    (tag) =>
+      !tag.hasOwnProperty("id") ||
+      existingTags.find((extTag) => extTag.id === (tag as Tag).id) === undefined
+  );
+
+  const removedTags = existingTags.filter(
+    (tag) => newTagSet.find((newTag) => newTag.tag === tag.tag) === undefined
+  );
+
+  apiFunctions.editTask(
+    teamId,
+    task,
+    newTasks,
+    newUsers,
+    removedUsers,
+    usersTasks,
+    newTags,
+    removedTags,
+    newNote,
+    allData,
+    setAllData
+  );
 };
 
 export const functions = {

@@ -28,7 +28,9 @@ export const EditTask = () => {
   const { tags, usersTasks, taggedTasks } = allData;
   const { id, ...taskNoId } = activeTask;
   const { team, teamMembers } = activeTeam;
-  const taskUsers = usersTasks.filter((userTask) => userTask.taskId === id);
+  const taskUsers = usersTasks.filter(
+    (userTask) => userTask.taskId === id && userTask.teamId === team.id
+  );
   const currentAssignedUsers = taskUsers.map(
     (userTask) => teamMembers.find((member) => member.id === userTask.userId)!
   );
@@ -49,8 +51,9 @@ export const EditTask = () => {
     taskId: 0,
     authId: user.id,
   });
-  const [assignedUsers, setAssignedUsers] =
-    useState<User[]>(currentAssignedUsers);
+  const [assignedUsers, setAssignedUsers] = useState<User[]>(
+    currentAssignedUsers.filter((user) => user.id !== task.ucId)
+  );
 
   return (
     <div className="edit-task-cont">
@@ -73,6 +76,7 @@ export const EditTask = () => {
           }
           setPage("loading");
           functions.editTask(
+            team.id,
             { ...task, id: id },
             currentAssignedUsers,
             assignedUsers,
