@@ -1,17 +1,12 @@
 import { useState } from "react";
-import { TeamProfile } from "../../types/objectTypes";
 import "../../styles/dashboard.css";
+import { useUser } from "../../functions/providersContext";
 
-export const TeamList = ({
-  teamProfiles,
-  activeTeam,
-  setActiveTeam,
-}: {
-  teamProfiles: Array<TeamProfile>;
-  activeTeam: TeamProfile;
-  setActiveTeam: (team: TeamProfile) => void;
-}) => {
-  const nonActiveTeams = teamProfiles.filter(
+export const TeamList = () => {
+
+  const {activeTeam, setActiveTeam, userTeamProfiles} = useUser()
+
+  const nonActiveTeams = userTeamProfiles.filter(
     (profile) => profile.team.id !== activeTeam.team.id
   );
   const [isHover, setIsHover] = useState(false);

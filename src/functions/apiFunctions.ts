@@ -1,5 +1,10 @@
 import toast from "react-hot-toast";
-import { GetRequests, PostRequests } from "../api";
+import {
+  DeleteRequests,
+  GetRequests,
+  PatchRequests,
+  PostRequests,
+} from "../api";
 import {
   AllData,
   Note,
@@ -10,6 +15,7 @@ import {
   TeamMemberLink,
   User,
   UserAuth,
+  UserTask,
 } from "../types/objectTypes";
 
 const getAllData = async (): Promise<AllData> => {
@@ -88,6 +94,7 @@ const signUpUser = async (
 };
 
 const addTask = async (
+  userId: number,
   newTask: Omit<Task, "id">,
   teamId: number,
   newNote: Omit<Note, "id">,
@@ -97,6 +104,11 @@ const addTask = async (
 ) => {
   try {
     const addedTask = await PostRequests.addTask(newTask);
+    await PostRequests.addUserTask({
+      userId: userId,
+      taskId: addedTask.id,
+      teamId: teamId,
+    });
     assignedUsers.forEach(async (user) => {
       await PostRequests.addUserTask({
         userId: user.id,
@@ -131,9 +143,72 @@ const addTask = async (
   }
 };
 
+const editTask = async (
+  teamId: number,
+  task: Task,
+  newTasks: Task[],
+  newUsers: User[],
+  removedUsers: User[],
+  userTasks: UserTask[],
+  newTags: Omit<Tag, "id">[] | Tag[],
+  removedTags: Tag[],
+  newNote: Omit<Note, "id">,
+  allData: AllData,
+  setAllData: (allData: AllData) => void
+) => {
+  setAllData({ ...allData, tasks: newTasks });
+  await PatchRequests.updateTask(task);
+  removedUsers.forEach(async (user) => {
+    const userLink = userTasks.find(
+      (link) => link.userId === user.id && link.taskId === task.id
+    )!;
+    DeleteRequests.deleteUserTask(userLink.id);
+  });
+  newUsers.forEach(async (user) => {
+    await PostRequests.addUserTask({
+      userId: user.id,
+      taskId: task.id,
+      teamId: teamId,
+    });
+  });
+  removedTags.forEach(async (tag) => {
+    const taggedTask = allData.taggedTasks.filter(
+      (link) => link.taskId === task.id && link.tagId === tag.id
+    );
+    if (taggedTask.length < 2) {
+      await DeleteRequests.deleteTag(tag.id);
+      await DeleteRequests.deleteTaskTag(taggedTask[0].id);
+    } else {
+      taggedTask.forEach(async (link) => {
+        await DeleteRequests.deleteTaskTag(link.id);
+      });
+    }
+  });
+
+  newTags.forEach(async (tag) => {
+    if (!tag.hasOwnProperty("id")) {
+      const addedTag = await PostRequests.addTag(tag);
+      await PostRequests.addTaggedTask({
+        taskId: task.id,
+        tagId: addedTag.id,
+      });
+    } else {
+      await PostRequests.addTaggedTask({
+        taskId: task.id,
+        tagId: (tag as Tag).id,
+      });
+    }
+  });
+
+  if (newNote.title.trim().length !== 0 && newNote.desc.trim().length !== 0) {
+    await PostRequests.addNote({ ...newNote, taskId: task.id });
+  }
+};
+
 export const apiFunctions = {
   getAllData,
   validateUser,
   signUpUser,
   addTask,
+  editTask,
 };

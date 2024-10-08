@@ -112,3 +112,33 @@ export const PostRequests = {
     }).then((res) => res.json());
   },
 };
+
+const patchRequestsOptions = {
+  method: "PATCH",
+  headers: { "Content-Type": "application/json" },
+};
+
+export const PatchRequests = {
+  updateTask: (task: Task) => {
+    return fetch(`${baseUrl}/tasks/${task.id}`, {
+      ...patchRequestsOptions,
+      body: JSON.stringify(task),
+    });
+  },
+};
+
+const deleteRequestsOptions = {
+  method: "DELETE",
+};
+
+export const DeleteRequests = {
+  deleteUserTask: (id: number) => {
+    return fetch(`${baseUrl}/usersTasks/${id}`, deleteRequestsOptions);
+  },
+  deleteTag: (id: number) => {
+    return fetch(`${baseUrl}/tags/${id}`, deleteRequestsOptions);
+  },
+  deleteTaskTag: (id: number) => {
+    return fetch(`${baseUrl}/taggedTasks/${id}`, deleteRequestsOptions);
+  },
+};

@@ -119,6 +119,8 @@ export class UserDateInput extends Component<{
             setNewTask({ ...newTask, dueDate: newDate.toLocaleDateString() });
           }}
           min={todaysDate.toJSON().split("T")[0]}
+          value={newTask.dueDate}
+          placeholder={`${newTask.dueDate}`}
         />
       </div>
     );
@@ -127,35 +129,34 @@ export class UserDateInput extends Component<{
 
 export const UserNoteInput = ({
   note,
-  setNote
-}:{
-  note: Omit<Note, 'id'>;
-  setNote: (note: Omit<Note, 'id'>) => void
+  setNote,
+}: {
+  note: Omit<Note, "id">;
+  setNote: (note: Omit<Note, "id">) => void;
 }) => {
-  return(
+  return (
     <div className="new-note-cont">
       <div className="h6">Add Note: </div>
-      
-      <UserInput 
+
+      <UserInput
         label="Title"
         name="title"
         userInputProps={{
           value: note.title,
-          onChange: (e) => setNote({...note, title: e.currentTarget.value})
+          onChange: (e) => setNote({ ...note, title: e.currentTarget.value }),
         }}
       />
-      <UserTextareaInput 
+      <UserTextareaInput
         label="Description"
         name="description"
         userTextareaInput={{
           value: note.desc,
-          onChange: (e) => setNote({...note, desc: e.currentTarget.value})
+          onChange: (e) => setNote({ ...note, desc: e.currentTarget.value }),
         }}
       />
-      
     </div>
-  )
-}
+  );
+};
 
 export class ExistingTagInput extends Component<{
   newTagSet: Omit<Tag, "id">[];
@@ -201,14 +202,16 @@ export class ExistingTagInput extends Component<{
               <p>click to delete an added tag</p>
             </div>
             <div className="tags">
-              {newTagSet.map((tag) => (
+              {newTagSet.map((setTag) => (
                 <a
-                  key={tag.tag}
+                  key={setTag.tag}
                   onClick={() =>
-                    setNewTagSet(newTagSet.filter((tag) => tag.tag !== tag.tag))
+                    setNewTagSet(
+                      newTagSet.filter((tag) => tag.tag !== setTag.tag)
+                    )
                   }
                 >
-                  {tag.tag}
+                  {setTag.tag}
                 </a>
               ))}
             </div>

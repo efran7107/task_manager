@@ -7,6 +7,7 @@ import {
 import { ErrorPopUp, UserInput } from "../inputs/formInputs";
 import { validations } from "../../functions/validations";
 import { useLogIn, useUser } from "../../functions/providersContext";
+import toast from "react-hot-toast";
 
 export const SignUpForm = () => {
   const [signUp, setSignUp] = useState(defaultSignUp);
@@ -40,6 +41,7 @@ export const SignUpForm = () => {
             )
           ) {
             setIsFirstSignUp(false);
+            toast.error('please use a unique username or fill out the form to sign up or either a username and password to log in')
             return;
           }
           signUpUser(signUp, createTeam, joinTeam);

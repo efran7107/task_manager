@@ -1,4 +1,5 @@
-.add-task-cont {
+.add-task-cont,
+.edit-task-cont {
   margin-top: 100px;
   position: relative;
   display: flex;
@@ -10,7 +11,8 @@
   gap: 20px;
 }
 
-.add-task-cont form {
+.add-task-cont form,
+.edit-task-cont form {
   width: 100%;
 }
 
@@ -44,7 +46,8 @@
   width: 100%;
 }
 
-.add-task-form {
+.add-task-form,
+.edit-task-form{
   display: flex;
   flex-direction: column;
   height: 250px;

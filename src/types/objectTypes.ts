@@ -5,7 +5,8 @@ export type Page =
   | "add-task"
   | "error"
   | "join-team/create-team"
-  | 'edit-task';
+  | "edit task"
+  | "task-notes";
 
 export type Status = "to-do" | "doing" | "done";
 

@@ -17,6 +17,7 @@
   box-sizing: border-box;
   width: 80vw;
   margin: 0 auto;
+  position: relative;
 }
 
 .user-input,

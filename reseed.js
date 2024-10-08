@@ -55,7 +55,8 @@ const db = {
       id: 1,
       userId: 1,
       password: "5678",
-    },{
+    },
+    {
       id: 2,
       userId: 2,
       password: "voldimort",
@@ -124,6 +125,12 @@ const db = {
     {
       id: 0,
       userId: 0,
+      taskId: 0,
+      teamId: 0,
+    },
+    {
+      id: 1,
+      userId: 1,
       taskId: 0,
       teamId: 0,
     },

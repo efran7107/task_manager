@@ -1,4 +1,4 @@
-import { AllData, Page, User } from "./objectTypes";
+import { AllData, Page, Task, TeamProfile, User } from "./objectTypes";
 
 export type TUserProvider = {
   page: Page;
@@ -11,6 +11,12 @@ export type TUserProvider = {
   logOutUser: () => void;
   joinTeam: (teamName: string) => void;
   createTeam: (newteamInput: {newTeamName: string, newTeamCode: string}) => void
+  activeTask: Task;
+  setActiveTask: (task:Task) => void;
+  userTeamProfiles: TeamProfile[]
+  setUserTeamProfiles: (userTeamProfiles: TeamProfile[]) => void
+  activeTeam: TeamProfile
+  setActiveTeam: (activeTeam: TeamProfile) => void
 };
 
 export type TLogInProvider = {

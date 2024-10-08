@@ -11,9 +11,9 @@ import { User } from "../../types/objectTypes";
 import { format } from "../../functions/formatting";
 
 export const LogInProvider = ({ children }: { children: ReactNode }) => {
-  const { allData, setAllData, setUser, setPage } = useUser();
+  const { allData, setAllData, setUser, setPage, setUserTeamProfiles, setActiveTeam } = useUser();
 
-  const { users, teams } = allData;
+  const { users, teams, teamMemberLinks } = allData;
 
   const logInUser = async ({
     username,
@@ -36,7 +36,9 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
       return false;
     } else {
       functions.logInUser(setUser, undefined, undefined, validUsernames[0]);
-      localStorage.setItem("user", validUsernames[0].username);
+      localStorage.setItem("user", JSON.stringify(validUsernames[0]));
+      setUserTeamProfiles(functions.getTeamMemberInfo(validUsernames[0], teams, teamMemberLinks, users))
+      setActiveTeam(functions.getTeamMemberInfo(validUsernames[0], teams, teamMemberLinks, users)[0])
       document.querySelectorAll(".site-title")[0].classList.add("logged-in");
       setPage("dashboard");
       return true;
