@@ -1,0 +1,32 @@
+.task-notes-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.task-note-cont .task {
+  width: 40%;
+  align-items: center;
+}
+
+.task-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.note-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.note {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  border-radius: 20px;
+}

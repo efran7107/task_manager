@@ -33,14 +33,23 @@ export const TaskModal = ({
         </p>
         <div className="btn-container">
           {ucId === user.id && (
-            <input
-              type="button"
-              value={"\uf044"}
-              onClick={() => {
-                setPage("edit task");
-                return;
-              }}
-            />
+            <>
+              <input
+                type="button"
+                value={"\uf044"}
+                onClick={() => {
+                  setPage("edit task");
+                  return;
+                }}
+              />
+              <input
+                type="button"
+                value={"\uf1f8"}
+                onClick={() => {
+                  return;
+                }}
+              />
+            </>
           )}
           <input
             type="button"
