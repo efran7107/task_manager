@@ -2,7 +2,7 @@ import { useUser } from "../../functions/providersContext";
 import "../../styles/task-note-page.css";
 
 export const TaskNotePage = () => {
-  const { activeTask, allData } = useUser();
+  const { activeTask, allData, setPage } = useUser();
 
   const { users, notes } = allData;
   const { id, title, desc, status, dueDate, dateCreated, isUrgent, ucId } =
@@ -11,7 +11,15 @@ export const TaskNotePage = () => {
 
   return (
     <div className="task-notes-cont">
+      <h1>
+        <i
+          className="fa-solid fa-chevron-left"
+          onClick={() => setPage("dashboard")}
+        ></i>{" "}
+        Task Notes
+      </h1>
       <div className="task">
+        <input type="button" value={"+ " + "\uf249"} />
         <h2>{title}</h2>
         <div className="task-details">
           <p>{desc}</p>

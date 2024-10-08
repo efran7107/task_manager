@@ -5,9 +5,14 @@
   gap: 30px;
 }
 
-.task-note-cont .task {
+.task-notes-cont .task {
   width: 40%;
   align-items: center;
+}
+
+.task-notes-cont .task input[type="button"] {
+  font-family: "Font Awesome 6 free";
+  padding: 5px;
 }
 
 .task-details {

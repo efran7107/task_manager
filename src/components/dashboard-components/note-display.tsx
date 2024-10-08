@@ -24,3 +24,7 @@ export const NoteDisplay = ({ note }: { note: Note }) => {
     </div>
   );
 };
+
+export const EditNote = () => {
+  return <></>;
+};
