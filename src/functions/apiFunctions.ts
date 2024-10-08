@@ -13,6 +13,7 @@ import {
   Task,
   Team,
   TeamMemberLink,
+  TeamProfile,
   User,
   UserAuth,
   UserTask,
@@ -205,10 +206,38 @@ const editTask = async (
   }
 };
 
+const deleteTask = async (
+  task: Task,
+  allData: AllData,
+  setPage: (page: Page) => void,
+  reloadData: () => void
+) => {
+  const { tags, taggedTasks } = allData;
+  const taskTags = taggedTasks.filter((link) => link.taskId === task.id);
+  const onlyOneTagLink = taskTags.map((link) => {
+    const tag = tags.find((tag) => tag.id === link.tagId)!;
+    const tagLinks = taggedTasks.filter((link) => link.tagId === tag.id);
+    if (tagLinks.length === 1) {
+      return tag;
+    }
+  });
+
+  await DeleteRequests.deleteTask(task.id);
+  onlyOneTagLink.forEach((tag) => {
+    if (tag) {
+      DeleteRequests.deleteTag(tag.id);
+    }
+  });
+
+  setPage("dashboard");
+  reloadData();
+};
+
 export const apiFunctions = {
   getAllData,
   validateUser,
   signUpUser,
   addTask,
   editTask,
+  deleteTask,
 };
