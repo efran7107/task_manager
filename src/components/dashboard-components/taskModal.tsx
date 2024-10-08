@@ -1,13 +1,16 @@
 import { useUser } from "../../functions/providersContext";
 import "../../styles/task-modal.css";
 import { defaultNewTask } from "../../functions/defaultStates";
+import { apiFunctions } from "../../functions/apiFunctions";
+import toast from "react-hot-toast";
 
 export const TaskModal = ({
   setHasActiveTask,
 }: {
   setHasActiveTask: (hasActiveTask: boolean) => void;
 }) => {
-  const { allData, setPage, activeTask, setActiveTask, user } = useUser();
+  const { allData, setPage, activeTask, setActiveTask, user, reloadData } =
+    useUser();
   const { users } = allData;
   const { id, title, desc, status, dueDate, dateCreated, isUrgent, ucId } =
     activeTask;
@@ -46,6 +49,18 @@ export const TaskModal = ({
                 type="button"
                 value={"\uf2ed"}
                 onClick={() => {
+                  apiFunctions
+                    .deleteTask(activeTask, allData, setPage, reloadData)
+                    .then(() => {
+                      toast.success("task deleted");
+                      setHasActiveTask(false);
+                      setActiveTask({ ...defaultNewTask, id: 0 });
+                      setPage("dashboard");
+                    })
+                    .catch(() => {
+                      setPage("error");
+                      toast.error("error deleting task");
+                    });
                   return;
                 }}
               />

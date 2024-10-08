@@ -132,6 +132,9 @@ const deleteRequestsOptions = {
 };
 
 export const DeleteRequests = {
+  deleteTask: (id: number) => {
+    return fetch(`${baseUrl}/tasks/${id}`, deleteRequestsOptions);
+  },
   deleteUserTask: (id: number) => {
     return fetch(`${baseUrl}/usersTasks/${id}`, deleteRequestsOptions);
   },
@@ -140,5 +143,8 @@ export const DeleteRequests = {
   },
   deleteTaskTag: (id: number) => {
     return fetch(`${baseUrl}/taggedTasks/${id}`, deleteRequestsOptions);
+  },
+  deleteNote: (id: number) => {
+    return fetch(`${baseUrl}/notes/${id}`, deleteRequestsOptions);
   },
 };
