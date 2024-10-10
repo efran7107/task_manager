@@ -11,6 +11,7 @@ export const Dashboard = () => {
   const { tasks, usersTasks } = allData;
 
   const [hasActiveTask, setHasActiveTask] = useState(false)
+  const [isConfirmLeaving, setIsConfirmLeaving] = useState(false)
 
   const userAssignedTasks = functions.getUserTasks(
     user.id,
@@ -42,6 +43,18 @@ export const Dashboard = () => {
             className="action-btn" 
             onClick={() => setPage('join-team/create-team')}
           />
+          <div className="leave-team">
+            <input type="button" value="Leave Team" onClick={() => setIsConfirmLeaving(true)}/>
+            {isConfirmLeaving && (
+              <div className="confirm">
+                <p>Are you sure you want to leave the team?</p>
+                <div className="yes-no">
+                  <input type="button" value="yes" />
+                  <input type="button" value="no" onClick={() => setIsConfirmLeaving(false)}/>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <hr />

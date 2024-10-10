@@ -38,6 +38,33 @@
   margin-right: 10px;
 }
 
+.action-btns {
+  display: flex;
+  align-items: center;
+}
+
+.leave-team input{
+  padding: 5px;
+}
+
+.confirm {
+  position: absolute;
+    right: -10px;
+    top: 50px;
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.yes-no {
+  display: flex;
+  gap: 5px;
+}
+
 .dashboard-container hr {
   margin: 8px 0;
 }
