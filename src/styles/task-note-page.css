@@ -71,6 +71,17 @@
   top: 10px
 }
 
+.add-note-cont{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.add-note-cont .new-note-cont .h6{
+  display: none;
+}
+
 .note-cont .edit-note-cont .edit-note  {
   font-family: "Roboto Condensed", sans-serif;
 }
