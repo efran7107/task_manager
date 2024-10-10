@@ -172,14 +172,6 @@
       "dateCreated": "8/4/24",
       "taskId": 0,
       "authId": 1
-    },
-    {
-      "title": "something",
-      "desc": "something",
-      "authId": 0,
-      "taskId": 0,
-      "dateCreated": "10/8/2024",
-      "id": 1
     }
   ]
 }

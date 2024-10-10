@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { useUser } from "../../functions/providersContext";
 import "../../styles/task-note-page.css";
-import { NoteDisplay } from "../dashboard-components/note-display";
+import { EditNote, NoteDisplay } from "../dashboard-components/note-display";
 
 export const TaskNotePage = () => {
   const { activeTask, allData, setPage } = useUser();
@@ -9,6 +10,7 @@ export const TaskNotePage = () => {
   const { id, title, desc, status, dueDate, dateCreated, isUrgent, ucId } =
     activeTask;
   const taskNotes = notes.filter((note) => note.taskId === id);
+  const [isActiveEdit, setIsActiveEdit] = useState({isEdit: false, editId: -1})
 
   return (
     <div className="task-notes-cont">
@@ -40,7 +42,11 @@ export const TaskNotePage = () => {
       </div>
       <div className="note-list">
         {taskNotes.map((note) => (
-          <NoteDisplay note={note} key={note.id} />
+          <div className="note-cont" key={note.id}>
+            <NoteDisplay note={note} setIsActiveEdit={setIsActiveEdit}/>
+            {isActiveEdit.isEdit === true && isActiveEdit.editId === note.id && <EditNote note={note} setIsActiveEdit={setIsActiveEdit}/>}
+          </div>
+          
         ))}
       </div>
     </div>
