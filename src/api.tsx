@@ -125,6 +125,12 @@ export const PatchRequests = {
       body: JSON.stringify(task),
     });
   },
+  updateNote: (note: Note) => {
+    return fetch(`${baseUrl}/notes/${note.id}`, {
+      ...patchRequestsOptions,
+      body: JSON.stringify(note),
+  })
+  }
 };
 
 const deleteRequestsOptions = {

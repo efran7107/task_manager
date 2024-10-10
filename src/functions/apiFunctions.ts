@@ -13,7 +13,6 @@ import {
   Task,
   Team,
   TeamMemberLink,
-  TeamProfile,
   User,
   UserAuth,
   UserTask,
