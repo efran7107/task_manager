@@ -1,0 +1,15 @@
+.theme-button {
+  position: fixed;
+  top: 50%;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border: 3px solid var(--border-color);
+  border-radius: 15px;
+  background-color: var(--fill-color);
+  color: var(--font-color);
+  font-size: 20px;
+}

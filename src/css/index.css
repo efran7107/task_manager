@@ -1,0 +1,51 @@
+:root {
+  font-family: "Roboto", "Open Sans", serif;
+  box-sizing: border-box;
+  --background-color: #ededed;
+  --font-color: #1e1e1e;
+  --alt-font: #ededed;
+  --border-color: #4caf50;
+  --fill-color: #0096c7;
+  --default-transition: all ease-in-out 0.25s;
+  --default-font: "Roboto", "Open Sans", serif;
+  --outline-color: #cc8800;
+  --outline-style: 3px solid var(--outline-color);
+}
+
+.dark {
+  --background-color: #1e1e1e;
+  --font-color: #ededed;
+  --alt-font: #1e1e1e;
+  --border-color: #009688;
+  --fill-color: #007bff;
+}
+
+body {
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--font-color);
+  transition: var(--default-transition);
+}
+
+h3 {
+  margin: 0;
+}
+
+.input-cont {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.input-cont input {
+  border: 2px solid var(--border-color);
+  border-radius: 5px;
+  color: var(--alt-font);
+  background-color: var(--fill-color);
+  padding: 1px 5px;
+  font-family: var(--default-font);
+}
+
+.input-cont input:focus-visible {
+  outline: var(--outline-style);
+}
