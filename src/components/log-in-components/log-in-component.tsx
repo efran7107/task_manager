@@ -10,7 +10,9 @@ export const UserSignIn = ({
 }) => {
   const { username, password } = logIn;
   return (
-    <div className="log-in-info">
+    <div 
+      className="log-in-info"
+      >
       <UserInput
         id="username"
         label="Username"
