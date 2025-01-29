@@ -33,6 +33,19 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
     setSignIn(group)
   }
 
+  const logUserIn = () => {
+    
+  }
+
+  const signUserIn = (): boolean => {
+    switch(signIn){
+      case 'log-in':
+        logUserIn();
+        break;
+    }
+    return true
+  }
+
   return (
     <LogInProviderContext.Provider
       value={{
@@ -40,7 +53,8 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
         setLogIn,
         signUp,
         setSignUp,
-        resetInfo
+        resetInfo,
+        signUserIn
       }}
     >
       {children}

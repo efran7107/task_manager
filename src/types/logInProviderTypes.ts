@@ -6,6 +6,7 @@ export type TLogInProvider = {
   signUp: SignUpInput;
   setSignUp: (signUp: SignUpInput) => void;
   resetInfo: (group: tgroup) => void;
+  signUserIn: () => boolean;
 };
 
 export type LogInInput = {

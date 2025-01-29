@@ -14,11 +14,13 @@ const newData = {
       id: 0,
       name: "Ernest Franssen",
       email: "Email@email.com",
+      username: 'efran7107'
     },
     {
       id: 1,
       name: "Mary Franssen",
       email: "email@email.co",
+      username: 'mfran9305'
     },
   ],
   userAuths: [

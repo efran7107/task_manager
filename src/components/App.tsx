@@ -24,7 +24,7 @@ function App() {
       </h1>
       {!isLoggedIn && (
         <LogInProvider>
-          <UserLogIn />
+          <UserLogIn setIsLoggedIn={setIsLoggedIn}/>
         </LogInProvider>
       )}
     </>
