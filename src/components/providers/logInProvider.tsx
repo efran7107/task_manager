@@ -5,7 +5,7 @@ import {
   SignUpInput,
   tgroup,
 } from "../../types/logInProviderTypes";
-import { TteamMember, TuserAuth } from "../../types/globalTypes";
+import { TTeamMember, TUserAuth } from "../../types/globalTypes";
 import { apiOptions } from "../../api";
 import toast from "react-hot-toast";
 
@@ -45,7 +45,7 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const logUserIn = async (setIsLoggedIn: (isLoggedIn: boolean) => void) => {
-    const user: TteamMember | undefined = await apiOptions.getRequests.getUsername(
+    const user: TTeamMember | undefined = await apiOptions.getRequests.getUsername(
       logIn.username
     ); 
     if(user === undefined){
@@ -53,7 +53,7 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
       setLogIn(defaultLogInInfo)
     }else{
       const userId = user.id;
-      const userAuth: TuserAuth = await apiOptions.getRequests.getUserAuth(userId)
+      const userAuth: TUserAuth = await apiOptions.getRequests.getUserAuth(userId)
       const password = userAuth.password
       switch(password === logIn.password){
         case true:

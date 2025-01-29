@@ -6,7 +6,7 @@ export type TAllData = {
     teams: TTeam[];
     teamMembers: TTeamMember[];
     userAuths: TUserAuth[];
-    memTeamLink: TMemTeamLink[];
+    memTeamLinks: TMemTeamLink[];
 }
 
 export type TTeam = {

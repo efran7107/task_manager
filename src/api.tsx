@@ -13,6 +13,7 @@ const getRequests = {
         .then(res => res[0]),
     getDataInfo:(cat: string) => 
         fetch(`${local}${cat}`)
+        .then(res => res.json())
 }
 
 export const apiOptions = {

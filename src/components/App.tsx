@@ -5,6 +5,8 @@ import { ThemeButton } from "./inputs/theme-btn";
 import { LogInProvider } from "./providers/logInProvider";
 import { UserLogIn } from "./userLogIn";
 import { Toaster } from "react-hot-toast";
+import { UserProvider } from "./providers/userProvider";
+import { Dashboard } from "./dashboard";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,6 +30,11 @@ function App() {
         <LogInProvider>
           <UserLogIn setIsLoggedIn={setIsLoggedIn}/>
         </LogInProvider>
+      )}
+      {isLoggedIn && (
+        <UserProvider>
+          <Dashboard setIsLoggedIn={setIsLoggedIn}/>
+        </UserProvider>
       )}
     </>
   );
