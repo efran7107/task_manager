@@ -4,6 +4,7 @@ import { ThemeProvider } from "./providers/themeProvider";
 import { ThemeButton } from "./inputs/theme-btn";
 import { LogInProvider } from "./providers/logInProvider";
 import { UserLogIn } from "./userLogIn";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,6 +17,7 @@ function App() {
 
   return (
     <>
+    <Toaster/>
       <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
         <ThemeButton />
       </ThemeProvider>
@@ -24,7 +26,7 @@ function App() {
       </h1>
       {!isLoggedIn && (
         <LogInProvider>
-          <UserLogIn />
+          <UserLogIn setIsLoggedIn={setIsLoggedIn}/>
         </LogInProvider>
       )}
     </>
