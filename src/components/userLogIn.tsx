@@ -23,7 +23,9 @@ export const UserLogIn = ({setIsLoggedIn} : {setIsLoggedIn : (isLoggedIn: boolea
         <UserSignUp signUp={signUp} setSignUp={setSignUp}/>
       </div>
       <input 
-        type="button" value="Sign In"
+        className="submit-btn"
+        type="button" 
+        value="Sign In"
         onClick={() => {
           setIsLoggedIn(signUserIn())
         }}
