@@ -1,9 +1,10 @@
 import { useLogIn } from "../functions/providersContext";
 import { UserSignIn } from "./log-in-components/log-in-component";
 import "../css/UserLogIn.css";
+import { UserSignUp } from "./log-in-components/sign-up-component";
 
 export const UserLogIn = () => {
-  const { logIn, setLogIn, resetInfo } = useLogIn();
+  const { logIn, setLogIn, signUp, setSignUp, resetInfo } = useLogIn();
 
   return (
     <div className="user-log-in">
@@ -16,10 +17,10 @@ export const UserLogIn = () => {
       </div>
       <div 
         className="sign-up-container"
-        onClick={() => resetInfo('log-in')}
+        onClick={() => resetInfo('sign-up')}
       >
         <h3>Sign Up</h3>
-        
+        <UserSignUp signUp={signUp} setSignUp={setSignUp}/>
       </div>
     </div>
   );
