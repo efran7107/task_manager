@@ -27,7 +27,7 @@ export const UserLogIn = ({setIsLoggedIn} : {setIsLoggedIn : (isLoggedIn: boolea
         type="button" 
         value="Sign In"
         onClick={() => {
-          setIsLoggedIn(signUserIn())
+          signUserIn(setIsLoggedIn)
         }}
       />
     </div>
