@@ -1,19 +1,26 @@
 import { apiOptions } from "../api";
-import { TAllData, TMemTeamLink, TTeam, TTeamMember, TUserAuth } from "../types/globalTypes";
+import { TAllData, TTeamMember } from "../types/globalTypes";
 
-export const getAllData = async (setAllData: (allData: TAllData) => void) => {
-    const teams: TTeam[] = await apiOptions.getRequests.getDataInfo('teams');
-    const teamMembers: TTeamMember[] = await apiOptions.getRequests.getDataInfo('teamMembers');
-    const userAuths: TUserAuth[] = await apiOptions.getRequests.getDataInfo('userAuths');
-    const memTeamLinks: TMemTeamLink[] = await apiOptions.getRequests.getDataInfo('memTeamLinks');
+const defAllData: TAllData = {
+    teams: [],
+    teamMembers: [],
+    userAuths: [],
+    memTeamLinks: []
+}
 
-    const allData: TAllData = {
-        teams: teams,
-        teamMembers: teamMembers,
-        userAuths: userAuths,
-        memTeamLinks: memTeamLinks
+export const getAllData = async ( setAllData: (allData: TAllData) => void) => {
+    let allData = defAllData
+    const keys = Object.keys(allData);
+    for( const key of keys ) {
+        const data = await apiOptions.getRequests.getDataInfo(key);
+        allData = {...allData, [key]: data}        
     }
-
     setAllData(allData)
     
 }
+
+export const getUser = async (username: string, setTeamMember: (teamMember: TTeamMember) => void) => {
+    const user = await apiOptions.getRequests.getUser(username);
+    setTeamMember(user);
+}
+

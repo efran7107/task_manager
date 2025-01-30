@@ -2,6 +2,8 @@ import { ComponentProps } from "react";
 
 export type UserInputProp = ComponentProps<"input">;
 
+export type TLogInState = "home-page" | "create/join-team";
+
 export type TAllData = {
     teams: TTeam[];
     teamMembers: TTeamMember[];

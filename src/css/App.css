@@ -5,8 +5,10 @@
 }
 
 .head-title.logged-in {
+  position: absolute;
+  left: 0;
+  top: 0;
   text-align: left;
-  font-size: 35px;
-  margin-left: 20px;
+  scale: .5;
   transition: var(--default-transition);
 }
