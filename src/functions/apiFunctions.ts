@@ -1,5 +1,7 @@
+
 import { apiOptions } from "../api";
 import { TAllData, TTeamMember } from "../types/globalTypes";
+import { SignUpInput } from "../types/logInProviderTypes";
 
 const defAllData: TAllData = {
     teams: [],
@@ -24,3 +26,21 @@ export const getUser = async (username: string, setTeamMember: (teamMember: TTea
     setTeamMember(user);
 }
 
+export const addUser = async (
+    newUser: SignUpInput 
+) => {
+    const {username, firstName, lastName, email, password} = newUser;
+    const userName = firstName + ' ' + lastName
+    const tempUser = {
+        name: userName,
+        email: email,
+        username: username
+    }
+    const user: TTeamMember = await apiOptions.postRequests.addData('teamMembers', tempUser)
+    const tempUserAuth = {
+        userId: user.id,
+        password: password
+    }
+    apiOptions.postRequests.addData("userAuths", tempUserAuth)
+    
+}   

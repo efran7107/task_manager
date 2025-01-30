@@ -9,6 +9,7 @@ import { TTeamMember, TUserAuth } from "../../types/globalTypes";
 import { apiOptions } from "../../api";
 import toast from "react-hot-toast";
 import { isEmail, isMatch, isName } from "../../functions/validations";
+import { addUser } from "../../functions/apiFunctions";
 
 const defaultLogInInfo: LogInInput = {
   username: "",
@@ -101,7 +102,15 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
           break;
       }
     }
-    
+    addUser(
+      signUp,
+    ).finally(() => {
+      localStorage.setItem('username', signUp.username)
+      setIsLoggedIn(true)
+    }).catch(() =>{
+      toast.error('sorry, an error occured')
+    })
+
   }
 
   const signUserIn = (setIsLoggedIn: (isLoggedIn: boolean) => void) => {
