@@ -2,7 +2,7 @@ import { ComponentProps } from "react";
 
 export type UserInputProp = ComponentProps<"input">;
 
-export type TLogInState = "home-page" | "create/join-team";
+export type TPage = 'log-in' | "home-page" | "create/join-team" | 'loading';
 
 export type TAllData = {
     teams: TTeam[];
@@ -16,6 +16,12 @@ export type TTeam = {
     name: string;
     teamLeadId: number;
     numOfMembers: number;
+}
+
+export type TTeamAuth = {
+    id: number;
+    teamId: string;
+    auth: string;
 }
 
 export type TTeamMember = {

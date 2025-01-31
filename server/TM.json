@@ -7,6 +7,13 @@
       "numOfMembers": 2
     }
   ],
+  "teamAuths": [
+    {
+      "id": 0,
+      "teamId": 0,
+      "auth": "1234"
+    }
+  ],
   "teamMembers": [
     {
       "id": 0,
@@ -22,8 +29,8 @@
     },
     {
       "name": "Tony Macklroy",
-      "email": "t@e.co",
-      "username": "tmack",
+      "email": "e@g.co",
+      "username": "tMack",
       "id": 2
     }
   ],

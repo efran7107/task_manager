@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { UserProviderContext } from "../../functions/providersContext";
-import { TAllData, TLogInState, TTeamMember } from "../../types/globalTypes";
-import { getAllData, getUser } from "../../functions/apiFunctions";
+import { TAllData, TLogInState, TPage, TTeamMember } from "../../types/globalTypes";
+import { checkUserTeam, getAllData, getUser } from "../../functions/apiFunctions";
 
 const defTeamMember: TTeamMember = {
     id: -1,
@@ -17,24 +17,24 @@ const defAllData: TAllData = {
     memTeamLinks: []
 }
 
-export const UserProvider = ({children}:{children: ReactNode}) => {
-    const [logInState, setLogInState] = useState<TLogInState>('home-page')
+export const UserProvider = ({children, setPage}:{children: ReactNode, setPage: (page: TPage) => void}) => {
     const [allData, setAllData] = useState(defAllData)
     const [teamMember, setTeamMember] = useState(defTeamMember);
 
-    const {teams, teamMembers, userAuths, memTeamLinks} = allData
+    const {teams, teamMembers, userAuths, memTeamLinks} = allData;
 
     useEffect(() => {
         const userName = localStorage.getItem('username');
-        if(userName) getUser(userName, setTeamMember);
+        if(userName) getUser(userName, setTeamMember);        
         else return
-        getAllData(setAllData)        
+        getAllData(setAllData)
     },[])
 
     return(
         <UserProviderContext.Provider 
             value={{
-                teamMember
+                teamMember,
+                
             }}
         >
             {children}

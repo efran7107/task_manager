@@ -5,7 +5,7 @@ import {
   SignUpInput,
   tgroup,
 } from "../../types/logInProviderTypes";
-import { TTeamMember, TUserAuth } from "../../types/globalTypes";
+import { TPage, TTeamMember, TUserAuth } from "../../types/globalTypes";
 import { apiOptions } from "../../api";
 import toast from "react-hot-toast";
 import { isEmail, isMatch, isName } from "../../functions/validations";
@@ -25,7 +25,7 @@ const defaultSignUpInput: SignUpInput = {
   confirm: "",
 };
 
-export const LogInProvider = ({ children }: { children: ReactNode }) => {
+export const LogInProvider = ({ children, setPage }: { children: ReactNode, setPage: (page: TPage) => void }) => {
   const [signIn, setSignIn] = useState<tgroup>("log-in");
   const [logIn, setLogIn] = useState(defaultLogInInfo);
   const [signUp, setSignUp] = useState(defaultSignUpInput);
@@ -47,7 +47,8 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("username" , username)
   }
 
-  const logUserIn = async (setIsLoggedIn: (isLoggedIn: boolean) => void) => {
+  const logUserIn = async () => {
+    setPage('loading')
     const user: TTeamMember | undefined = await apiOptions.getRequests.getUser(
       logIn.username
     ); 
@@ -61,7 +62,7 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
       switch(password === logIn.password){
         case true:
           storeUser(user.username);
-          setIsLoggedIn(true);
+          setPage('home-page');
           break;
         case false:
           setLogIn(defaultLogInInfo)
@@ -71,7 +72,8 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const signUserUp = (setIsLoggedIn: (isLoggedIn: boolean) => void) => {
+  const signUserUp = () => {
+    setPage('loading')
     for(const [key, value] of Object.entries(signUp)){
       switch(key){
         case 'username' : 
@@ -106,20 +108,20 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
       signUp,
     ).finally(() => {
       localStorage.setItem('username', signUp.username)
-      setIsLoggedIn(true)
+      setPage('create/join-team')
     }).catch(() =>{
       toast.error('sorry, an error occured')
     })
 
   }
 
-  const signUserIn = (setIsLoggedIn: (isLoggedIn: boolean) => void) => {
+  const signUserIn = () => {
     switch (signIn) {
       case "log-in":
-        logUserIn(setIsLoggedIn);
+        logUserIn();
         break;
       case 'sign-up': 
-        signUserUp(setIsLoggedIn)
+        signUserUp()
     }
     return true;
   };

@@ -1,4 +1,6 @@
-export const Dashboard = ({setIsLoggedIn}:{setIsLoggedIn: (isLoggedIn: boolean) => void}) => {
+import { useUser } from "../functions/providersContext"
 
-    return (<></>)
+export const Dashboard = () => {
+    const {logInState, teamMember} = useUser()
+    return (<h1>Fucking something</h1>)
 }

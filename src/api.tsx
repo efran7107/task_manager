@@ -19,6 +19,9 @@ const getRequests = {
         .then(res => res[0]),
     getDataInfo:(cat: string) => 
         fetch(`${local}${cat}`)
+        .then(res => res.json()),
+    getSingleData: (cat:string, key: string, value: string) =>
+        fetch( `${local}${cat}?${key}=${value}`)
         .then(res => res.json())
 }
 
