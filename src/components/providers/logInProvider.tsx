@@ -49,15 +49,13 @@ export const LogInProvider = ({ children, setPage }: { children: ReactNode, setP
 
   const logUserIn = async () => {
     setPage('loading')
-    const user: TTeamMember | undefined = await apiOptions.getRequests.getUser(
-      logIn.username
-    ); 
+    const user: TTeamMember | undefined = await apiOptions.getRequests.getSingleData('teamMembers', 'username', logIn.username)
     if(user === undefined){
       toast.error('Sorry, username and/or password is incorrect.')
       setLogIn(defaultLogInInfo)
     }else{
       const userId = user.id;
-      const userAuth: TUserAuth = await apiOptions.getRequests.getUserAuth(userId)
+      const userAuth: TUserAuth = await apiOptions.getRequests.getSingleData('userAuths', 'userId', userId)
       const password = userAuth.password
       switch(password === logIn.password){
         case true:
@@ -67,6 +65,7 @@ export const LogInProvider = ({ children, setPage }: { children: ReactNode, setP
         case false:
           setLogIn(defaultLogInInfo)
           toast.error('Sorry, username and/or password is incorrect.');
+          setPage('log-in')
           break;
       }
     }
@@ -79,18 +78,21 @@ export const LogInProvider = ({ children, setPage }: { children: ReactNode, setP
         case 'username' : 
           if(users.find(user => user.username === value)){
             toast.error("Please fill out the form to create an account.")
+            setPage('log-in')
             return
           }
           break;
         case 'email':
           if(!isEmail(value)){
             toast.error("Please fill out the form to create an account.")
+            setPage('log-in')
             return
           }
           break;
         case 'password':
           if(!isMatch(value, signUp.confirm)){
             toast.error("Please fill out the form to create an account.")
+            setPage('log-in')
             return
           }
           break;
@@ -99,6 +101,7 @@ export const LogInProvider = ({ children, setPage }: { children: ReactNode, setP
         default: 
           if(!isName(value)){
             toast.error("Please fill out the form to create an account.")
+            setPage('log-in')
             return
           }
           break;

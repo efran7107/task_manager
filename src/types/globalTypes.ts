@@ -20,7 +20,7 @@ export type TTeam = {
 
 export type TTeamAuth = {
     id: number;
-    teamId: string;
+    teamId: number;
     auth: string;
 }
 

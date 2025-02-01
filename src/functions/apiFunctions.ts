@@ -1,5 +1,4 @@
 
-import toast from "react-hot-toast";
 import { apiOptions } from "../api";
 import { TAllData, TMemTeamLink, TPage, TTeam, TTeamAuth, TTeamMember } from "../types/globalTypes";
 import { SignUpInput } from "../types/logInProviderTypes";
@@ -23,7 +22,7 @@ export const getAllData = async ( setAllData: (allData: TAllData) => void) => {
 }
 
 export const getUser = async (username: string, setTeamMember: (teamMember: TTeamMember) => void) => {
-    const user = await apiOptions.getRequests.getUser(username);
+    const user = await apiOptions.getRequests.getSingleData('teamMembers', 'username', username)
     setTeamMember(user);
 }
 
@@ -47,21 +46,30 @@ export const addUser = async (
 }
 
 export const checkUserTeam = async (username: string): Promise<TPage> => {
-    const user = await apiOptions.getRequests.getUser(username);
+    const user = await apiOptions.getRequests.getSingleData("teamMembers", 'username', username)
     const memTeamLinks: TMemTeamLink[] = await apiOptions.getRequests.getDataInfo('memTeamLinks');
     const userTeamLinks = memTeamLinks.filter(link => link.userId === user.id)
     return userTeamLinks.length > 0 ? 'home-page' : 'create/join-team';
 }
 
-export const enterTeam = async (joinTeam: {teamName: string, auth: string}): Promise<boolean> => {
-    const teams: TTeam[] = await apiOptions.getRequests.getSingleData("teams", 'name', joinTeam.teamName)
-    if(teams.length < 1)
+export const varifyTeam = async (joinTeam: {teamName: string, auth: string}): Promise<boolean> => {
+    const team: TTeam = await apiOptions.getRequests.getSingleData("teams", 'name', joinTeam.teamName)
+    console.log(team);
+    
+    if(team === undefined)
         return false
-    const team = teams[0]
+    
     const teamAuth: TTeamAuth = await apiOptions.getRequests.getSingleData('teamAuths', 'teamId', team.id.toString())
     if(teamAuth.auth === joinTeam.auth)
         return true
     else
         return false
-    
+}
+
+export const validateTeamName = async (newTeam: {teamName: string, auth: string, confirm: string}) => {
+    const {teamName, auth, confirm} = newTeam
+    const team = await apiOptions.getRequests.getSingleData('teams', 'name', teamName)
+    if(team) return false
+    if(auth !== confirm) return false
+    return true
 }

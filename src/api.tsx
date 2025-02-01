@@ -1,4 +1,3 @@
-import { TTeamMember, TUserAuth } from "./types/globalTypes"
 
 const local = 'http://localhost:3000/'
 const header = {"Content-type" : 'application/json'};
@@ -9,20 +8,13 @@ const request = {
 }
 
 const getRequests = {
-    getUser: (username: string):Promise<TTeamMember> => 
-        fetch(`${local}teamMembers?username=${username}`)
-        .then(res => res.json())
-        .then(res => res[0]),
-    getUserAuth:(userId: number):Promise<TUserAuth> =>
-        fetch(`${local}userAuths?userId=${userId}`)
-        .then(res => res.json())
-        .then(res => res[0]),
     getDataInfo:(cat: string) => 
         fetch(`${local}${cat}`)
         .then(res => res.json()),
-    getSingleData: (cat:string, key: string, value: string) =>
+    getSingleData: (cat:string, key: string, value: string | number) =>
         fetch( `${local}${cat}?${key}=${value}`)
         .then(res => res.json())
+        .then(dataArr => dataArr[0])
 }
 
 const postRequests = {

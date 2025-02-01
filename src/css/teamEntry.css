@@ -18,3 +18,9 @@
     border: 5px solid var(--border-color);
     border-radius: 20px;
 }
+
+.team-input-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

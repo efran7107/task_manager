@@ -5,6 +5,12 @@
       "name": "Team 1",
       "teamLeadId": 0,
       "numOfMembers": 2
+    },
+    {
+      "name": "Team 2",
+      "teamLeadId": 2,
+      "numOfMembers": 1,
+      "id": 1
     }
   ],
   "teamAuths": [
@@ -12,6 +18,11 @@
       "id": 0,
       "teamId": 0,
       "auth": "1234"
+    },
+    {
+      "teamId": 1,
+      "auth": "1234",
+      "id": 1
     }
   ],
   "teamMembers": [
@@ -28,9 +39,9 @@
       "username": "mfran9305"
     },
     {
-      "name": "Tony Macklroy",
+      "name": "Tomy Macklroy",
       "email": "e@g.co",
-      "username": "tMack",
+      "username": "tmack4727",
       "id": 2
     }
   ],
@@ -61,6 +72,11 @@
       "id": 1,
       "userId": 1,
       "teamId": 0
+    },
+    {
+      "userId": 2,
+      "teamId": 1,
+      "id": 2
     }
   ]
 }
