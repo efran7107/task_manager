@@ -9,6 +9,13 @@ const newData = {
       numOfMembers: 2,
     },
   ],
+  teamAuths: [
+    {
+      id: 0,
+      teamId: 0,
+      auth: '1234'
+    }
+  ],
   teamMembers: [
     {
       id: 0,

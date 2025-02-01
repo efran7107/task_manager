@@ -1,0 +1,26 @@
+.team-entry-cont {
+    margin: 0 auto;
+    display: flex;
+    gap: 40px;
+    width: 500px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.join-team,
+.create-team {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 70%;
+    padding: 10px 30px;
+    border: 5px solid var(--border-color);
+    border-radius: 20px;
+}
+
+.team-input-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

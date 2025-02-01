@@ -5,14 +5,25 @@ import { ThemeButton } from "./inputs/theme-btn";
 import { LogInProvider } from "./providers/logInProvider";
 import { UserLogIn } from "./userLogIn";
 import { Toaster } from "react-hot-toast";
+import { UserProvider } from "./providers/userProvider";
+import { Dashboard } from "./dashboard";
+import { TPage } from "../types/globalTypes";
+import { LoadingPage } from "./loadingPage";
+import { checkUserTeam } from "../functions/apiFunctions";
+import { TeamEntry } from "./teamEntry";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [page, setPage] = useState<TPage>('loading');
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user === null) setIsLoggedIn(false);
-    else setIsLoggedIn(true);
+    const user = localStorage.getItem("username");
+    if (!user) {
+      setPage('log-in');
+    }
+    else{
+      checkUserTeam(user)
+        .then(setPage)
+    }
   }, []);
 
   return (
@@ -20,15 +31,24 @@ function App() {
     <Toaster/>
       <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
         <ThemeButton />
-      </ThemeProvider>
-      <h1 className={`head-title ${isLoggedIn ? "logged-in" : ""}`}>
-        Task Manager
-      </h1>
-      {!isLoggedIn && (
-        <LogInProvider>
-          <UserLogIn setIsLoggedIn={setIsLoggedIn}/>
+      <div className={`head-title ${page !== 'log-in' ? "logged-in" : ""}`}>
+        <h1>
+          Task Manager
+        </h1>
+      </div>
+      {page === 'loading' && <LoadingPage/>}
+      {page === 'log-in' && (
+        <LogInProvider setPage={setPage}>
+          <UserLogIn />
         </LogInProvider>
       )}
+      {page === 'home-page' && (
+        <UserProvider setPage={setPage}>
+          <Dashboard/>
+        </UserProvider>
+      )}
+      {page === 'create/join-team' && <TeamEntry setPage={setPage}/>}
+      </ThemeProvider>
     </>
   );
 }

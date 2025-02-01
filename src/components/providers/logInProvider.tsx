@@ -1,13 +1,15 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { LogInProviderContext } from "../../functions/providersContext";
 import {
   LogInInput,
   SignUpInput,
   tgroup,
 } from "../../types/logInProviderTypes";
-import { TteamMember, TuserAuth } from "../../types/globalTypes";
+import { TPage, TTeamMember, TUserAuth } from "../../types/globalTypes";
 import { apiOptions } from "../../api";
 import toast from "react-hot-toast";
+import { isEmail, isMatch, isName } from "../../functions/validations";
+import { addUser } from "../../functions/apiFunctions";
 
 const defaultLogInInfo: LogInInput = {
   username: "",
@@ -23,10 +25,11 @@ const defaultSignUpInput: SignUpInput = {
   confirm: "",
 };
 
-export const LogInProvider = ({ children }: { children: ReactNode }) => {
+export const LogInProvider = ({ children, setPage }: { children: ReactNode, setPage: (page: TPage) => void }) => {
   const [signIn, setSignIn] = useState<tgroup>("log-in");
   const [logIn, setLogIn] = useState(defaultLogInInfo);
   const [signUp, setSignUp] = useState(defaultSignUpInput);
+  const [users, setUsers] = useState<TTeamMember[]>([])
 
   const resetInfo = (group: tgroup) => {
     switch (group) {
@@ -44,39 +47,94 @@ export const LogInProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("username" , username)
   }
 
-  const logUserIn = async (setIsLoggedIn: (isLoggedIn: boolean) => void) => {
-    const user: TteamMember | undefined = await apiOptions.getRequests.getUsername(
-      logIn.username
-    ); 
+  const logUserIn = async () => {
+    setPage('loading')
+    const user: TTeamMember | undefined = await apiOptions.getRequests.getSingleData('teamMembers', 'username', logIn.username)
     if(user === undefined){
       toast.error('Sorry, username and/or password is incorrect.')
       setLogIn(defaultLogInInfo)
     }else{
       const userId = user.id;
-      const userAuth: TuserAuth = await apiOptions.getRequests.getUserAuth(userId)
+      const userAuth: TUserAuth = await apiOptions.getRequests.getSingleData('userAuths', 'userId', userId)
       const password = userAuth.password
       switch(password === logIn.password){
         case true:
           storeUser(user.username);
-          setIsLoggedIn(true);
+          setPage('home-page');
           break;
         case false:
           setLogIn(defaultLogInInfo)
           toast.error('Sorry, username and/or password is incorrect.');
+          setPage('log-in')
           break;
       }
     }
-  
   };
 
-  const signUserIn = (setIsLoggedIn: (isLoggedIn: boolean) => void) => {
+  const signUserUp = () => {
+    setPage('loading')
+    for(const [key, value] of Object.entries(signUp)){
+      switch(key){
+        case 'username' : 
+          if(users.find(user => user.username === value)){
+            toast.error("Please fill out the form to create an account.")
+            setPage('log-in')
+            return
+          }
+          break;
+        case 'email':
+          if(!isEmail(value)){
+            toast.error("Please fill out the form to create an account.")
+            setPage('log-in')
+            return
+          }
+          break;
+        case 'password':
+          if(!isMatch(value, signUp.confirm)){
+            toast.error("Please fill out the form to create an account.")
+            setPage('log-in')
+            return
+          }
+          break;
+        case 'confirm':
+          break;
+        default: 
+          if(!isName(value)){
+            toast.error("Please fill out the form to create an account.")
+            setPage('log-in')
+            return
+          }
+          break;
+      }
+    }
+    addUser(
+      signUp,
+    ).finally(() => {
+      localStorage.setItem('username', signUp.username)
+      setPage('create/join-team')
+    }).catch(() =>{
+      toast.error('sorry, an error occured')
+    })
+
+  }
+
+  const signUserIn = () => {
     switch (signIn) {
       case "log-in":
-        logUserIn(setIsLoggedIn);
+        logUserIn();
         break;
+      case 'sign-up': 
+        signUserUp()
     }
     return true;
   };
+
+  useEffect(() => {
+    apiOptions
+      .getRequests
+      .getDataInfo('teamMembers')
+      .then((users) => setUsers(users))
+  },[])
 
   return (
     <LogInProviderContext.Provider

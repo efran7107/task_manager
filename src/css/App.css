@@ -1,12 +1,18 @@
-.head-title {
-  text-align: center;
+.head-title h1 {
   font-size: 55px;
-  transition: var(--default-transition);
+  transition: var(--defaultTransition);
 }
 
-.head-title.logged-in {
-  text-align: left;
-  font-size: 35px;
-  margin-left: 20px;
-  transition: var(--default-transition);
+.head-title.logged-in h1 {
+  font-size: 30px;
 }
+
+.head-title {
+  text-align: center;
+  transition: var(--defaultTransition);
+}
+
+.head-title.logged-in{ 
+  text-align: left;
+}
+

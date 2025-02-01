@@ -2,11 +2,13 @@ import { ComponentProps } from "react";
 
 export type UserInputProp = ComponentProps<"input">;
 
+export type TPage = 'log-in' | "home-page" | "create/join-team" | 'loading';
+
 export type TAllData = {
     teams: TTeam[];
     teamMembers: TTeamMember[];
     userAuths: TUserAuth[];
-    memTeamLink: TMemTeamLink[];
+    memTeamLinks: TMemTeamLink[];
 }
 
 export type TTeam = {
@@ -14,6 +16,12 @@ export type TTeam = {
     name: string;
     teamLeadId: number;
     numOfMembers: number;
+}
+
+export type TTeamAuth = {
+    id: number;
+    teamId: number;
+    auth: string;
 }
 
 export type TTeamMember = {
