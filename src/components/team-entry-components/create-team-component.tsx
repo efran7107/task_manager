@@ -1,46 +1,39 @@
-import { UserInput } from "../inputs/userInput"
+import { ReactNode } from "react";
+import { UserInput } from "../inputs/userInput";
+import { convertCamelToLabel } from "../../functions/finctions";
 
 export const UserCreateTeam = ({
-    curVal, 
-    changeCreateTeam
+  createTeam,
+  changeCreateTeam,
 }: {
-    curVal: {
-        teamName: string,
-        auth: string,
-        confirm: string
-    }, 
-    changeCreateTeam: (key: string, value: string) => void
+  createTeam: {
+    teamName: string;
+    auth: string;
+    confirm: string;
+  };
+  changeCreateTeam: (key: string, value: string) => void;
 }) => {
-    const {teamName, auth, confirm} = curVal
-    return (
-        <div className="team-input-cont">
-                <UserInput 
-                    id="newTeamName" 
-                    label="New Team Name" 
-                    userInput={{
-                        type: 'text',
-                        value: teamName,
-                        onChange: (e) => changeCreateTeam('teamName', e.currentTarget.value)
-                    }}
-                />
-                <UserInput 
-                    id="newAuth" 
-                    label="Team Password" 
-                    userInput={{
-                        type: "password",
-                        value: auth,
-                        onChange: (e) => changeCreateTeam('auth', e.currentTarget.value)
-                    }}
-                />
-                <UserInput 
-                    id="confirm" 
-                    label="Confirm Team Password" 
-                    userInput={{
-                        type: "password",
-                        value: confirm,
-                        onChange: (e) => changeCreateTeam('confirm', e.currentTarget.value)
-                    }}
-                />
-                </div>
-    )
-}
+  const getInputs = (): ReactNode[] => {
+    const inputs = [];
+    for (const [key, val] of Object.entries(createTeam)) {
+      const label = convertCamelToLabel(key);
+      inputs.push(
+        <UserInput
+          key={key}
+          id={key}
+          curKey={key}
+          label={label}
+          userInput={{
+            value: val,
+            onChange: (e) => changeCreateTeam(key, e.target.value),
+          }}
+        />
+      );
+    }
+    return inputs;
+  };
+
+  return (
+    <div className="team-input-cont">{getInputs().map((input) => input)}</div>
+  );
+};
