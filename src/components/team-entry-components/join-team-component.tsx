@@ -1,41 +1,38 @@
-import { UserInput } from "../inputs/userInput"
+import { ReactNode } from "react";
+import { UserInput } from "../inputs/userInput";
+import { convertCamelToLabel } from "../../functions/finctions";
 
 export const UserJoinTeam = ({
-    curValue, 
-    changeJoinTeam
+  joinTeam,
+  changeJoinTeam,
 }: {
-    changeJoinTeam: (key: string, value: string) => void, 
-    curValue: {
-        teamName: string,
-        auth: string
-    }
+  changeJoinTeam: (key: string, value: string) => void;
+  joinTeam: {
+    teamName: string;
+    auth: string;
+  };
 }) => {
+  const getInputs = (): ReactNode[] => {
+    const inputs = [];
+    for (const [key, val] of Object.entries(joinTeam)) {
+      const label = convertCamelToLabel(key);
+      inputs.push(
+        <UserInput
+          key={key}
+          id={key}
+          curKey={key}
+          label={label}
+          userInput={{
+            value: val,
+            onChange: (e) => changeJoinTeam(key, e.target.value),
+          }}
+        />
+      );
+    }
+    return inputs;
+  };
 
-    const {
-        teamName,
-        auth
-    } = curValue
-    
-    return (
-        <div className="team-input-cont">
-                        <UserInput 
-                            id="teamName" 
-                            label="Team Name" 
-                            userInput={{
-                                type: 'text',
-                                value: teamName,
-                                onChange: (e) => changeJoinTeam('teamName', e.currentTarget.value)
-                            }}
-                        />
-                        <UserInput 
-                            id="auth" 
-                            label="Team Password" 
-                            userInput={{
-                                type: "password",
-                                value: auth,
-                                onChange: (e) => changeJoinTeam('auth', e.currentTarget.value)
-                            }}
-                        />
-                    </div>
-    )
-}
+  return (
+    <div className="team-input-cont">{getInputs().map((input) => input)}</div>
+  );
+};
