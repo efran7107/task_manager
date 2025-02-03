@@ -6,6 +6,8 @@ import '../css/UserLogIn.css'
 import { validateTeamName, varifyTeam } from "../functions/apiFunctions";
 import { apiOptions } from "../api";
 import toast from "react-hot-toast";
+import { UserJoinTeam } from "./team-entry-components/join-team-component";
+import { UserCreateTeam } from "./team-entry-components/create-team-component";
 
 const defJoinTeam = {
     teamName: '',
@@ -118,61 +120,20 @@ export const TeamEntry = ({setPage}:{setPage: (page: TPage) => void}) => {
     }
 
     return (
-        <div className="team-entry-cont">
-            <div className="join-team" onClick={() => setTeamType('join')}>
+        <div className="team-entry-cont"
+            onKeyDown={(e) => console.log(e.key)}
+            tabIndex={0}
+        >
+            <div 
+                className="join-team" 
+                onClick={() => setTeamType('join')}
+            >
             <h2>Join Team</h2>
-            <div className="team-input-cont">
-                <UserInput 
-                    id="teamName" 
-                    label="Team Name" 
-                    userInput={{
-                        type: 'text',
-                        value: joinTeam.teamName,
-                        onChange: (e) => changeJoinTeam('teamName', e.currentTarget.value)
-                    }}
-                />
-                <UserInput 
-                    id="auth" 
-                    label="Team Password" 
-                    userInput={{
-                        type: "password",
-                        value: joinTeam.auth,
-                        onChange: (e) => changeJoinTeam('auth', e.currentTarget.value)
-                    }}
-                />
-            </div>
+            <UserJoinTeam curValue={joinTeam} changeJoinTeam={changeJoinTeam}/>
             </div>
             <div className="create-team" onClick={() => setTeamType('create')}>
                 <h2>Create Team</h2>
-                <div className="team-input-cont">
-                <UserInput 
-                    id="newTeamName" 
-                    label="New Team Name" 
-                    userInput={{
-                        type: 'text',
-                        value: createTeam.teamName,
-                        onChange: (e) => changeCreateTeam('teamName', e.currentTarget.value)
-                    }}
-                />
-                <UserInput 
-                    id="newAuth" 
-                    label="Team Password" 
-                    userInput={{
-                        type: "password",
-                        value: createTeam.auth,
-                        onChange: (e) => changeCreateTeam('auth', e.currentTarget.value)
-                    }}
-                />
-                <UserInput 
-                    id="confirm" 
-                    label="Confirm Team Password" 
-                    userInput={{
-                        type: "password",
-                        value: createTeam.confirm,
-                        onChange: (e) => changeCreateTeam('confirm', e.currentTarget.value)
-                    }}
-                />
-                </div>
+                <UserCreateTeam curVal={createTeam} changeCreateTeam={changeCreateTeam} />
             </div>
             <input className="submit-btn" type="button" value="Join/Create Team" onClick={teamEntry}/>
         </div>

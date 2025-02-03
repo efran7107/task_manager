@@ -7,7 +7,14 @@ export const UserLogIn = () => {
   const { logIn, setLogIn, signUp, setSignUp, resetInfo, signUserIn } = useLogIn();
 
   return (
-    <div className="user-log-in">
+    <div 
+      className="user-log-in" 
+      onKeyDown={(e) => {
+        if(e.key === 'Enter') signUserIn();
+        return;
+      }} 
+      tabIndex={0}
+    >
       <div 
         className="log-in-container"
         onClick={() => resetInfo('log-in')}

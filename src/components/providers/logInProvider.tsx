@@ -53,6 +53,7 @@ export const LogInProvider = ({ children, setPage }: { children: ReactNode, setP
     if(user === undefined){
       toast.error('Sorry, username and/or password is incorrect.')
       setLogIn(defaultLogInInfo)
+      setPage('log-in')
     }else{
       const userId = user.id;
       const userAuth: TUserAuth = await apiOptions.getRequests.getSingleData('userAuths', 'userId', userId)
