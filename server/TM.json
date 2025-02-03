@@ -28,7 +28,7 @@
       "username": "mfran9305"
     },
     {
-      "name": "Tony Mack",
+      "name": "Tony Macklroy",
       "email": "tmack@gmail.com",
       "username": "tmack",
       "id": 2
@@ -61,11 +61,6 @@
       "id": 1,
       "userId": 1,
       "teamId": 0
-    },
-    {
-      "userId": 2,
-      "teamId": 0,
-      "id": 2
     }
   ]
 }
