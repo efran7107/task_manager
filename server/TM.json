@@ -26,12 +26,6 @@
       "name": "Mary Franssen",
       "email": "email@email.co",
       "username": "mfran9305"
-    },
-    {
-      "name": "Tony Macklroy",
-      "email": "tmack@gmail.com",
-      "username": "tmack",
-      "id": 2
     }
   ],
   "userAuths": [
@@ -44,11 +38,6 @@
       "id": 1,
       "userId": 1,
       "password": "5678"
-    },
-    {
-      "userId": 2,
-      "password": "1234",
-      "id": 2
     }
   ],
   "memTeamLinks": [

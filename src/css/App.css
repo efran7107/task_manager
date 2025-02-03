@@ -1,10 +1,11 @@
 .head-title h1 {
   font-size: 55px;
-  transition: var(--defaultTransition);
+  transition: all ease-in-out 1s;
 }
 
 .head-title.logged-in h1 {
   font-size: 30px;
+  margin-left: 50px;
 }
 
 .head-title {
@@ -12,7 +13,6 @@
   transition: var(--defaultTransition);
 }
 
-.head-title.logged-in{ 
+.head-title.logged-in {
   text-align: left;
 }
-

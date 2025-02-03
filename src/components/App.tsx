@@ -13,41 +13,37 @@ import { checkUserTeam } from "../functions/apiFunctions";
 import { TeamEntry } from "./teamEntry";
 
 function App() {
-  const [page, setPage] = useState<TPage>('loading');
+  const [page, setPage] = useState<TPage>("loading");
 
   useEffect(() => {
     const user = localStorage.getItem("username");
     if (!user) {
-      setPage('log-in');
-    }
-    else{
-      checkUserTeam(user)
-        .then(setPage)
+      setPage("log-in");
+    } else {
+      checkUserTeam(user).then(setPage);
     }
   }, []);
 
   return (
     <>
-    <Toaster/>
+      <Toaster />
       <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
         <ThemeButton />
-      <div className={`head-title ${page !== 'log-in' ? "logged-in" : ""}`}>
-        <h1>
-          Task Manager
-        </h1>
-      </div>
-      {page === 'loading' && <LoadingPage/>}
-      {page === 'log-in' && (
-        <LogInProvider setPage={setPage}>
-          <UserLogIn />
-        </LogInProvider>
-      )}
-      {page === 'home-page' && (
-        <UserProvider setPage={setPage}>
-          <Dashboard/>
-        </UserProvider>
-      )}
-      {page === 'create/join-team' && <TeamEntry setPage={setPage}/>}
+        <div className={`head-title ${page !== "log-in" ? "logged-in" : ""}`}>
+          <h1>Task Manager</h1>
+        </div>
+        {page === "loading" && <LoadingPage />}
+        {page === "log-in" && (
+          <LogInProvider setPage={setPage}>
+            <UserLogIn />
+          </LogInProvider>
+        )}
+        {page === "home-page" && (
+          <UserProvider setPage={setPage}>
+            <Dashboard />
+          </UserProvider>
+        )}
+        {page === "create/join-team" && <TeamEntry setPage={setPage} />}
       </ThemeProvider>
     </>
   );

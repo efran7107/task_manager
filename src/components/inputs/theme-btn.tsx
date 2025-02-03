@@ -8,8 +8,11 @@ export const ThemeButton = () => {
       className="theme-button"
       onClick={() => (theme === "dark" ? setTheme("light") : setTheme("dark"))}
     >
-      {theme === "light" && <i className="fa-regular fa-moon"></i>}
-      {theme === "dark" && <i className="fa-solid fa-moon"></i>}
+      {theme === "light" ? (
+        <i className="fa-regular fa-moon"></i>
+      ) : (
+        <i className="fa-solid fa-moon"></i>
+      )}
     </div>
   );
 };

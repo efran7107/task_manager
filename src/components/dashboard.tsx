@@ -1,6 +1,7 @@
-import { useUser } from "../functions/providersContext"
+import { useUser } from "../functions/providersContext";
 
 export const Dashboard = () => {
-    const {logInState, teamMember} = useUser()
-    return (<h1>Fucking something</h1>)
-}
+  const { teamMember } = useUser();
+  const { username, name } = teamMember;
+  return <div className="user-dash-nav"></div>;
+};
