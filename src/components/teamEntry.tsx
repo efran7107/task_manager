@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { TMemTeamLink, TPage, TTeam, TTeamAuth, TTeamMember } from "../types/globalTypes";
-import { UserInput } from "./inputs/userInput";
 import '../css/teamEntry.css'
 import '../css/UserLogIn.css'
 import { validateTeamName, varifyTeam } from "../functions/apiFunctions";
