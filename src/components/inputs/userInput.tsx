@@ -13,7 +13,7 @@ export const UserInput = ({
 }) => {
   const getType = (): string => {
     if (curKey === "password" || curKey === "auth" || curKey === "confirm")
-      return curKey;
+      return "password";
     else return "text";
   };
 

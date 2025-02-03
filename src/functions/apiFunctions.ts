@@ -40,7 +40,12 @@ export const getUser = async (
 
 export const addUser = async (newUser: SignUpInput) => {
   const { username, firstName, lastName, email, password } = newUser;
-  const userName = firstName + " " + lastName;
+  const userName =
+    firstName.charAt(0).toUpperCase() +
+    firstName.slice(1).toLowerCase() +
+    " " +
+    lastName.charAt(0).toUpperCase() +
+    lastName.slice(1).toLowerCase();
   const tempUser = {
     name: userName,
     email: email,

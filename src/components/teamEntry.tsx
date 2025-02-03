@@ -85,7 +85,12 @@ export const TeamEntry = ({ setPage }: { setPage: (page: TPage) => void }) => {
   return (
     <div
       className="team-entry-cont"
-      onKeyDown={(e) => console.log(e.key)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          teamEntry();
+        }
+        return;
+      }}
       tabIndex={0}
     >
       <div className="join-team" onClick={() => setTeamType("join")}>
