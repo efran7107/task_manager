@@ -1,32 +1,33 @@
 import {TTeamMember} from "../../types/globalTypes.ts";
+import {IUser} from "../interfaces/userInterface.ts";
 
-export class User {
-	private id: number;
-	private name: string;
-	private username: string;
-	private email: string;
-	
-	constructor(user: TTeamMember) {
-		const {id, name, username, email} = user
-		this.id = id;
-		this.name = name;
-		this.username = username;
-		this.email = email;
-	}
-	
-	
-	
-	getUser = (): TTeamMember => {
-		return{
-			id: this.id,
-			name: this.name,
-			username: this.username,
-			email: this.email
-		}
-	}
-	
-	
-	
-	
-	
+export class User implements IUser{
+    name: string
+    private username: string
+    private email: string
+    private id: number
+
+    constructor(user: TTeamMember) {
+        const {name, username, email, id} = user
+        this.name = name
+        this.username = username
+        this.email = email
+        this.id = id
+    }
+
+    getUser = (): Omit<TTeamMember, 'id' | 'email'> => {
+        return {
+            name: this.name,
+            username: this.username,
+        }
+    }
+
+    getUserId = () => {
+        return this.id
+    }
+
+    getUserEmail = () => {
+        return this.email
+    }
+
 }

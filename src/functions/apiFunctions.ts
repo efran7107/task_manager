@@ -7,7 +7,6 @@ import {
   TTeamMember,
 } from "../types/globalTypes";
 import { SignUpInput } from "../types/logInProviderTypes";
-import {User} from "../components/classes/user.ts";
 
 export const addUser = async (newUser: SignUpInput) => {
   const { username, firstName, lastName, email, password } = newUser;
@@ -139,9 +138,7 @@ export const createNewTeam = async (createTeam: {
   await apiOptions.postRequests.addData("memTeamLinks", tempMemTeamLink);
 };
 
-export const signUserIn = async (
-  username: string
-) => {
-  const user:TTeamMember = await apiOptions.getRequests.getSingleData('teamMembers', 'username', username)
-  return new User(user)
+export const getUserData = async (username: string) => {
+  const user: TTeamMember = await apiOptions.getRequests.getSingleData('teamMembers', 'username', username)
+
 }

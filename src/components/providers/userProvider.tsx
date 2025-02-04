@@ -1,7 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { UserProviderContext } from "../../functions/providersContext";
-import {TPage, TTeam, TTeamMember} from "../../types/globalTypes";
-import { signUserIn} from "../../functions/apiFunctions";
+import {TPage, TTeamMember} from "../../types/globalTypes";
 import {User} from "../classes/user.ts";
 
 const defTeamMember: TTeamMember = {
@@ -11,7 +10,6 @@ const defTeamMember: TTeamMember = {
   username: '',
 }
 
-const defUser: User = new User(defTeamMember)
 
 export const UserProvider = ({
   children,
@@ -20,16 +18,10 @@ export const UserProvider = ({
   children: ReactNode;
   setPage: (page: TPage) => void;
 }) => {
-  const [user, setUser] = useState<User>(defUser)
-  
-  const [activeTeam, setActiveTeam] = useState<TTeam>()
-
+  const [user, setUser] = useState(new User(defTeamMember))
   useEffect(() => {
     const username = localStorage.getItem("username")!;
-    signUserIn(username)
-      .then((curUser) => {
-        setUser(curUser)
-      })
+
   }, []);
 
   return (
