@@ -32,18 +32,20 @@ function App() {
         <div className={`head-title ${page !== "log-in" ? "logged-in" : ""}`}>
           <h1>Task Manager</h1>
         </div>
-        {page === "loading" && <LoadingPage />}
-        {page === "log-in" && (
-          <LogInProvider setPage={setPage}>
-            <UserLogIn />
-          </LogInProvider>
-        )}
-        {page === "home-page" && (
-          <UserProvider setPage={setPage}>
-            <Dashboard />
-          </UserProvider>
-        )}
-        {page === "create/join-team" && <TeamEntry setPage={setPage} />}
+        <div className="container">
+          {page === "loading" && <LoadingPage />}
+          {page === "log-in" && (
+            <LogInProvider setPage={setPage}>
+              <UserLogIn />
+            </LogInProvider>
+          )}
+          {page === "home-page" && (
+            <UserProvider setPage={setPage}>
+              <Dashboard />
+            </UserProvider>
+          )}
+          {page === "create/join-team" && <TeamEntry setPage={setPage} />}
+        </div>
       </ThemeProvider>
     </>
   );

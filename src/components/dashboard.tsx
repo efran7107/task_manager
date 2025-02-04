@@ -1,20 +1,10 @@
-import { useUser } from "../functions/providersContext";
-
+import { DashboarNav } from "./dashboard-components/dashboard-navbar";
+import "../css/userDashboard.css";
 export const Dashboard = () => {
-  const { teamMember } = useUser();
-  const { username, name } = teamMember;
   return (
-    <div className="user-dash-nav">
-      <div className="username-cont">
-        <p>{username}</p>
-        <p>({name})</p>
-      </div>
-      <div className="action-cont">
-        <a href="">Create Task</a>
-        <a href="">Join Team</a>
-        <a href="">View Stats</a>
-        <a href="">Log Out</a>
-      </div>
+    <div className="user-dashboard">
+      <DashboarNav />
+      <hr />
     </div>
   );
 };

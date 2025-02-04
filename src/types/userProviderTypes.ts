@@ -1,5 +1,6 @@
-import { TTeamMember } from "./globalTypes"
+import { TTeam, TTeamMember } from "./globalTypes";
 
 export type TUserProvider = {
-    teamMember: TTeamMember;
-}
+  teamMember: TTeamMember;
+  userTeams: TTeam[];
+};

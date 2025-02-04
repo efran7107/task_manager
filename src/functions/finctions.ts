@@ -15,10 +15,10 @@ export const getUserTeams = (
   memTeamLinks: TMemTeamLink[],
   teams: TTeam[],
   userId: number
-) => {
+): TTeam[] => {
   const userLinks = memTeamLinks.filter((link) => link.userId === userId);
-  const userTeams = userLinks.map((link) =>
-    teams.find((team) => team.id === link.teamId)
+  const userTeams = userLinks.map(
+    (link) => teams.find((team) => team.id === link.teamId)!
   );
-  console.log(userTeams);
+  return userTeams;
 };

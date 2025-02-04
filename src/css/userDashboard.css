@@ -1,0 +1,16 @@
+.user-dash-nav {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.username-cont,
+.action-cont {
+  display: flex;
+  gap: 10px;
+}
+
+.username-cont {
+  flex-direction: column;
+  gap: 5px;
+}
