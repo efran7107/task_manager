@@ -13,6 +13,14 @@ const getRequests = {
     fetch(`${local}${cat}?${key}=${value}`)
       .then((res) => res.json())
       .then((dataArr) => dataArr[0]),
+  getDataById: (cat: string, id: number) =>
+    fetch(`${local}${cat}/${id}`)
+      .then(res => res.json())
+      .then(data => data[0])
+  ,
+  getFilteredData: (cat: string, key: string, value: string | number) =>
+    fetch(`${local}${cat}?${key}=${value}`).then((res) => res.json())
+  
 };
 
 const postRequests = {

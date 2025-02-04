@@ -1,22 +1,17 @@
 import { ReactNode, useEffect, useState } from "react";
 import { UserProviderContext } from "../../functions/providersContext";
-import { TAllData, TPage, TTeamMember } from "../../types/globalTypes";
-import { getAllData, getUser } from "../../functions/apiFunctions";
-import { getUserTeams } from "../../functions/finctions";
+import {TPage, TTeam, TTeamMember} from "../../types/globalTypes";
+import { signUserIn} from "../../functions/apiFunctions";
+import {User} from "../classes/user.ts";
 
 const defTeamMember: TTeamMember = {
   id: -1,
-  name: "",
-  email: "",
-  username: "",
-};
+  name: '',
+  email: '',
+  username: '',
+}
 
-const defAllData: TAllData = {
-  teams: [],
-  teamMembers: [],
-  userAuths: [],
-  memTeamLinks: [],
-};
+const defUser: User = new User(defTeamMember)
 
 export const UserProvider = ({
   children,
@@ -25,23 +20,22 @@ export const UserProvider = ({
   children: ReactNode;
   setPage: (page: TPage) => void;
 }) => {
-  const [allData, setAllData] = useState(defAllData);
-  const [teamMember, setTeamMember] = useState(defTeamMember);
-  const { teams, teamMembers, userAuths, memTeamLinks } = allData;
-  const userTeams = getUserTeams(memTeamLinks, teams, teamMember.id);
+  const [user, setUser] = useState<User>(defUser)
+  
+  const [activeTeam, setActiveTeam] = useState<TTeam>()
 
   useEffect(() => {
-    const userName = localStorage.getItem("username");
-    if (userName) getUser(userName, setTeamMember);
-    else return;
-    getAllData(setAllData);
+    const username = localStorage.getItem("username")!;
+    signUserIn(username)
+      .then((curUser) => {
+        setUser(curUser)
+      })
   }, []);
 
   return (
     <UserProviderContext.Provider
       value={{
-        teamMember,
-        userTeams,
+        user
       }}
     >
       {children}

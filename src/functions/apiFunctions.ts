@@ -1,6 +1,5 @@
 import { apiOptions } from "../api";
 import {
-  TAllData,
   TMemTeamLink,
   TPage,
   TTeam,
@@ -8,35 +7,7 @@ import {
   TTeamMember,
 } from "../types/globalTypes";
 import { SignUpInput } from "../types/logInProviderTypes";
-
-const defAllData: TAllData = {
-  teams: [],
-  teamMembers: [],
-  userAuths: [],
-  memTeamLinks: [],
-};
-
-export const getAllData = async (setAllData: (allData: TAllData) => void) => {
-  let allData = defAllData;
-  const keys = Object.keys(allData);
-  for (const key of keys) {
-    const data = await apiOptions.getRequests.getDataInfo(key);
-    allData = { ...allData, [key]: data };
-  }
-  setAllData(allData);
-};
-
-export const getUser = async (
-  username: string,
-  setTeamMember: (teamMember: TTeamMember) => void
-) => {
-  const user = await apiOptions.getRequests.getSingleData(
-    "teamMembers",
-    "username",
-    username
-  );
-  setTeamMember(user);
-};
+import {User} from "../components/classes/user.ts";
 
 export const addUser = async (newUser: SignUpInput) => {
   const { username, firstName, lastName, email, password } = newUser;
@@ -167,3 +138,10 @@ export const createNewTeam = async (createTeam: {
   await apiOptions.postRequests.addData("teamAuths", tempTeamAuth);
   await apiOptions.postRequests.addData("memTeamLinks", tempMemTeamLink);
 };
+
+export const signUserIn = async (
+  username: string
+) => {
+  const user:TTeamMember = await apiOptions.getRequests.getSingleData('teamMembers', 'username', username)
+  return new User(user)
+}

@@ -1,6 +1,6 @@
-import { TTeam, TTeamMember } from "./globalTypes";
+import {User} from "../components/classes/user.ts";
+
 
 export type TUserProvider = {
-  teamMember: TTeamMember;
-  userTeams: TTeam[];
+  user: User
 };

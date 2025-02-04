@@ -1,8 +1,8 @@
 import { useUser } from "../../functions/providersContext";
 
-export const DashboarNav = () => {
-  const { teamMember } = useUser();
-  const { username, name } = teamMember;
+export const DashboardNav = () => {
+  const { user } = useUser();
+  const {username, name} = user.getUser()
   return (
     <div className="user-dash-nav">
       <div className="username-cont">
