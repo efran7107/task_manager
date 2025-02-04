@@ -122,6 +122,7 @@ export const addUserToTeam = async (joinTeam: {
     "name",
     joinTeam.teamName
   );
+  const newMemNumberObj = { numOfMembers: team.numOfMembers + 1 };
   const user: TTeamMember = await apiOptions.getRequests.getSingleData(
     "teamMembers",
     "username",
@@ -132,6 +133,7 @@ export const addUserToTeam = async (joinTeam: {
     teamId: team.id,
   };
   await apiOptions.postRequests.addData("memTeamLinks", newMemTeamLink);
+  await apiOptions.patchRequests.editData("teams", newMemNumberObj, team.id);
 };
 
 export const createNewTeam = async (createTeam: {

@@ -1,11 +1,8 @@
 import { ReactNode, useEffect, useState } from "react";
 import { UserProviderContext } from "../../functions/providersContext";
 import { TAllData, TPage, TTeamMember } from "../../types/globalTypes";
-import {
-  checkUserTeam,
-  getAllData,
-  getUser,
-} from "../../functions/apiFunctions";
+import { getAllData, getUser } from "../../functions/apiFunctions";
+import { getUserTeams } from "../../functions/finctions";
 
 const defTeamMember: TTeamMember = {
   id: -1,
@@ -30,8 +27,9 @@ export const UserProvider = ({
 }) => {
   const [allData, setAllData] = useState(defAllData);
   const [teamMember, setTeamMember] = useState(defTeamMember);
-
   const { teams, teamMembers, userAuths, memTeamLinks } = allData;
+  const [userTeams, setUserTeams] = useState();
+  getUserTeams(memTeamLinks, teams, teamMember.id);
 
   useEffect(() => {
     const userName = localStorage.getItem("username");
