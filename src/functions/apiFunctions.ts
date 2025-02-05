@@ -7,6 +7,8 @@ import {
   TTeamMember,
 } from "../types/globalTypes";
 import { SignUpInput } from "../types/logInProviderTypes";
+import {Team} from "../components/classes/team.ts";
+import {User} from "../components/classes/user.ts";
 
 export const addUser = async (newUser: SignUpInput) => {
   const { username, firstName, lastName, email, password } = newUser;
@@ -140,5 +142,22 @@ export const createNewTeam = async (createTeam: {
 
 export const getUserData = async (username: string) => {
   const user: TTeamMember = await apiOptions.getRequests.getSingleData('teamMembers', 'username', username)
-
+  const teams: TTeam[] = await  apiOptions.getRequests.getDataInfo('teams')
+  const memTeams = await apiOptions.getRequests.getFilteredData('memTeamLinks', 'userId', user.id)
+      .then((links:TMemTeamLink[]) =>
+          links
+              .map(link => teams.find(team => team.id === link.teamId)!)
+              .map(team => new Team(team))
+      )
+  const userData = {
+    user: new User(user),
+    teams: memTeams
+  }
+  if(
+      memTeams
+          .filter((team) =>
+            team.getTeamLeader().getUserId() === user.id).length > 0
+  )
+    return {...userData, activeTeam: memTeams.filter((team) => team.getTeamLeader().getUserId() === user.id)[0]}
+  else return {...userData, activeTeam: memTeams[0]}
 }

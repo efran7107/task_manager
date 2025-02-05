@@ -10,3 +10,4 @@ export const convertCamelToLabel = (label: string) => {
   const convert = label.replace(/([A-Z])/g, " $1");
   return convert.charAt(0).toUpperCase() + convert.slice(1);
 };
+
