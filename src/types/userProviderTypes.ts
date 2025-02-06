@@ -1,9 +1,6 @@
-import {User} from "../components/classes/user.ts";
-import {Team} from "../components/classes/team.ts";
+import {User} from "../components/classes/User.ts";
 
 
 export type TUserProvider = {
-  user: User
-  userTeams: Team[]
-  activeTeam: Team
+    user: User
 };

@@ -1,8 +1,12 @@
-import { useUser } from "../../functions/providersContext";
+import {useUser} from "../../functions/providersContext.ts";
+
 
 export const DashboardNav = () => {
-  const { user } = useUser();
-  const {username, name} = user.getUser()
+  const { user } = useUser()
+    if (!user) {
+        return <></>
+    }
+    const {name, username} = user.getUser()
   return (
     <div className="user-dash-nav">
       <div className="username-cont">

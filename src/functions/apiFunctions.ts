@@ -7,8 +7,8 @@ import {
   TTeamMember,
 } from "../types/globalTypes";
 import { SignUpInput } from "../types/logInProviderTypes";
-import {Team} from "../components/classes/team.ts";
-import {User} from "../components/classes/user.ts";
+import {User} from "../components/classes/User.ts";
+import {Team} from "../components/classes/Team.ts";
 
 export const addUser = async (newUser: SignUpInput) => {
   const { username, firstName, lastName, email, password } = newUser;
@@ -141,23 +141,26 @@ export const createNewTeam = async (createTeam: {
 };
 
 export const getUserData = async (username: string) => {
-  const user: TTeamMember = await apiOptions.getRequests.getSingleData('teamMembers', 'username', username)
+  const teamMember: TTeamMember = await apiOptions.getRequests.getSingleData('teamMembers', 'username', username)
   const teams: TTeam[] = await  apiOptions.getRequests.getDataInfo('teams')
-  const memTeams = await apiOptions.getRequests.getFilteredData('memTeamLinks', 'userId', user.id)
-      .then((links:TMemTeamLink[]) =>
-          links
-              .map(link => teams.find(team => team.id === link.teamId)!)
-              .map(team => new Team(team))
+  const users: TTeamMember[] = await  apiOptions.getRequests.getDataInfo('teamMembers')
+  const allMemTeamLinks:TMemTeamLink[] = await apiOptions.getRequests.getDataInfo('memTeamLinks')
+  const memTeamLinks: TMemTeamLink[] = await apiOptions.getRequests.getFilteredData('memTeamLinks', 'userId', teamMember.id)
+
+  const userTeams = memTeamLinks
+      .map(memTeamLink => teams
+          .find(teamObj => teamObj.id === memTeamLink.teamId)!)
+      .map(team =>
+          new Team(
+              team,
+              allMemTeamLinks
+                  .filter(link => link.teamId === team.id)
+                  .map(filLink => users.find(users => users.id === filLink.id)!)
+                  .map(member => new User(member))
+              )
       )
-  const userData = {
-    user: new User(user),
-    teams: memTeams
-  }
-  if(
-      memTeams
-          .filter((team) =>
-            team.getTeamLeader().getUserId() === user.id).length > 0
-  )
-    return {...userData, activeTeam: memTeams.filter((team) => team.getTeamLeader().getUserId() === user.id)[0]}
-  else return {...userData, activeTeam: memTeams[0]}
+
+  const userData = {user: new User(teamMember), userTeams: userTeams}
+  console.log(userTeams.filter(team => team.getTeamLeader().getId() === teamMember.id))
+  return new User(teamMember)
 }
