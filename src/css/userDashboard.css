@@ -14,3 +14,39 @@
   flex-direction: column;
   gap: 5px;
 }
+
+.teams-and-tasks {
+  display: flex;
+}
+
+.team-display-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.team-selector-cont {
+  position: relative;
+}
+
+.team-selection{
+  position: absolute;
+  transform: scaleY(0) translateY(-80px);
+  opacity: 0;
+  transition: ease-out .2s;
+}
+.team-selection.active{
+  transform: scaleY(1) translateY(0px);
+  opacity: 1;
+}
+
+.team-users {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 60vh;
+  padding: 20px;
+  border: 3px solid var(--border-color);
+  border-radius: 20px;
+}

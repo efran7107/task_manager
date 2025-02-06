@@ -3,10 +3,7 @@ import {useUser} from "../../functions/providersContext.ts";
 
 export const DashboardNav = () => {
   const { user } = useUser()
-    if (!user) {
-        return <></>
-    }
-    const {name, username} = user.getUser()
+  const {name, username} = user
   return (
     <div className="user-dash-nav">
       <div className="username-cont">
