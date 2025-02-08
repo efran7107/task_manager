@@ -1,25 +1,21 @@
-import { ReactNode, useEffect, useState } from "react";
+import {ReactNode, useEffect, useState} from "react";
 import { UserProviderContext } from "../../functions/providersContext";
-import { TAllData, TPage, TTeamMember } from "../../types/globalTypes";
-import {
-  checkUserTeam,
-  getAllData,
-  getUser,
-} from "../../functions/apiFunctions";
+import {TPage, TTeam, TTeamMember} from "../../types/globalTypes";
+import {getUserData} from "../../functions/apiFunctions.ts";
 
-const defTeamMember: TTeamMember = {
+const defUser: TTeamMember = {
   id: -1,
-  name: "",
-  email: "",
-  username: "",
-};
+  name: '',
+  email: '',
+  username: ''
+}
 
-const defAllData: TAllData = {
-  teams: [],
-  teamMembers: [],
-  userAuths: [],
-  memTeamLinks: [],
-};
+const defTeam: TTeam = {
+    id: -1,
+    name: '',
+    numOfMembers: 0,
+    teamLeadId: 0
+}
 
 export const UserProvider = ({
   children,
@@ -28,22 +24,29 @@ export const UserProvider = ({
   children: ReactNode;
   setPage: (page: TPage) => void;
 }) => {
-  const [allData, setAllData] = useState(defAllData);
-  const [teamMember, setTeamMember] = useState(defTeamMember);
-
-  const { teams, teamMembers, userAuths, memTeamLinks } = allData;
+    const [user, setUser] = useState<TTeamMember>(defUser)
+    const [userTeams, setUserTeams] = useState<{ team: TTeam,  users: TTeamMember[]}[]>([])
+    const [activeTeam, setActiveTeam] = useState<{ team: TTeam, users: TTeamMember[]}>({team: defTeam, users: []})
 
   useEffect(() => {
-    const userName = localStorage.getItem("username");
-    if (userName) getUser(userName, setTeamMember);
-    else return;
-    getAllData(setAllData);
+    const username = localStorage.getItem("username")!;
+    getUserData(username)
+        .then((userData) => {
+            const {user, userTeams, activeTeam} = userData
+            setUser(user)
+            setUserTeams(userTeams)
+            setActiveTeam(activeTeam)
+        })
   }, []);
 
   return (
     <UserProviderContext.Provider
       value={{
-        teamMember,
+        user,
+          userTeams,
+          activeTeam,
+          setActiveTeam,
+          setPage
       }}
     >
       {children}

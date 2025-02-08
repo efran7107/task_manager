@@ -1,7 +1,14 @@
-import { useUser } from "../functions/providersContext";
-
+import { DashboardNav } from "./dashboard-components/dashboard-navbar";
+import "../css/userDashboard.css";
+import {TeamDisplay} from "./dashboard-components/teamDisplay.tsx";
 export const Dashboard = () => {
-  const { teamMember } = useUser();
-  const { username, name } = teamMember;
-  return <div className="user-dash-nav"></div>;
+  return (
+    <div className="user-dashboard">
+      <DashboardNav />
+      <hr />
+        <div className="teams-and-tasks">
+            <TeamDisplay/>
+        </div>
+    </div>
+  );
 };

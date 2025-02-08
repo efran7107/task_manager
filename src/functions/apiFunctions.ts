@@ -1,6 +1,5 @@
 import { apiOptions } from "../api";
 import {
-  TAllData,
   TMemTeamLink,
   TPage,
   TTeam,
@@ -8,35 +7,6 @@ import {
   TTeamMember,
 } from "../types/globalTypes";
 import { SignUpInput } from "../types/logInProviderTypes";
-
-const defAllData: TAllData = {
-  teams: [],
-  teamMembers: [],
-  userAuths: [],
-  memTeamLinks: [],
-};
-
-export const getAllData = async (setAllData: (allData: TAllData) => void) => {
-  let allData = defAllData;
-  const keys = Object.keys(allData);
-  for (const key of keys) {
-    const data = await apiOptions.getRequests.getDataInfo(key);
-    allData = { ...allData, [key]: data };
-  }
-  setAllData(allData);
-};
-
-export const getUser = async (
-  username: string,
-  setTeamMember: (teamMember: TTeamMember) => void
-) => {
-  const user = await apiOptions.getRequests.getSingleData(
-    "teamMembers",
-    "username",
-    username
-  );
-  setTeamMember(user);
-};
 
 export const addUser = async (newUser: SignUpInput) => {
   const { username, firstName, lastName, email, password } = newUser;
@@ -122,6 +92,7 @@ export const addUserToTeam = async (joinTeam: {
     "name",
     joinTeam.teamName
   );
+  const newMemNumberObj = { numOfMembers: team.numOfMembers + 1 };
   const user: TTeamMember = await apiOptions.getRequests.getSingleData(
     "teamMembers",
     "username",
@@ -132,6 +103,7 @@ export const addUserToTeam = async (joinTeam: {
     teamId: team.id,
   };
   await apiOptions.postRequests.addData("memTeamLinks", newMemTeamLink);
+  await apiOptions.patchRequests.editData("teams", newMemNumberObj, team.id);
 };
 
 export const createNewTeam = async (createTeam: {
@@ -165,3 +137,28 @@ export const createNewTeam = async (createTeam: {
   await apiOptions.postRequests.addData("teamAuths", tempTeamAuth);
   await apiOptions.postRequests.addData("memTeamLinks", tempMemTeamLink);
 };
+
+export const getUserData = async (username: string) => {
+  const teamMember: TTeamMember = await apiOptions.getRequests.getSingleData('teamMembers', 'username', username)
+  const teams: TTeam[] = await  apiOptions.getRequests.getDataInfo('teams')
+  const users: TTeamMember[] = await  apiOptions.getRequests.getDataInfo('teamMembers')
+  const teamMemberLinks: TMemTeamLink[] = await apiOptions.getRequests.getFilteredData('memTeamLinks', 'userId', teamMember.id)
+  const allTeamLinks: TMemTeamLink[] = await apiOptions.getRequests.getDataInfo('memTeamLinks')
+
+  const userTeamsTeams = teamMemberLinks.map(link => teams.find(team => team.id === link.teamId)!)
+  const userTeams: {team: TTeam, users: TTeamMember[]}[] = []
+  for(const team of userTeamsTeams) {
+    const teamLinks = allTeamLinks.filter(link => link.teamId === team.id)
+    const teamUsers: TTeamMember[] = []
+    for(const link of teamLinks) {
+      teamUsers.push(users.find(user => user.id === link.userId)!)
+    }
+    userTeams.push({team: team, users: teamUsers})
+  }
+
+  const userData = {user: teamMember, userTeams: userTeams}
+
+  const isLeader = userTeams.filter(team => team.team.id === teamMember.id).length > 0
+  if (isLeader) return {...userData, activeTeam: userTeams.filter(team => team.team.id === teamMember.id)[0]}
+  return {...userData, activeTeam: userTeams[0]}
+}

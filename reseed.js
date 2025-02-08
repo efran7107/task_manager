@@ -8,26 +8,37 @@ const newData = {
       teamLeadId: 0,
       numOfMembers: 2,
     },
+    {
+      id: 1,
+      name: "Team 2",
+      teamLeadId: 1,
+      numOfMembers: 2,
+    },
   ],
   teamAuths: [
     {
       id: 0,
       teamId: 0,
-      auth: '1234'
-    }
+      auth: "1234",
+    },
+    {
+      id: 1,
+      teamId: 1,
+      auth: "5678",
+    },
   ],
   teamMembers: [
     {
       id: 0,
       name: "Ernest Franssen",
       email: "Email@email.com",
-      username: 'efran7107'
+      username: "efran7107",
     },
     {
       id: 1,
       name: "Mary Franssen",
       email: "email@email.co",
-      username: 'mfran9305'
+      username: "mfran9305",
     },
   ],
   userAuths: [
@@ -52,6 +63,16 @@ const newData = {
       id: 1,
       userId: 1,
       teamId: 0,
+    },
+    {
+      id: 2,
+      userId: 0,
+      teamId: 1,
+    },
+    {
+      id: 3,
+      userId: 1,
+      teamId: 1,
     },
   ],
 };

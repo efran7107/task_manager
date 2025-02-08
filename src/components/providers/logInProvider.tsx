@@ -147,7 +147,11 @@ export const LogInProvider = ({
   useEffect(() => {
     apiOptions.getRequests
       .getDataInfo("teamMembers")
-      .then((users) => setUsers(users));
+      .then((users) => setUsers(users))
+      .catch(() => {
+        toast.error("sorry, an error occured");
+        setPage("loading");
+      });
   }, []);
 
   return (

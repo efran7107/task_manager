@@ -30,20 +30,27 @@ function App() {
       <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
         <ThemeButton />
         <div className={`head-title ${page !== "log-in" ? "logged-in" : ""}`}>
-          <h1>Task Manager</h1>
+          <h1 onClick={() => {
+            if(page !== "log-in") {
+              setPage('home-page')
+              return
+            }
+            }}>Task Manager</h1>
         </div>
-        {page === "loading" && <LoadingPage />}
-        {page === "log-in" && (
-          <LogInProvider setPage={setPage}>
-            <UserLogIn />
-          </LogInProvider>
-        )}
-        {page === "home-page" && (
-          <UserProvider setPage={setPage}>
-            <Dashboard />
-          </UserProvider>
-        )}
-        {page === "create/join-team" && <TeamEntry setPage={setPage} />}
+        <div className="container">
+          {page === "loading" && <LoadingPage />}
+          {page === "log-in" && (
+            <LogInProvider setPage={setPage}>
+              <UserLogIn />
+            </LogInProvider>
+          )}
+          {page === "home-page" && (
+            <UserProvider setPage={setPage}>
+              <Dashboard />
+            </UserProvider>
+          )}
+          {page === "create/join-team" && <TeamEntry setPage={setPage} />}
+        </div>
       </ThemeProvider>
     </>
   );
