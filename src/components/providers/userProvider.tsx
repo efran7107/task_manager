@@ -44,7 +44,9 @@ export const UserProvider = ({
       value={{
         user,
           userTeams,
-          activeTeam
+          activeTeam,
+          setActiveTeam,
+          setPage
       }}
     >
       {children}
