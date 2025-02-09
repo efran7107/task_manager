@@ -1,10 +1,12 @@
-import {TPage, TTeam, TTeamMember} from "./globalTypes.ts";
+import {TPage} from "./globalTypes.ts";
+import {User} from "../classes/User.ts";
+import {Team} from "../classes/Team.ts";
 
 
 export type TUserProvider = {
-    user: TTeamMember
-    userTeams: { team: TTeam,  users: TTeamMember[]}[],
-    activeTeam: { team: TTeam,  users: TTeamMember[]},
-    setActiveTeam: (activeTeam: { team: TTeam,  users: TTeamMember[]}) => void,
+    user: User
+    userTeams: Team[],
+    activeTeam: Team,
+    setActiveTeam: (activeTeam: Team) => void,
     setPage: (page: TPage) => void
 };

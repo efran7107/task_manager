@@ -7,6 +7,8 @@ import {
   TTeamMember,
 } from "../types/globalTypes";
 import { SignUpInput } from "../types/logInProviderTypes";
+import {Team} from "../classes/Team.ts";
+import {User} from "../classes/User.ts";
 
 export const addUser = async (newUser: SignUpInput) => {
   const { username, firstName, lastName, email, password } = newUser;
@@ -146,19 +148,19 @@ export const getUserData = async (username: string) => {
   const allTeamLinks: TMemTeamLink[] = await apiOptions.getRequests.getDataInfo('memTeamLinks')
 
   const userTeamsTeams = teamMemberLinks.map(link => teams.find(team => team.id === link.teamId)!)
-  const userTeams: {team: TTeam, users: TTeamMember[]}[] = []
+  const userTeams: Team[] = []
   for(const team of userTeamsTeams) {
     const teamLinks = allTeamLinks.filter(link => link.teamId === team.id)
-    const teamUsers: TTeamMember[] = []
+    const teamUsers: User[] = []
     for(const link of teamLinks) {
-      teamUsers.push(users.find(user => user.id === link.userId)!)
+      teamUsers.push(new User(users.find(user => user.id === link.userId)!))
     }
-    userTeams.push({team: team, users: teamUsers})
+    userTeams.push(new Team(team, teamUsers))
   }
 
-  const userData = {user: teamMember, userTeams: userTeams}
+  const userData = {user: new User(teamMember), userTeams: userTeams}
 
-  const isLeader = userTeams.filter(team => team.team.id === teamMember.id).length > 0
-  if (isLeader) return {...userData, activeTeam: userTeams.filter(team => team.team.id === teamMember.id)[0]}
+  const isLeader = userTeams.filter(team => team.getId() === teamMember.id).length > 0
+  if (isLeader) return {...userData, activeTeam: userTeams.filter(team => team.getId() === teamMember.id)[0]}
   return {...userData, activeTeam: userTeams[0]}
 }
