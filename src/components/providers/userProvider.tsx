@@ -12,8 +12,6 @@ const defUser: User = new User({
   username: ''
 })
 
-
-
 const defTeam: Team = new Team({
     id: -1,
     name: '',
@@ -31,7 +29,6 @@ export const UserProvider = ({
     const [user, setUser] = useState<User>(defUser)
     const [userTeams, setUserTeams] = useState<Team[]>([defTeam])
     const [activeTeam, setActiveTeam] = useState<Team>(defTeam)
-
   useEffect(() => {
     const username = localStorage.getItem("username")!;
     getUserData(username)
