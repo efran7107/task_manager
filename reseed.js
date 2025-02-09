@@ -118,6 +118,7 @@ const newData = {
       desc: 'test 1',
       date: '2/1/25',
       taskId: 0,
+      authId: 0,
     },
     {
       id: 1,
@@ -125,6 +126,7 @@ const newData = {
       desc: 'test 2',
       date: '2/2/25',
       taskId: 1,
+      authId: 1
     }
   ]
 };
