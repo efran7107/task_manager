@@ -36,13 +36,17 @@ a {
   color: var(--font-color);
 }
 
-h1{
+h1, h4{
   cursor: default;
 }
 
 h3 {
   margin: 0;
   cursor: pointer;
+}
+
+h4 {
+  margin: 10px 0;
 }
 
 .container {

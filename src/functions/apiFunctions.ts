@@ -147,16 +147,14 @@ export const getUserData = async (username: string) => {
   const teamMemberLinks: TMemTeamLink[] = await apiOptions.getRequests.getFilteredData('memTeamLinks', 'userId', teamMember.id)
   const allTeamLinks: TMemTeamLink[] = await apiOptions.getRequests.getDataInfo('memTeamLinks')
 
-  const userTeamsTeams = teamMemberLinks.map(link => teams.find(team => team.id === link.teamId)!)
-  const userTeams: Team[] = []
-  for(const team of userTeamsTeams) {
-    const teamLinks = allTeamLinks.filter(link => link.teamId === team.id)
-    const teamUsers: User[] = []
-    for(const link of teamLinks) {
-      teamUsers.push(new User(users.find(user => user.id === link.userId)!))
-    }
-    userTeams.push(new Team(team, teamUsers))
-  }
+  const userTeams = teamMemberLinks.map(link => teams.find(team => team.id === link.teamId)!)
+      .map((team) => {
+        const teamUsers = allTeamLinks.filter(link => link.teamId === team.id)
+            .map(link => {
+              return new User(users.find(user => user.id === link.userId)!)
+            })
+        return new Team(team, teamUsers)
+      })
 
   const userData = {user: new User(teamMember), userTeams: userTeams}
 
