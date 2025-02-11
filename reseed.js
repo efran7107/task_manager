@@ -84,7 +84,8 @@ const newData = {
       author: 'efran7107',
       status: 'to-do',
       creationDate: '1/1/25',
-      dueDate: '2/28/25'
+      dueDate: '2/28/25',
+      teamId: 0,
     },
     {
       id: 1,
@@ -94,21 +95,20 @@ const newData = {
       author: 'mfran9305',
       status: 'doing',
       creationDate: '1/1/25',
-      dueDate: '2/28/25'
+      dueDate: '2/28/25',
+      teamId: 1,
     },
   ],
   taskLinks: [
     {
       id: 0,
       taskId: 0,
-      teamMemberId: 0,
-      teamId: 0,
+      teamMemberId: 0
     },
     {
       id: 1,
       taskId: 1,
-      teamMemberId: 1,
-      teamId: 1,
+      teamMemberId: 1
     }
   ],
   notes: [
