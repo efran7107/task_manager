@@ -1,7 +1,7 @@
 import { apiOptions } from "../api";
 import {
   TMemTeamLink,
-  TPage,
+  TPage, TTask,
   TTeam,
   TTeamAuth,
   TTeamMember,
@@ -140,6 +140,11 @@ export const createNewTeam = async (createTeam: {
   await apiOptions.postRequests.addData("memTeamLinks", tempMemTeamLink);
 };
 
+const getTeamTasks = async (teamId: number) => {
+  const teamTasks: TTask[] = await apiOptions.getRequests.getFilteredData('tasks', 'teamId', teamId)
+  return teamTasks
+}
+
 export const getUserData = async (username: string) => {
   const teamMember: TTeamMember = await apiOptions.getRequests.getSingleData('teamMembers', 'username', username)
   const teams: TTeam[] = await  apiOptions.getRequests.getDataInfo('teams')
@@ -148,17 +153,20 @@ export const getUserData = async (username: string) => {
   const allTeamLinks: TMemTeamLink[] = await apiOptions.getRequests.getDataInfo('memTeamLinks')
 
   const userTeams = teamMemberLinks.map(link => teams.find(team => team.id === link.teamId)!)
-      .map((team) => {
-        const teamUsers = allTeamLinks.filter(link => link.teamId === team.id)
-            .map(link => {
-              return new User(users.find(user => user.id === link.userId)!)
-            })
-        return new Team(team, teamUsers)
+  
+  const userTeamClasses: Team[] = []
+  for(const team of userTeams){
+    const teamUsers = allTeamLinks.filter(link => link.teamId === team.id)
+      .map(link => {
+        return new User(users.find(user => user.id === link.userId)!)
       })
+    const teamTasks = await getTeamTasks(team.id)
+    userTeamClasses.push(new Team(team, teamUsers, teamTasks))
+  }
 
-  const userData = {user: new User(teamMember), userTeams: userTeams}
+  const userData = {user: new User(teamMember), userTeams: userTeamClasses}
 
-  const isLeader = userTeams.filter(team => team.getId() === teamMember.id).length > 0
-  if (isLeader) return {...userData, activeTeam: userTeams.filter(team => team.getId() === teamMember.id)[0]}
-  return {...userData, activeTeam: userTeams[0]}
+  const isLeader = userTeamClasses.filter(team => team.getId() === teamMember.id).length > 0
+  if (isLeader) return {...userData, activeTeam: userTeamClasses.filter(team => team.getId() === teamMember.id)[0]}
+  return {...userData, activeTeam: userTeamClasses[0]}
 }
