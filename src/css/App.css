@@ -6,6 +6,7 @@
 .head-title.logged-in h1 {
   font-size: 30px;
   margin-left: 50px;
+  width: max-content;
   cursor: pointer;
 }
 

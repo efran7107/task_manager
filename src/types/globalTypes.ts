@@ -50,14 +50,14 @@ export type TTask = {
     teamId: number;
 }
 
-export type TTaskLinks = {
+export type TTaskLink = {
     id: number;
     taskId: number;
     teamMemberId: number;
 
 }
 
-export type TNotes = {
+export type TNote = {
     id: number;
     title: string;
     desc: string;

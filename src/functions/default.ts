@@ -1,6 +1,7 @@
 import {User} from "../classes/User.ts";
 import {Team} from "../classes/Team.ts";
-import {TTask} from "../types/globalTypes.ts";
+import {TNote} from "../types/globalTypes.ts";
+import {Task} from "../classes/Task.ts";
 
 export const defUser: User = new User({
     id: -1,
@@ -9,7 +10,16 @@ export const defUser: User = new User({
     username: ''
 })
 
-export const defTask: TTask = {
+export const defNote: TNote = {
+        "id": -1,
+        "title": "",
+        "desc": "",
+        "date": "1/1/00",
+        "taskId": -1,
+        "authId": -1
+    }
+
+export const defTask: Task = new Task({
     "id": -1,
     "title": "",
     "desc": "",
@@ -19,6 +29,12 @@ export const defTask: TTask = {
     "creationDate": "1/1/00",
     "dueDate": "1/1/00",
     "teamId": -1
+}, [defNote])
+
+export const defTaskLink = {
+    id: -1,
+    taskId: -1,
+    teamMemberId: -1
 }
 
 export const defTeam: Team = new Team({
@@ -26,5 +42,5 @@ export const defTeam: Team = new Team({
     name: '',
     numOfMembers: 1,
     teamLeadId: -1
-}, [defUser], [defTask])
+}, [defUser], [defTask], [defTaskLink])
 
