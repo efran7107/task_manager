@@ -21,10 +21,12 @@ export const TeamDisplay = () => {
             </div>
             <div className="team-users">
                 <h4>Members: </h4>
-                <p><i className="fa-solid fa-star"></i> {teamLeader.getUserNames().username}</p>
-                {users.map(user => user.getId() !== teamLeader.getId() && (
-                    <p key={user.getId()}>{user.getUserNames().username}</p>
-                ))}
+                <div className="users-list">
+                    <p><i className="fa-solid fa-star"></i> {teamLeader.getUserNames().username}</p>
+                    {users.map(user => user.getId() !== teamLeader.getId() && (
+                        <p key={user.getId()}>{user.getUserNames().username}</p>
+                    ))}
+                </div>
             </div>
         </div>
     )

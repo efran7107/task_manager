@@ -98,6 +98,17 @@ const newData = {
       dueDate: '2/28/25',
       teamId: 1,
     },
+    {
+      id: 2,
+      title: 'task 3',
+      desc: 'task 3',
+      isUrgent: false,
+      author: 'mfran9305',
+      status: 'done',
+      creationDate: '1/1/25',
+      dueDate: '2/28/25',
+      teamId: 0,
+    },
   ],
   taskLinks: [
     {
@@ -109,7 +120,12 @@ const newData = {
       id: 1,
       taskId: 1,
       teamMemberId: 1
-    }
+    },
+    {
+      id: 2,
+      taskId: 0,
+      teamMemberId: 1
+    },
   ],
   notes: [
     {
