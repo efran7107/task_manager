@@ -26,6 +26,10 @@ export const UserProvider = ({
   const userJoinTeam = () => {
         setPage('create/join-team')
   }
+  
+  const userCreateTask = () => {
+      setPage('create-task')
+  }
 
   useEffect(() => {
     const username = localStorage.getItem("username")!;
@@ -47,7 +51,8 @@ export const UserProvider = ({
         setActiveTeam,
         setPage,
         logUserOut,
-          userJoinTeam
+          userJoinTeam,
+        userCreateTask
       }}
     >
       {children}

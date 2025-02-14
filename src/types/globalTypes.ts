@@ -2,7 +2,7 @@ import { ComponentProps } from "react";
 
 export type UserInputProp = ComponentProps<"input">;
 
-export type TPage = 'log-in' | "home-page" | "create/join-team" | 'loading';
+export type TPage = 'log-in' | "home-page" | "create/join-team" | 'loading' | 'create-task';
 
 export type taskStatus = 'to-do' | 'doing' | 'done';
 

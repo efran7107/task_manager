@@ -11,4 +11,5 @@ export type TUserProvider = {
     setPage: (page: TPage) => void
     logUserOut: () => void
     userJoinTeam: () => void
+    userCreateTask: () => void
 };

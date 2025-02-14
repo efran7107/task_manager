@@ -169,9 +169,13 @@ export const getUserData = async (username: string) => {
       .map(link => {
         return new User(users.find(user => user.id === link.userId)!)
       })
-    const memTeamLinks = teamUsers.map(user => allTaskLinks.find(link => link.teamMemberId === user.getId())!)
+    const memTaskLinks:TTaskLink[] = []
+    for(const user of teamUsers){
+      allTaskLinks.filter(link => link.teamMemberId === user.getId())
+        .forEach(link => memTaskLinks.push(link))
+    }
     const teamTasks = await getTeamTasks(team.id)
-    userTeamClasses.push(new Team(team, teamUsers, teamTasks, memTeamLinks))
+    userTeamClasses.push(new Team(team, teamUsers, teamTasks, memTaskLinks))
   }
 
   const userData = {user: new User(teamMember), userTeams: userTeamClasses}
