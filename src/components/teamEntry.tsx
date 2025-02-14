@@ -47,7 +47,8 @@ export const TeamEntry = ({ setPage }: { setPage: (page: TPage) => void }) => {
       toast.error("sorry, wrong team and/or password");
       return;
     }
-    addUserToTeam(joinTeam);
+    
+    await addUserToTeam(joinTeam);
     setPage("home-page");
   };
 

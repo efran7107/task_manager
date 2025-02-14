@@ -20,7 +20,7 @@ function App() {
     if (!user) {
       setPage("log-in");
     } else {
-      checkUserTeam(user).then(setPage);
+      checkUserTeam(user).then((hasTeam) => hasTeam ? setPage('home-page') : setPage('create/join-team'));
     }
   }, []);
 

@@ -1,7 +1,7 @@
 import { apiOptions } from "../api";
 import {
   TMemTeamLink,
-  TPage, TTask, TTaskLink,
+  TTask, TTaskLink,
   TTeam,
   TTeamAuth,
   TTeamMember,
@@ -35,7 +35,7 @@ export const addUser = async (newUser: SignUpInput) => {
   apiOptions.postRequests.addData("userAuths", tempUserAuth);
 };
 
-export const checkUserTeam = async (username: string): Promise<TPage> => {
+export const checkUserTeam = async (username: string): Promise<boolean> => {
   const user = await apiOptions.getRequests.getSingleData(
     "teamMembers",
     "username",
@@ -45,8 +45,12 @@ export const checkUserTeam = async (username: string): Promise<TPage> => {
     "memTeamLinks"
   );
   const userTeamLinks = memTeamLinks.filter((link) => link.userId === user.id);
-  return userTeamLinks.length > 0 ? "home-page" : "create/join-team";
+  return userTeamLinks.length > 0;
 };
+
+export const isInTeam = (userId: number, teamId: number) => {
+
+}
 
 export const varifyTeam = async (joinTeam: {
   teamName: string;
@@ -57,8 +61,6 @@ export const varifyTeam = async (joinTeam: {
     "name",
     joinTeam.teamName
   );
-  console.log(team);
-
   if (team === undefined) return false;
 
   const teamAuth: TTeamAuth = await apiOptions.getRequests.getSingleData(
