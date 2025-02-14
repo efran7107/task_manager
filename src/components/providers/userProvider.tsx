@@ -22,7 +22,11 @@ export const UserProvider = ({
       localStorage.removeItem('username')
       setPage('log-in')
   }
-  
+
+  const userJoinTeam = () => {
+        setPage('create/join-team')
+  }
+
   useEffect(() => {
     const username = localStorage.getItem("username")!;
     getUserData(username)
@@ -42,7 +46,8 @@ export const UserProvider = ({
         activeTeam,
         setActiveTeam,
         setPage,
-        logUserOut
+        logUserOut,
+          userJoinTeam
       }}
     >
       {children}
