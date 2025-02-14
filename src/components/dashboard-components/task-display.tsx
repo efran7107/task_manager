@@ -13,13 +13,14 @@ export function TaskDisplay() {
     useEffect(() => {
         setFilter(tasks)
     }, [tasks]);
-
     return (
         <div className='task-display'>
             <div className="filter-bar">
                 <div className="options">
                     <p className={`filter ${filter === tasks ? 'filtered' : ''}`} onClick={() => setFilter(tasks)}>Team Tasks</p>
-                    <p className={`filter ${filter === userTasks ? 'filtered' : ''}`} onClick={() => setFilter(userTasks)}>Your Team Tasks</p>
+                    <p className={`filter
+                    ${filter !== tasks ? 'filtered' : ''}`}
+                       onClick={() => setFilter(userTasks)}>Your Team Tasks</p>
                 </div>
             </div>
             <hr/>
@@ -27,8 +28,8 @@ export function TaskDisplay() {
                 <div className="task-section to-do">
                     <h3>To-Do: </h3>
                     <div className="task-column">
-                        {filter.filter(task => task.getTask().status === 'to-do')
-                            .map((task) => (
+                        {filter.filter(task => task && task.getTask().status === 'to-do')
+                            .map((task) => task && (
                                 <TaskCard key={task.getId()} task={task}/>
                             ))}
                     </div>
@@ -37,8 +38,8 @@ export function TaskDisplay() {
                 <div className="task-section doing">
                     <h3>Doing: </h3>
                     <div className="task-column">
-                        {filter.filter(task => task.getTask().status === 'doing')
-                            .map((task) => (
+                        {filter.filter(task => task && task.getTask().status === 'doing')
+                            .map((task) => task && (
                                 <TaskCard key={task.getId()} task={task}/>
                             ))}
                     </div>
@@ -47,8 +48,8 @@ export function TaskDisplay() {
                 <div className="task-section done">
                     <h3>Done: </h3>
                     <div className="task-column">
-                        {filter.filter(task => task.getTask().status === 'done')
-                            .map((task) => (
+                        {filter.filter(task => task && task.getTask().status === 'done')
+                            .map((task) => task && (
                                 <TaskCard key={task.getId()} task={task}/>
                             ))}
                     </div>

@@ -32,6 +32,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  align-items: center;
 }
 
 .team-selection{
@@ -56,9 +57,10 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 20px;
+  padding: 15px;
   border: 3px solid var(--border-color);
   border-radius: 20px;
+  align-items: center;
 }
 
 .users-list {
@@ -91,4 +93,45 @@
 .options .filter.filtered {
   border: 2px solid var(--border-color);
   border-radius: 10px;
+}
+
+.tasks {
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.tasks hr {
+  margin: 0 10px
+}
+
+.task-section {
+  width: 30%;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.task-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  position: relative;
+}
+
+.task-card .desc {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.urgent {
+  position: absolute;
+  top: 15px;
+  right: 20px;
 }

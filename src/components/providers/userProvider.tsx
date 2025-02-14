@@ -17,6 +17,12 @@ export const UserProvider = ({
     const [user, setUser] = useState<User>(defUser)
     const [userTeams, setUserTeams] = useState<Team[]>([defTeam])
     const [activeTeam, setActiveTeam] = useState<Team>(defTeam)
+  
+  const logUserOut = () => {
+      localStorage.removeItem('username')
+      setPage('log-in')
+  }
+  
   useEffect(() => {
     const username = localStorage.getItem("username")!;
     getUserData(username)
@@ -32,10 +38,11 @@ export const UserProvider = ({
     <UserProviderContext.Provider
       value={{
         user,
-          userTeams,
-          activeTeam,
-          setActiveTeam,
-          setPage
+        userTeams,
+        activeTeam,
+        setActiveTeam,
+        setPage,
+        logUserOut
       }}
     >
       {children}
