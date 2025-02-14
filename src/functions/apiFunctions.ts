@@ -1,7 +1,7 @@
 import { apiOptions } from "../api";
 import {
   TMemTeamLink,
-  TPage,
+  TPage, TTask, TTaskLink,
   TTeam,
   TTeamAuth,
   TTeamMember,
@@ -9,6 +9,7 @@ import {
 import { SignUpInput } from "../types/logInProviderTypes";
 import {Team} from "../classes/Team.ts";
 import {User} from "../classes/User.ts";
+import {Task} from "../classes/Task.ts";
 
 export const addUser = async (newUser: SignUpInput) => {
   const { username, firstName, lastName, email, password } = newUser;
@@ -140,27 +141,39 @@ export const createNewTeam = async (createTeam: {
   await apiOptions.postRequests.addData("memTeamLinks", tempMemTeamLink);
 };
 
+const getTeamTasks = async (teamId: number) => {
+  const teamTasks: TTask[] = await apiOptions.getRequests.getFilteredData('tasks', 'teamId', teamId)
+  const taskClasses: Task[] = []
+  for(const task of teamTasks){
+    const notes = await apiOptions.getRequests.getFilteredData('notes', 'taskId', task.id)
+    taskClasses.push(new Task(task, notes))
+  }
+  return taskClasses
+}
+
 export const getUserData = async (username: string) => {
   const teamMember: TTeamMember = await apiOptions.getRequests.getSingleData('teamMembers', 'username', username)
   const teams: TTeam[] = await  apiOptions.getRequests.getDataInfo('teams')
   const users: TTeamMember[] = await  apiOptions.getRequests.getDataInfo('teamMembers')
   const teamMemberLinks: TMemTeamLink[] = await apiOptions.getRequests.getFilteredData('memTeamLinks', 'userId', teamMember.id)
   const allTeamLinks: TMemTeamLink[] = await apiOptions.getRequests.getDataInfo('memTeamLinks')
-
-  const userTeamsTeams = teamMemberLinks.map(link => teams.find(team => team.id === link.teamId)!)
-  const userTeams: Team[] = []
-  for(const team of userTeamsTeams) {
-    const teamLinks = allTeamLinks.filter(link => link.teamId === team.id)
-    const teamUsers: User[] = []
-    for(const link of teamLinks) {
-      teamUsers.push(new User(users.find(user => user.id === link.userId)!))
-    }
-    userTeams.push(new Team(team, teamUsers))
+  const allTaskLinks: TTaskLink[] = await apiOptions.getRequests.getDataInfo('taskLinks')
+  const userTeams = teamMemberLinks.map(link => teams.find(team => team.id === link.teamId)!)
+  
+  const userTeamClasses: Team[] = []
+  for(const team of userTeams){
+    const teamUsers = allTeamLinks.filter(link => link.teamId === team.id)
+      .map(link => {
+        return new User(users.find(user => user.id === link.userId)!)
+      })
+    const memTeamLinks = teamUsers.map(user => allTaskLinks.find(link => link.teamMemberId === user.getId())!)
+    const teamTasks = await getTeamTasks(team.id)
+    userTeamClasses.push(new Team(team, teamUsers, teamTasks, memTeamLinks))
   }
 
-  const userData = {user: new User(teamMember), userTeams: userTeams}
+  const userData = {user: new User(teamMember), userTeams: userTeamClasses}
 
-  const isLeader = userTeams.filter(team => team.getId() === teamMember.id).length > 0
-  if (isLeader) return {...userData, activeTeam: userTeams.filter(team => team.getId() === teamMember.id)[0]}
-  return {...userData, activeTeam: userTeams[0]}
+  const isLeader = userTeamClasses.filter(team => team.getId() === teamMember.id).length > 0
+  if (isLeader) return {...userData, activeTeam: userTeamClasses.filter(team => team.getId() === teamMember.id)[0]}
+  return {...userData, activeTeam: userTeamClasses[0]}
 }

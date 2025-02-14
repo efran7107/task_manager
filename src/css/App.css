@@ -1,18 +1,17 @@
 .head-title h1 {
   font-size: 55px;
-  transition: all ease-in-out 1s;
   margin: 20px 0;
 }
 
 .head-title.logged-in h1 {
   font-size: 30px;
   margin-left: 50px;
+  width: max-content;
   cursor: pointer;
 }
 
 .head-title {
   text-align: center;
-  transition: var(--default-transition);
 }
 
 .head-title.logged-in {

@@ -4,22 +4,8 @@ import {TPage} from "../../types/globalTypes";
 import {getUserData} from "../../functions/apiFunctions.ts";
 import {User} from "../../classes/User.ts";
 import {Team} from "../../classes/Team.ts";
+import {defTeam, defUser} from "../../functions/default.ts";
 
-const defUser: User = new User({
-  id: -1,
-  name: '',
-  email: '',
-  username: ''
-})
-
-
-
-const defTeam: Team = new Team({
-    id: -1,
-    name: '',
-    numOfMembers: 1,
-    teamLeadId: -1
-}, [defUser])
 
 export const UserProvider = ({
   children,
@@ -31,7 +17,12 @@ export const UserProvider = ({
     const [user, setUser] = useState<User>(defUser)
     const [userTeams, setUserTeams] = useState<Team[]>([defTeam])
     const [activeTeam, setActiveTeam] = useState<Team>(defTeam)
-
+  
+  const logUserOut = () => {
+      localStorage.removeItem('username')
+      setPage('log-in')
+  }
+  
   useEffect(() => {
     const username = localStorage.getItem("username")!;
     getUserData(username)
@@ -47,10 +38,11 @@ export const UserProvider = ({
     <UserProviderContext.Provider
       value={{
         user,
-          userTeams,
-          activeTeam,
-          setActiveTeam,
-          setPage
+        userTeams,
+        activeTeam,
+        setActiveTeam,
+        setPage,
+        logUserOut
       }}
     >
       {children}

@@ -9,4 +9,5 @@ export type TUserProvider = {
     activeTeam: Team,
     setActiveTeam: (activeTeam: Team) => void,
     setPage: (page: TPage) => void
+    logUserOut: () => void
 };

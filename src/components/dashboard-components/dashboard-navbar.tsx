@@ -2,7 +2,7 @@ import {useUser} from "../../functions/providersContext.ts";
 
 
 export const DashboardNav = () => {
-  const { user } = useUser()
+  const { user, logUserOut } = useUser()
   const {name, username} = user.getUserNames()
   return (
     <div className="user-dash-nav">
@@ -11,10 +11,10 @@ export const DashboardNav = () => {
         <p>({name})</p>
       </div>
       <div className="action-cont">
-        <a href="">Create Task</a>
-        <a href="">Join Team</a>
-        <a href="">View Stats</a>
-        <a href="">Log Out</a>
+        <a>Create Task</a>
+        <a>Join Team</a>
+        <a>View Stats</a>
+        <a onClick={logUserOut}>Log Out</a>
       </div>
     </div>
   );

@@ -35,6 +35,8 @@ export function ThemeProvider({
     theme,
     setTheme: (theme: Theme) => {
       localStorage.setItem(storageKey, theme);
+      window.document.documentElement.classList.remove('light', 'dark')
+      window.document.documentElement.classList.add(theme)
       setTheme(theme);
     },
   };
