@@ -48,8 +48,9 @@ export const checkUserTeam = async (username: string): Promise<boolean> => {
   return userTeamLinks.length > 0;
 };
 
-export const isInTeam = (userId: number, teamId: number) => {
-
+export const isInTeam = async (userId: number, teamId: number) => {
+  const memTeamLinks: TMemTeamLink[] = await apiOptions.getRequests.getMultipleFilterData('memTeamLinks', 'userId', userId, 'teamId', teamId)
+  return memTeamLinks.length > 0
 }
 
 export const varifyTeam = async (joinTeam: {
