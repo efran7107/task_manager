@@ -21,8 +21,8 @@ function App() {
 
   const setPage = (page: TPage) => {
     setIsLoading(true)
-    if(page === 'log-in') setIsInLogIn(true)
-    else setIsInLogIn(false)
+    if(page === 'log-in') setIsInLogIn(false)
+    else setIsInLogIn(true)
     setIsLoading(false)
     navigate(`/${page}`)
   }
@@ -79,19 +79,6 @@ function App() {
             <Route path='/create_join-team' element={<TeamEntry setPage={setPage} />}/>
             <Route path='/create-task' element={<CreateTask setPage={setPage}/>}/>
           </Routes>
-          {/*{page === "loading" && <LoadingPage />}*/}
-          {/*{page === "log-in" && (*/}
-          {/*  <LogInProvider setPage={setPage}>*/}
-          {/*    <UserLogIn />*/}
-          {/*  </LogInProvider>*/}
-          {/*)}*/}
-          {/*{page === "home-page" && (*/}
-          {/*  <UserProvider setPage={setPage}>*/}
-          {/*    <Dashboard />*/}
-          {/*  </UserProvider>*/}
-          {/*)}*/}
-          {/*{page === "create/join-team" && <TeamEntry setPage={setPage} />}*/}
-          {/*{page === 'create-task' && <CreateTask setPage={setPage}/>}*/}
         </div>
       </ThemeProvider>
     </>
