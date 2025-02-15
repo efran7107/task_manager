@@ -1,8 +1,13 @@
 .loading-dots {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh; /* Adjust as needed */
+  background-color: var(--background-color);
+  position: absolute;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  z-index: 1;
+  width: 100%;
   }
   
   .dot {

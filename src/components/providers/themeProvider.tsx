@@ -29,7 +29,7 @@ export function ThemeProvider({
     }
 
     root.classList.add(theme);
-  }, []);
+  }, [storageKey, theme]);
 
   const value = {
     theme,

@@ -1,7 +1,7 @@
-import '../css/loading-dots.css'
+import '../css/loading-dots.css';
 
 export const LoadingPage = () => {
-
+    
     return (
         <div className="loading-dots">
             <p>Loading </p>
