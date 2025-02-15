@@ -40,11 +40,11 @@ export const TeamEntry = ({ setPage }: { setPage: (page: TPage) => void }) => {
   };
 
   const userJoinTeam = async () => {
-    setPage("loading");
+
     const isTeamVarified = await varifyTeam(joinTeam);
     if (!isTeamVarified) {
       setJoinTeam(defJoinTeam);
-      setPage("create/join-team");
+      setPage("create_join-team");
       toast.error("sorry, wrong team and/or password");
       return;
     }
@@ -62,11 +62,11 @@ export const TeamEntry = ({ setPage }: { setPage: (page: TPage) => void }) => {
   };
 
   const userCreateTeam = async () => {
-    setPage("loading");
+
     for (const val of Object.values(createTeam)) {
       if (val.trim() === "") {
         toast.error("please fill out the form to create a team");
-        setPage("create/join-team");
+        setPage("create_join-team");
         setCreateTeam(defCreateTeam);
         return;
       }
@@ -74,7 +74,7 @@ export const TeamEntry = ({ setPage }: { setPage: (page: TPage) => void }) => {
     const isValidTeamName = validateTeamName(createTeam);
     if (!isValidTeamName) {
       toast.error("sorry, team name is already taken or auth does not match");
-      setPage("create/join-team");
+      setPage("create_join-team");
       setCreateTeam(defCreateTeam);
       return;
     }

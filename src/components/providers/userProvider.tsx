@@ -24,7 +24,7 @@ export const UserProvider = ({
   }
 
   const userJoinTeam = () => {
-        setPage('create/join-team')
+        setPage('create_join-team')
   }
   
   const userCreateTask = () => {
