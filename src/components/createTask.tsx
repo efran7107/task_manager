@@ -20,6 +20,10 @@ export class CreateTask extends Component<{
 		 const { setPage } = this.props
 			const title = this.state.title
 		console.log(title)
-		return <></>;
+		return (
+			<div className='task-form-cont'>
+
+			</div>
+		);
 	}
 }
