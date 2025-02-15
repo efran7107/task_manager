@@ -4,13 +4,13 @@
       "id": 0,
       "name": "Team 1",
       "teamLeadId": 0,
-      "numOfMembers": 2
+      "numOfMembers": 3
     },
     {
       "id": 1,
       "name": "Team 2",
       "teamLeadId": 1,
-      "numOfMembers": 2
+      "numOfMembers": 3
     }
   ],
   "teamAuths": [
@@ -37,6 +37,12 @@
       "name": "Mary Franssen",
       "email": "email@email.co",
       "username": "mfran9305"
+    },
+    {
+      "name": "Tony Macklroy",
+      "email": "tmack4727@gmail.com",
+      "username": "tmack4727",
+      "id": 2
     }
   ],
   "userAuths": [
@@ -49,6 +55,11 @@
       "id": 1,
       "userId": 1,
       "password": "5678"
+    },
+    {
+      "userId": 2,
+      "password": "1234",
+      "id": 2
     }
   ],
   "memTeamLinks": [
@@ -71,6 +82,16 @@
       "id": 3,
       "userId": 1,
       "teamId": 1
+    },
+    {
+      "userId": 2,
+      "teamId": 0,
+      "id": 4
+    },
+    {
+      "userId": 2,
+      "teamId": 1,
+      "id": 5
     }
   ],
   "tasks": [
