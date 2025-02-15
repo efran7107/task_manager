@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { UserInput } from "../inputs/userInput";
-import { convertCamelToLabel } from "../../functions/finctions";
+import { convertCamelToLabel } from "../../functions/functions.ts";
 
 export const UserJoinTeam = ({
   joinTeam,

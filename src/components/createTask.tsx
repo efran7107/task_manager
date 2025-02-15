@@ -4,7 +4,7 @@ import {User} from "../classes/User.ts";
 import {Team} from "../classes/Team.ts";
 import {defTeam, defUser} from "../functions/default.ts";
 import {getUserData} from "../functions/apiFunctions.ts";
-import {getDate} from "../functions/finctions.ts";
+import {getDate} from "../functions/functions.ts";
 import {UserInput} from "./inputs/userInput.tsx";
 
 type creatTask = Omit<TTask, 'id' | 'teamId'>
@@ -78,9 +78,16 @@ export class CreateTask extends Component<{
 					<UserInput id='desc' curKey='desc' label='Desc' userInput={{
 						onChange: (e) => {
 							this.setTask('desc', e.currentTarget.value)
-						}
+						},
 					}}/>
-
+					<div className="is-urgent">
+						<label htmlFor="isUrgent">Urgent</label>
+						<input type="checkbox" defaultChecked={isUrgent}/>
+					</div>
+					<div className="due-date">
+						<label htmlFor="dueDate">Due Date: </label>
+						<input type="date" onChange={(e) => console.log(e.currentTarget.value)} min={creationDate}/>
+					</div>
 				</div>
 			</form>
 		)

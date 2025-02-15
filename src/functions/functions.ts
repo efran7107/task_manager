@@ -15,7 +15,7 @@ export const getDate = () => {
   const today = new Date();
   const month = today.getMonth() + 1
   const day = today.getDate();
-  const year = today.getFullYear().toString().slice(-2)
-  return [month, day, year].join('/')
+  const year = today.getFullYear()
+  return [year, month, day].join('-')
 }
 
