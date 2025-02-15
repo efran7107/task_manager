@@ -78,7 +78,7 @@ function App() {
               </UserProvider>
             }/>
             <Route path='/create_join-team' element={<TeamEntry setPage={setPage} />}/>
-            <Route path='/create-task' element={<CreateTask/>}/>
+            <Route path='/create-task' element={<CreateTask setPage={setPage} setIsLoading={setIsLoading}/>}/>
 
 
           </Routes>
