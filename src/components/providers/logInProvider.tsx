@@ -10,7 +10,7 @@ import { apiOptions } from "../../api";
 import toast from "react-hot-toast";
 import { isEmail, isMatch, isName } from "../../functions/validations";
 import { addUser } from "../../functions/apiFunctions";
-import { sendError } from "../../functions/finctions";
+import { sendError } from "../../functions/functions.ts";
 
 const defaultLogInInfo: LogInInput = {
   username: "",
