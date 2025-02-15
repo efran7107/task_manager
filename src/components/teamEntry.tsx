@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { TPage } from "../types/globalTypes";
+import {TPage, TTeam, TTeamMember} from "../types/globalTypes";
 import "../css/teamEntry.css";
 import "../css/UserLogIn.css";
 import {
   addUserToTeam,
-  createNewTeam,
+  createNewTeam, isInTeam,
   validateTeamName,
   varifyTeam,
 } from "../functions/apiFunctions";
 import toast from "react-hot-toast";
 import { UserJoinTeam } from "./team-entry-components/join-team-component";
 import { UserCreateTeam } from "./team-entry-components/create-team-component";
+import {apiOptions} from "../api.tsx";
 
 const defJoinTeam = {
   teamName: "",
@@ -47,7 +48,16 @@ export const TeamEntry = ({ setPage }: { setPage: (page: TPage) => void }) => {
       toast.error("sorry, wrong team and/or password");
       return;
     }
-    addUserToTeam(joinTeam);
+    const team: TTeam = await apiOptions.getRequests.getSingleData('teams', 'name', joinTeam.teamName)
+    const user: TTeamMember = await apiOptions.getRequests.getSingleData('teamMembers', 'username', localStorage.getItem('username')!)
+    const isRepeat = await isInTeam(user.id, team.id)
+    if(isRepeat) {
+      setJoinTeam(defJoinTeam);
+      setPage("home-page");
+      toast.error("sorry, you're already part of this team");
+      return;
+    }
+    await addUserToTeam(joinTeam);
     setPage("home-page");
   };
 

@@ -1,7 +1,7 @@
 import { apiOptions } from "../api";
 import {
   TMemTeamLink,
-  TPage, TTask, TTaskLink,
+  TTask, TTaskLink,
   TTeam,
   TTeamAuth,
   TTeamMember,
@@ -35,7 +35,7 @@ export const addUser = async (newUser: SignUpInput) => {
   apiOptions.postRequests.addData("userAuths", tempUserAuth);
 };
 
-export const checkUserTeam = async (username: string): Promise<TPage> => {
+export const checkUserTeam = async (username: string): Promise<boolean> => {
   const user = await apiOptions.getRequests.getSingleData(
     "teamMembers",
     "username",
@@ -45,8 +45,13 @@ export const checkUserTeam = async (username: string): Promise<TPage> => {
     "memTeamLinks"
   );
   const userTeamLinks = memTeamLinks.filter((link) => link.userId === user.id);
-  return userTeamLinks.length > 0 ? "home-page" : "create/join-team";
+  return userTeamLinks.length > 0;
 };
+
+export const isInTeam = async (userId: number, teamId: number) => {
+  const memTeamLinks: TMemTeamLink[] = await apiOptions.getRequests.getMultipleFilterData('memTeamLinks', 'userId', userId, 'teamId', teamId)
+  return memTeamLinks.length > 0
+}
 
 export const varifyTeam = async (joinTeam: {
   teamName: string;
@@ -57,8 +62,6 @@ export const varifyTeam = async (joinTeam: {
     "name",
     joinTeam.teamName
   );
-  console.log(team);
-
   if (team === undefined) return false;
 
   const teamAuth: TTeamAuth = await apiOptions.getRequests.getSingleData(
@@ -166,9 +169,13 @@ export const getUserData = async (username: string) => {
       .map(link => {
         return new User(users.find(user => user.id === link.userId)!)
       })
-    const memTeamLinks = teamUsers.map(user => allTaskLinks.find(link => link.teamMemberId === user.getId())!)
+    const memTaskLinks:TTaskLink[] = []
+    for(const user of teamUsers){
+      allTaskLinks.filter(link => link.teamMemberId === user.getId())
+        .forEach(link => memTaskLinks.push(link))
+    }
     const teamTasks = await getTeamTasks(team.id)
-    userTeamClasses.push(new Team(team, teamUsers, teamTasks, memTeamLinks))
+    userTeamClasses.push(new Team(team, teamUsers, teamTasks, memTaskLinks))
   }
 
   const userData = {user: new User(teamMember), userTeams: userTeamClasses}

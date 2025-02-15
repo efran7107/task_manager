@@ -11,6 +11,7 @@ import { TPage } from "../types/globalTypes";
 import { LoadingPage } from "./loadingPage";
 import { checkUserTeam } from "../functions/apiFunctions";
 import { TeamEntry } from "./teamEntry";
+import {CreateTask} from "./createTask.tsx";
 
 function App() {
   const [page, setPage] = useState<TPage>("loading");
@@ -20,7 +21,7 @@ function App() {
     if (!user) {
       setPage("log-in");
     } else {
-      checkUserTeam(user).then(setPage);
+      checkUserTeam(user).then((hasTeam) => hasTeam ? setPage('home-page') : setPage('create/join-team'));
     }
   }, []);
 
@@ -50,6 +51,7 @@ function App() {
             </UserProvider>
           )}
           {page === "create/join-team" && <TeamEntry setPage={setPage} />}
+          {page === 'create-task' && <CreateTask setPage={setPage}/>}
         </div>
       </ThemeProvider>
     </>

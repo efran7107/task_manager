@@ -14,7 +14,10 @@ const getRequests = {
       .then((res) => res.json())
       .then((dataArr) => dataArr[0]),
   getFilteredData: (cat: string, key: string, value: string | number) =>
-    fetch(`${local}${cat}?${key}=${value}`).then((res) => res.json())
+    fetch(`${local}${cat}?${key}=${value}`).then((res) => res.json()),
+  getMultipleFilterData: (cat: string, key1: string, val1: string | number, key2: string, val2: string | number) =>
+    fetch(`${local}${cat}?${key1}=${val1}&${key2}=${val2}`).then(res => res.json())
+  
   
 };
 
