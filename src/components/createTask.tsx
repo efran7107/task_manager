@@ -1,8 +1,11 @@
 import {Component} from "react";
 import {TPage, TTask} from "../types/globalTypes.ts";
 
-type creatTaskProp = Omit<TTask, 'id' | 'teamId'>
-const defCreateTask: creatTaskProp = {
+type creatTask = Omit<TTask, 'id' | 'teamId'>
+
+
+
+const defCreateTask: creatTask = {
 	title: '',
 	desc: '',
 	isUrgent: false,
@@ -13,17 +16,11 @@ const defCreateTask: creatTaskProp = {
 }
 export class CreateTask extends Component<{
 	setPage: (page: TPage) => void
-}, creatTaskProp>{
-	 state = defCreateTask
-	
-	render() {
-		 const { setPage } = this.props
-			const title = this.state.title
-		console.log(title)
-		return (
-			<div className='task-form-cont'>
+}, creatTask> {
 
-			</div>
-		);
+	state = defCreateTask
+	render() {
+
+		return <></>
 	}
 }
