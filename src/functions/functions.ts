@@ -16,6 +16,10 @@ export const getDate = () => {
   const month = today.getMonth() + 1
   const day = today.getDate();
   const year = today.getFullYear()
-  return [year, month, day].join('-')
+  return [
+      year,
+    month < 10 ? '0' + month : month,
+    day < 10 ? '0' + day : day
+  ].join('-')
 }
 

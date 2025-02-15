@@ -11,7 +11,7 @@ type creatTask = Omit<TTask, 'id' | 'teamId'>
 
 type createTaskStates = {
 	createTask: creatTask,
-	user: User,
+	activeUser: User,
 	userTeams: Team[],
 	activeTeam: Team
 }
@@ -23,8 +23,8 @@ const defCreateTask: creatTask = {
 	isUrgent: false,
 	author: "",
 	status: "to-do",
-	creationDate: "1/1/00",
-	dueDate: "1/1/00"
+	creationDate: "0000-01-01",
+	dueDate: "0000-01-01"
 }
 export class CreateTask extends Component<{
 	setPage: (page: TPage) => void
@@ -33,7 +33,7 @@ export class CreateTask extends Component<{
 
 	state = {
 		createTask: defCreateTask,
-		user: defUser,
+		activeUser: defUser,
 		userTeams: [defTeam],
 		activeTeam: defTeam
 	}
@@ -52,7 +52,7 @@ export class CreateTask extends Component<{
 						dueDate: getDate(),
 
 					},
-					user: user,
+					activeUser: user,
 					userTeams: userTeams,
 					activeTeam: activeTeam
 				})
@@ -65,7 +65,9 @@ export class CreateTask extends Component<{
 	}
 
 	render() {
-		const {title, desc, isUrgent, author, status, creationDate, dueDate} = this.state.createTask
+		const {createTask, activeTeam, userTeams, activeUser} = this.state
+		const { isUrgent, creationDate, dueDate} = createTask
+
 
 		return (
 			<form action="">
@@ -86,7 +88,38 @@ export class CreateTask extends Component<{
 					</div>
 					<div className="due-date">
 						<label htmlFor="dueDate">Due Date: </label>
-						<input type="date" onChange={(e) => console.log(e.currentTarget.value)} min={creationDate}/>
+						<input
+							type="date"
+							onChange={(e) => {
+								this.setTask('dueDate', e.currentTarget.value)
+							}}
+							value={dueDate}
+							min={creationDate}/>
+					</div>
+				</div>
+				<div className="choose-team-cont">
+					<div className="choose-team">
+						<select
+							name="activeTeam"
+							id="activeTeam"
+							value={activeTeam.getName()}
+							onChange={
+								(e) => {
+									this.setState({...this.state, activeTeam: userTeams.find(team => team.getName() === e.currentTarget.value)!})
+								}
+							}
+						>
+							{userTeams.map(team => (<option value={team.getName()} key={team.getId()}>{team.getName()}</option>))}
+						</select>
+					</div>
+					<div className="choose-users">
+						<div className="assign-to">
+							{activeTeam.getUsers().map((user) => {
+									if(user.getId() !== activeTeam.getTeamLeader().getId() && user.getId() !== activeUser.getId())
+										return(<p key={user.getId()}>{user.getUserNames().name}</p>)
+							})}
+						</div>
+						<div className="been-assigned"></div>
 					</div>
 				</div>
 			</form>
