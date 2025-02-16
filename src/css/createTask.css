@@ -1,5 +1,12 @@
 .task-form-entry {
     display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: stretch;
+}
+
+.task-form {
+    display: flex;
     justify-content: space-around;
     align-items: flex-start;
 }
@@ -23,4 +30,6 @@
 .names-cont p {
     cursor: pointer;
 }
+
+
 
