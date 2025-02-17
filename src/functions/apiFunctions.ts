@@ -1,6 +1,6 @@
 import { apiOptions } from "../api";
 import {
-  TMemTeamLink,
+  TMemTeamLink, TNote,
   TTask, TTaskLink,
   TTeam,
   TTeamAuth,
@@ -10,6 +10,7 @@ import { SignUpInput } from "../types/logInProviderTypes";
 import {Team} from "../classes/Team.ts";
 import {User} from "../classes/User.ts";
 import {Task} from "../classes/Task.ts";
+import toast from "react-hot-toast";
 
 export const addUser = async (newUser: SignUpInput) => {
   const { username, firstName, lastName, email, password } = newUser;
@@ -183,4 +184,42 @@ export const getUserData = async (username: string) => {
   const isLeader = userTeamClasses.filter(team => team.getId() === teamMember.id).length > 0
   if (isLeader) return {...userData, activeTeam: userTeamClasses.filter(team => team.getId() === teamMember.id)[0]}
   return {...userData, activeTeam: userTeamClasses[0]}
+}
+
+export const addTask = async (
+  task: Omit<TTask, 'id' | 'teamId'>,
+  teamId: number,
+  usersIds: number[],
+  activeUserId: number,
+  notes?: Omit<TNote, 'id' | 'taskId' | 'authId'>[]
+) => {
+  try{
+    const createdTask: Omit<TTask, 'id'> = {
+      ...task,
+      teamId: teamId
+    }
+    const newTask: TTask = await apiOptions.postRequests.addData('tasks', createdTask)
+    for (const id of usersIds) {
+      const newTaskLink: Omit<TTaskLink, 'id'> = {
+        taskId: newTask.id,
+        teamMemberId: id
+      }
+      await apiOptions.postRequests.addData('taskLinks', newTaskLink)
+    }
+    if(notes) {
+      for (const note of notes){
+        const newNote: Omit<TNote, 'id'> = {
+          ...note,
+          taskId: newTask.id,
+          authId: activeUserId
+        }
+        await apiOptions.postRequests.addData('notes', newNote)
+      }
+    }
+  }
+  catch (err){
+    console.error(err)
+    toast.error('sorry an error occured')
+  }
+  
 }

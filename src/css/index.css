@@ -170,3 +170,16 @@ h4 {
 .input-cont input:focus-visible {
   outline: var(--outline-style);
 }
+
+input[type="submit"] {
+  width: fit-content;
+  margin: 0 auto;
+  color: var(--alt-font);
+  background-color: var(--fill-color);
+  border: 2px solid var(--border-color);
+  border-radius: 5px;
+  font-family: var(--default-font);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px;
+}

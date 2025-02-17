@@ -4,13 +4,13 @@
       "id": 0,
       "name": "Team 1",
       "teamLeadId": 0,
-      "numOfMembers": 3
+      "numOfMembers": 2
     },
     {
       "id": 1,
       "name": "Team 2",
       "teamLeadId": 1,
-      "numOfMembers": 3
+      "numOfMembers": 2
     }
   ],
   "teamAuths": [
@@ -37,12 +37,6 @@
       "name": "Mary Franssen",
       "email": "email@email.co",
       "username": "mfran9305"
-    },
-    {
-      "name": "Tony Macklroy",
-      "email": "tmack4727@gmail.com",
-      "username": "tmack4727",
-      "id": 2
     }
   ],
   "userAuths": [
@@ -55,11 +49,6 @@
       "id": 1,
       "userId": 1,
       "password": "5678"
-    },
-    {
-      "userId": 2,
-      "password": "1234",
-      "id": 2
     }
   ],
   "memTeamLinks": [
@@ -82,16 +71,6 @@
       "id": 3,
       "userId": 1,
       "teamId": 1
-    },
-    {
-      "userId": 2,
-      "teamId": 0,
-      "id": 4
-    },
-    {
-      "userId": 2,
-      "teamId": 1,
-      "id": 5
     }
   ],
   "tasks": [
@@ -127,6 +106,17 @@
       "creationDate": "2025-01-01",
       "dueDate": "2025-02-28",
       "teamId": 0
+    },
+    {
+      "title": "Task 4",
+      "desc": "This is a test",
+      "isUrgent": true,
+      "author": "efran7107",
+      "status": "to-do",
+      "creationDate": "2025-02-16",
+      "dueDate": "2025-03-29",
+      "teamId": 0,
+      "id": 3
     }
   ],
   "taskLinks": [
@@ -144,6 +134,16 @@
       "id": 2,
       "taskId": 0,
       "teamMemberId": 1
+    },
+    {
+      "taskId": 3,
+      "teamMemberId": 0,
+      "id": 3
+    },
+    {
+      "taskId": 3,
+      "teamMemberId": 1,
+      "id": 4
     }
   ],
   "notes": [
