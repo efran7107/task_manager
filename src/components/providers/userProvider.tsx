@@ -30,6 +30,11 @@ export const UserProvider = ({
   const userCreateTask = () => {
       setPage('create-task')
   }
+  
+  const setTeam = (team: Team) => {
+      setActiveTeam(team)
+      localStorage.setItem('team', team.getName())
+  }
 
   useEffect(() => {
     const username = localStorage.getItem("username")!;
@@ -38,7 +43,13 @@ export const UserProvider = ({
             const {user, userTeams, activeTeam} = userData
             setUser(user)
             setUserTeams(userTeams)
-            setActiveTeam(activeTeam)
+            const activeTeamName = localStorage.getItem('team')
+          if(!activeTeamName){
+            setTeam(activeTeam)
+            return
+          }
+          const actTeam = userTeams.find(team => team.getName() === activeTeamName)
+          setTeam(actTeam!)
         })
   }, []);
 
@@ -48,7 +59,7 @@ export const UserProvider = ({
         user,
         userTeams,
         activeTeam,
-        setActiveTeam,
+        setTeam,
         setPage,
         logUserOut,
           userJoinTeam,
