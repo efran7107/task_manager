@@ -149,8 +149,9 @@ const getTeamTasks = async (teamId: number) => {
   const teamTasks: TTask[] = await apiOptions.getRequests.getFilteredData('tasks', 'teamId', teamId)
   const taskClasses: Task[] = []
   for(const task of teamTasks){
+    const taskLinks: TTaskLink[] = await apiOptions.getRequests.getFilteredData('taskLinks', 'taskId', task.id)
     const notes = await apiOptions.getRequests.getFilteredData('notes', 'taskId', task.id)
-    taskClasses.push(new Task(task, notes))
+    taskClasses.push(new Task(task, notes, taskLinks.map(link => link.teamMemberId)))
   }
   return taskClasses
 }
