@@ -20,7 +20,7 @@ export const UserInput = ({
   return (
     <div className="input-cont">
       <label htmlFor={id}>{label}: </label>
-      <input {...userInput} type={getType()} />
+      <input id={id} {...userInput} type={getType()} />
     </div>
   );
 };

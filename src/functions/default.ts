@@ -29,7 +29,7 @@ export const defTask: Task = new Task({
     "creationDate": "1/1/00",
     "dueDate": "1/1/00",
     "teamId": -1
-}, [defNote])
+}, [defNote], [-1])
 
 export const defTaskLink = {
     id: -1,
