@@ -21,9 +21,12 @@ function App() {
 
   const setPage = (page: TPage) => {
     setIsLoading(true)
-    if(page === 'log-in') setIsInLogIn(false)
+    if(page === 'log-in') {
+      setIsInLogIn(false)
+    }
     else setIsInLogIn(true)
     setIsLoading(false)
+    localStorage.setItem('page', page)
     navigate(`/${page}`)
   }
 
@@ -31,6 +34,7 @@ function App() {
     const user = localStorage.getItem("username");
     setIsLoading(true)
     if (!user) {
+      localStorage.setItem('page', 'log-in')
       setIsLoading(false)
       navigate('/log-in')
       setIsInLogIn(false)
@@ -38,13 +42,13 @@ function App() {
     }
       setIsLoading(false)
       checkUserTeam(user).then((hasTeam) => {
+        const page = localStorage.getItem('page')!
         if(hasTeam) {
-          navigate('/home-page')
           setIsInLogIn(true)
           return
         }
         setIsInLogIn(true)
-        navigate('/create_join-team')
+        setPage(page as TPage)
       });
 
   }, []);
