@@ -99,7 +99,7 @@ export class CreateTask extends Component<{
 	}
 	
 	addTask = () => {
-		const {createTask, activeTeam, activeUser, assignedUsers} = this.state
+		const {createTask, activeTeam, activeUser, assignedUsers, notes} = this.state
 		const {title, desc} = createTask
 		const isValid = isCompletedTask({
 			title: title,
@@ -107,7 +107,7 @@ export class CreateTask extends Component<{
 		})
 		this.props.setIsLoading(true)
 		if(isValid) {
-			addTask(createTask, activeTeam.getId(), assignedUsers, activeUser.getId())
+			addTask(createTask, activeTeam.getId(), assignedUsers, activeUser.getId(), notes.length > 0 ? notes : undefined)
 				.then(() => {
 					this.props.setIsLoading(false)
 					this.props.setPage('home-page')
@@ -136,11 +136,16 @@ export class CreateTask extends Component<{
 							<UserInput id='title' curKey='title' label='Title' userInput={{
 								onChange: (e) => {
 									this.setTask('title', e.currentTarget.value)
-								}
+								},
+								value: createTask.title
 							}}/>
 							<div className="user-desc-cont">
 								<label htmlFor='desc'>Task Description: </label>
-								<textarea style={{resize: "none"}} onChange={(e) => this.setTask('desc', e.currentTarget.value)}/>
+								<textarea
+									style={{resize: "none"}}
+									onChange={(e) => this.setTask('desc', e.currentTarget.value)}
+									value={createTask.desc}
+								/>
 							</div>
 							<div className="is-urgent">
 								<label htmlFor="isUrgent">Urgent</label>

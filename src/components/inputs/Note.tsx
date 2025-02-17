@@ -30,23 +30,25 @@ export const NoteInput = ({
 				const {title, desc} = createNote
 				e.preventDefault()
 				if(!isCompletedTask({title: title, desc: desc})) return
-				setNotes([...notes, createNote])
 				setCreateNote({
 					title: '',
 					desc: '',
 					date: getDate()
 				})
+				setNotes([...notes, createNote])
 			}
 		}
 		>
+			<h3>Create Note: </h3>
 			<UserInput id='title' curKey='title' label='Title' userInput={{
-				onChange: editNote
+				onChange: editNote,
+				value: createNote.title
 			}}/>
 			<div className="user-desc-cont note-input">
 				<label htmlFor="desc">Description: </label>
-				<textarea name="desc" id="desc" onChange={editNote}></textarea>
+				<textarea name="desc" id="desc" onChange={editNote} value={createNote.desc}></textarea>
 			</div>
-			<input type="submit" value="Submit"/>
+			<input type="submit" value="Create Note"/>
 		</form>
 	)
 }

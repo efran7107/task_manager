@@ -192,3 +192,15 @@ input[type="submit"] {
   font-weight: 500;
   padding: 10px;
 }
+
+.note-cont {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  border: 3px solid var(--border-color);
+  border-radius: 20px;
+}
