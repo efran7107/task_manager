@@ -6,6 +6,7 @@
   --alt-font: #ededed;
   --border-color: #4caf50;
   --fill-color: #0096c7;
+  --modal-opacity: rgba(30, 30, 30, 0.25);
   --default-transition: all ease-in-out 0.25s;
   --default-font: "Roboto", "Open Sans", serif;
   --outline-color: #cc8800;
@@ -18,6 +19,7 @@
   --alt-font: #1e1e1e;
   --border-color: #009688;
   --fill-color: #007bff;
+  --modal-opacity: rgba(237, 237, 237, 0.25);
 }
 
 body {
@@ -25,6 +27,7 @@ body {
   background-color: var(--background-color);
   color: var(--font-color);
   transition: var(--default-transition);
+  box-sizing: border-box;
 }
 
 p {

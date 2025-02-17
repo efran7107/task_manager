@@ -128,6 +128,7 @@
   border: 1px solid var(--border-color);
   border-radius: 20px;
   position: relative;
+  cursor: pointer;
 }
 
 .task-card .desc {
@@ -141,4 +142,46 @@
   position: absolute;
   top: 15px;
   right: 20px;
+}
+
+.modal-cont {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--modal-opacity);
+}
+
+.task-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 40px;
+  gap: 25px;
+  width: 20%;
+  border: 3px solid var(--border-color);
+  border-radius: 20px;
+  background-color: var(--background-color);
+}
+
+.task-details-desc{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.task-details{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }

@@ -3,15 +3,16 @@ import {Task} from "../../classes/Task.ts";
 
 export class TaskCard extends Component<{
     task: Task
+    setActiveTask: (task: Task) => void
 }> {
 
     render() {
-        const {task} = this.props
+        const {task, setActiveTask} = this.props
         const taskObj = task.getTask()
         const {title, status, author, dueDate, isUrgent} = taskObj
         const numNotes = task.getNotes().length
         return(
-            <div className='task-card'>
+            <div className='task-card' onClick={() => setActiveTask(task)}>
                 <h4>{title}</h4>
               <div className="desc">
                 <p>{status}</p>
