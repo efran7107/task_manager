@@ -58,12 +58,12 @@ export const LogInProvider = ({
 
   const logUserIn = async () => {
     setIsLoading(true);
-    const user: TTeamMember | undefined =
+    const user: TTeamMember =
       await apiOptions.getRequests.getSingleData(
         "teamMembers",
         "username",
         logIn.username
-      );
+      )!;
     if (user === undefined) {
       toast.error("Sorry, username and/or password is incorrect.");
       setLogIn(defaultLogInInfo);

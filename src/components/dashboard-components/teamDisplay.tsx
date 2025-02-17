@@ -3,7 +3,7 @@ import {useState} from "react";
 
 
 export const TeamDisplay = () => {
-    const {activeTeam, userTeams, setActiveTeam} = useUser()
+    const {activeTeam, userTeams, setTeam} = useUser()
     const teamLeader = activeTeam.getTeamLeader()
     const users = activeTeam.getUsers()
     const [isActive, setIsActive] = useState(false)
@@ -14,7 +14,7 @@ export const TeamDisplay = () => {
                 <div className={`team-selection${isActive ? ' active' : ''}`}>
                     {userTeams.map(team => (
                         <p
-                            onClick={() => setActiveTeam(team)}
+                            onClick={() => setTeam(team)}
                             key={team.getId()}>{team.getName()}</p>
                     ))}
                 </div>

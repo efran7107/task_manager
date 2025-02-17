@@ -10,17 +10,29 @@ export function TaskDisplay() {
     const userTasks = activeTeam.getUserTaskLinks(user.getId())
     const [filter, setFilter] = useState<Task[]>([])
 
+    const setUserFilter = (filter: string) => {
+        setFilter(filter === 'tasks' ? tasks : userTasks)
+        localStorage.setItem('filter', filter)
+    }
+    
     useEffect(() => {
-        setFilter(tasks)
+        const filter = localStorage.getItem('filter')
+        if(!filter) {
+            setFilter(tasks)
+            localStorage.setItem('filter', 'tasks')
+            return
+        }
+        setFilter(filter === 'tasks' ? tasks : userTasks)
     }, [tasks]);
+    
     return (
         <div className='task-display'>
             <div className="filter-bar">
                 <div className="options">
-                    <p className={`filter ${filter === tasks ? 'filtered' : ''}`} onClick={() => setFilter(tasks)}>Team Tasks</p>
+                    <p className={`filter ${filter === tasks ? 'filtered' : ''}`} onClick={() => setUserFilter('tasks')}>Team Tasks</p>
                     <p className={`filter
                     ${filter !== tasks ? 'filtered' : ''}`}
-                       onClick={() => setFilter(userTasks)}>Your Team Tasks</p>
+                       onClick={() => setUserFilter('userTasks')}>Your Team Tasks</p>
                 </div>
             </div>
             <hr/>
