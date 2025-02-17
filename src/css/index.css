@@ -50,6 +50,10 @@ h4 {
   margin: 10px 0;
 }
 
+textarea {
+  resize: none;
+}
+
 .container {
   max-width: 1440px;
   margin: 0 auto;
@@ -114,6 +118,11 @@ h4 {
 .user-desc-cont textarea {
   width: 150px;
   height: 125px;
+}
+
+.user-desc-cont.note-input{
+  width: 200px;
+  height: 150px;
 }
 
 .due-date input[type="date"]{
@@ -182,4 +191,16 @@ input[type="submit"] {
   font-size: 16px;
   font-weight: 500;
   padding: 10px;
+}
+
+.note-cont {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  border: 3px solid var(--border-color);
+  border-radius: 20px;
 }
