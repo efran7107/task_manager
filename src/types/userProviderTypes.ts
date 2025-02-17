@@ -7,7 +7,7 @@ export type TUserProvider = {
     user: User
     userTeams: Team[],
     activeTeam: Team,
-    setActiveTeam: (activeTeam: Team) => void,
+    setTeam: (activeTeam: Team) => void,
     setPage: (page: TPage) => void
     logUserOut: () => void
     userJoinTeam: () => void
