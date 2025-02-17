@@ -3,10 +3,12 @@ import {taskStatus, TPage, TTask} from "../types/globalTypes.ts";
 import {User} from "../classes/User.ts";
 import {Team} from "../classes/Team.ts";
 import {defTeam, defUser} from "../functions/default.ts";
-import {getUserData} from "../functions/apiFunctions.ts";
-import {getDate} from "../functions/functions.ts";
+import {addTask, getUserData} from "../functions/apiFunctions.ts";
+import {getDate, getTomorrowsDate} from "../functions/functions.ts";
 import {UserInput} from "./inputs/userInput.tsx";
 import '../css/createTask.css';
+import {isCompletedTask} from "../functions/validations.ts";
+import toast from "react-hot-toast";
 
 type creatTask = Omit<TTask, 'id' | 'teamId'>
 
@@ -52,7 +54,7 @@ export class CreateTask extends Component<{
 						...this.state.createTask,
 						author: user.getUserNames().username,
 						creationDate: getDate(),
-						dueDate: getDate(),
+						dueDate: getTomorrowsDate(),
 
 					},
 					activeUser: user,
@@ -90,14 +92,30 @@ export class CreateTask extends Component<{
 	}
 	
 	addTask = () => {
-	
+		const {createTask, activeTeam, activeUser, assignedUsers} = this.state
+		const {title, desc} = createTask
+		const isValid = isCompletedTask({
+			title: title,
+			desc: desc
+		})
+		this.props.setIsLoading(true)
+		if(isValid) {
+			addTask(createTask, activeTeam.getId(), assignedUsers, activeUser.getId())
+				.then(() => {
+					this.props.setIsLoading(false)
+					this.props.setPage('home-page')
+				})
+			return
+		}
+		toast.error('please complete task to post it')
+		this.props.setIsLoading(false)
+		
 	}
 
 	render() {
 		const {createTask, activeTeam, userTeams, activeUser, assignedUsers} = this.state
-		const { isUrgent, creationDate, dueDate} = createTask
-
-
+		const { isUrgent, dueDate} = createTask
+		const minDueDate = getTomorrowsDate();
 		return (
 			<form className='task-form-entry' onSubmit={(e) => {
 				e.preventDefault()
@@ -113,7 +131,7 @@ export class CreateTask extends Component<{
 						}}/>
 						<div className="user-desc-cont">
 							<label htmlFor='desc'>Task Description: </label>
-							<textarea style={{resize: "none"}}/>
+							<textarea style={{resize: "none"}} onChange={(e) => this.setTask('desc', e.currentTarget.value)}/>
 						</div>
 						<div className="is-urgent">
 							<label htmlFor="isUrgent">Urgent</label>
@@ -134,7 +152,7 @@ export class CreateTask extends Component<{
 									this.setTask('dueDate', e.currentTarget.value)
 								}}
 								value={dueDate}
-								min={creationDate}/>
+								min={minDueDate}/>
 						</div>
 					</div>
 					<div className="choose-team-cont">

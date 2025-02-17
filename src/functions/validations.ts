@@ -16,3 +16,11 @@ export const isMatch = (password: string, confirm: string) => {
     else if(password !== confirm) return false;
     else return true;
 }
+
+export const isCompletedTask= (taskTitleDesc: {title: string, desc: string}) => {
+    const {title, desc} = taskTitleDesc
+    if(title.trim().length < 2 || desc.trim().length < 2){
+        return false
+    }
+    return true
+}

@@ -11,7 +11,16 @@ export const convertCamelToLabel = (label: string) => {
   return convert.charAt(0).toUpperCase() + convert.slice(1);
 };
 
-export const getDate = () => {
+export const getDate = (date?: string) => {
+  if(date){
+    const dateArr = date.split('/')
+    const [month, day, year] = dateArr
+    return [
+      year,
+      Number(month) < 10 ? '0' + month : month,
+      Number(day) < 10 ? '0' + day : day
+    ].join('-')
+  }
   const today = new Date();
   const month = today.getMonth() + 1
   const day = today.getDate();
@@ -22,4 +31,13 @@ export const getDate = () => {
     day < 10 ? '0' + day : day
   ].join('-')
 }
+
+export const getTomorrowsDate = () => {
+  const today = new Date()
+  const tomorrow = new Date(today)
+  tomorrow.setDate(today.getDate() + 1)
+  return getDate(tomorrow.toLocaleDateString())
+}
+
+
 
