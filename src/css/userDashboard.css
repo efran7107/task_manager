@@ -114,6 +114,12 @@
   align-items: center;
 }
 
+.task-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .task-card {
   display: flex;
   flex-direction: column;
@@ -128,6 +134,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  cursor: pointer;
 }
 
 .urgent {

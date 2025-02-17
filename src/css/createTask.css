@@ -1,0 +1,35 @@
+.task-form-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: stretch;
+}
+
+.task-form {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.task-info,
+.choose-team-cont {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 3px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.names-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.names-cont p {
+    cursor: pointer;
+}
+
+
+

@@ -71,13 +71,16 @@ function App() {
                 <UserLogIn />
               </LogInProvider>}
             />
+
             <Route path='/home-page' element={
               <UserProvider setPage={setPage}>
                 <Dashboard />
               </UserProvider>
             }/>
             <Route path='/create_join-team' element={<TeamEntry setPage={setPage} />}/>
-            <Route path='/create-task' element={<CreateTask setPage={setPage}/>}/>
+            <Route path='/create-task' element={<CreateTask setPage={setPage} setIsLoading={setIsLoading}/>}/>
+
+
           </Routes>
         </div>
       </ThemeProvider>
