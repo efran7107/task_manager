@@ -156,24 +156,40 @@ const getTeamTasks = async (teamId: number) => {
   return taskClasses
 }
 
+const getDataInfo = async () => {
+  const dataCats = ["teams", "teamMembers", "memTeamLinks", 'taskLinks'];
+  let dataInfo: {
+    teams: TTeam[],
+    teamMembers: TTeamMember[],
+    memTeamLinks: TMemTeamLink[],
+    taskLinks: TTaskLink[],
+  } = {
+    teams: [],
+    teamMembers: [],
+    memTeamLinks: [],
+    taskLinks: []
+  };
+  for(const cat of dataCats) {
+    dataInfo = {...dataInfo, [cat]: await apiOptions.getRequests.getDataInfo(cat)}
+  }
+  return dataInfo
+}
+
 export const getUserData = async (username: string) => {
+  const {teams, teamMembers, memTeamLinks, taskLinks} = await getDataInfo()
   const teamMember: TTeamMember = await apiOptions.getRequests.getSingleData('teamMembers', 'username', username)
-  const teams: TTeam[] = await  apiOptions.getRequests.getDataInfo('teams')
-  const users: TTeamMember[] = await  apiOptions.getRequests.getDataInfo('teamMembers')
   const teamMemberLinks: TMemTeamLink[] = await apiOptions.getRequests.getFilteredData('memTeamLinks', 'userId', teamMember.id)
-  const allTeamLinks: TMemTeamLink[] = await apiOptions.getRequests.getDataInfo('memTeamLinks')
-  const allTaskLinks: TTaskLink[] = await apiOptions.getRequests.getDataInfo('taskLinks')
   const userTeams = teamMemberLinks.map(link => teams.find(team => team.id === link.teamId)!)
   
   const userTeamClasses: Team[] = []
   for(const team of userTeams){
-    const teamUsers = allTeamLinks.filter(link => link.teamId === team.id)
+    const teamUsers = memTeamLinks.filter(link => link.teamId === team.id)
       .map(link => {
-        return new User(users.find(user => user.id === link.userId)!)
+        return new User(teamMembers.find(user => user.id === link.userId)!)
       })
     const memTaskLinks:TTaskLink[] = []
     for(const user of teamUsers){
-      allTaskLinks.filter(link => link.teamMemberId === user.getId())
+      taskLinks.filter(link => link.teamMemberId === user.getId())
         .forEach(link => memTaskLinks.push(link))
     }
     const teamTasks = await getTeamTasks(team.id)
@@ -181,8 +197,8 @@ export const getUserData = async (username: string) => {
   }
 
   const userData = {user: new User(teamMember), userTeams: userTeamClasses}
-
   const isLeader = userTeamClasses.filter(team => team.getId() === teamMember.id).length > 0
+  
   if (isLeader) return {...userData, activeTeam: userTeamClasses.filter(team => team.getId() === teamMember.id)[0]}
   return {...userData, activeTeam: userTeamClasses[0]}
 }
